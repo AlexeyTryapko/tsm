@@ -4,6 +4,7 @@
     "private": true,
     "main": "public/electron.js",
     "dependencies": {
+        "@mrblenny/react-flow-chart": "^0.0.9",
         "electron-is-dev": "^1.1.0",
         "react": "^16.12.0",
         "react-dom": "^16.12.0",
