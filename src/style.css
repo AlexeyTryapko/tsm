@@ -1,0 +1,50 @@
+body {
+    margin: 0px;
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+*,
+:after,
+:before {
+    box-sizing: inherit;
+}
+
+.page-content {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    max-width: 100vw;
+    max-height: 100vh;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 300px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.sidebar-item {
+    padding: 20px 30px;
+    font-size: 14px;
+    background: white;
+    cursor: move;
+}
+
+.sidebar-title {
+    margin: 10px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.05);
+}
