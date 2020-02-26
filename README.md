@@ -10,9 +10,9 @@
     ```
     yarn -v
     ```
-3. Clone [repository](https://github.com/BinaryStudioAcademy/thread-js):
+3. Clone [repository](https://github.com/AlexeyTryapko/tsm):
     ```
-    git clone git@github.com:BinaryStudioAcademy/thread-js.git
+    git clone git@github.com:AlexeyTryapko/tsm.git
     ```
 4. Go to project directory
     ```
