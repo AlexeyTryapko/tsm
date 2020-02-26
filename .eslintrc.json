@@ -1,0 +1,32 @@
+{
+    "extends": [
+        "prettier",
+        "prettier/standard",
+        "prettier/react",
+        "plugin:react/recommended"
+    ],
+    "plugins": ["prettier"],
+    "rules": {
+        "prettier/prettier": "error",
+        "camelcase": ["error", { "properties": "never" }],
+        "no-unused-vars": [
+            "error",
+            { "vars": "all", "args": "none", "ignoreRestSiblings": true }
+        ],
+        "quotes": [
+            "error",
+            "single",
+            { "avoidEscape": true, "allowTemplateLiterals": false }
+        ]
+    },
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true
+    },
+    "settings": {
+        "react": {
+            "pragma": "React",
+            "version": "detect"
+        }
+    }
+}
