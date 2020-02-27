@@ -25,10 +25,12 @@ export class Home extends React.Component {
             <div className="page-content">
                 <NodesSidebar nodes={nodesConfig} />
                 <Workspace chart={chart} actions={stateActions} />
-                <PropertiesSidebar
-                    id={chart.selected.id}
-                    type={chart.selected.type}
-                />
+                {chart.selected.id && (
+                    <PropertiesSidebar
+                        id={chart.selected.id}
+                        type={chart.selected.type}
+                    />
+                )}
             </div>
         );
     }
