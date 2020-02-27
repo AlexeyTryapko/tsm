@@ -1,10 +1,10 @@
-import React from 'react';
-import { FlowChartWithState } from '@mrblenny/react-flow-chart';
+import * as React from 'react';
+import { FlowChart } from '@mrblenny/react-flow-chart';
 
-const App = ({ chart = {} }) => (
+export const Workspace = ({ chart, actions }) => (
     <div className="content">
-        <FlowChartWithState initialValue={chart} />
+        <FlowChart chart={chart} callbacks={actions} />
     </div>
 );
 
-export default App;
+export default Workspace;

@@ -1,16 +1,7 @@
 import React from 'react';
 import './style.css';
-import { chart, nodes } from './configs/mock';
-import Workspace from './containers/Workspace';
-import NodesSidebar from './containers/NodesSidebar';
+import Home from './scenes/Home';
 
-const App = () => {
-    return (
-        <div className="page-content">
-            <NodesSidebar nodes={nodes} />
-            <Workspace chart={chart} />
-        </div>
-    );
-};
+const App = () => <Home />;
 
 export default App;
