@@ -39,7 +39,6 @@ body {
 .sidebar-item {
     padding: 20px 30px;
     font-size: 14px;
-    background: white;
     cursor: move;
 }
 
