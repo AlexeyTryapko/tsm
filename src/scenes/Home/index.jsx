@@ -10,7 +10,15 @@ export class Home extends React.Component {
         super();
         this.state = defaultChart;
     }
-
+    clearSelectedItem() {
+        this.setState({
+            selected: {},
+        });
+    }
+    getNodeType(id) {
+        const { nodes } = this.state;
+        return nodes[id]?.type;
+    }
     render() {
         const chart = this.state;
         const stateActions = Object.keys(actions).reduce(
@@ -25,12 +33,12 @@ export class Home extends React.Component {
             <div className="page-content">
                 <NodesSidebar nodes={nodesConfig} />
                 <Workspace chart={chart} actions={stateActions} />
-                {chart.selected.id && (
-                    <PropertiesSidebar
-                        id={chart.selected.id}
-                        type={chart.selected.type}
-                    />
-                )}
+                <PropertiesSidebar
+                    isShown={!!chart.selected.id}
+                    id={chart.selected.id}
+                    type={this.getNodeType(chart.selected.id)}
+                    closeSidebar={() => this.clearSelectedItem()}
+                />
             </div>
         );
     }

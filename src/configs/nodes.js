@@ -1,59 +1,42 @@
 export const nodesConfig = [
     {
-        type: 'top/bottom',
+        type: 'SIGNAL SOURCE',
         ports: {
             port1: {
                 id: 'port1',
-                type: 'top',
-                properties: {
-                    custom: 'property',
-                },
-            },
-            port2: {
-                id: 'port1',
-                type: 'bottom',
-                properties: {
-                    custom: 'property',
-                },
-            },
-        },
-        properties: {
-            custom: 'property',
-        },
-    },
-    {
-        type: 'bottom-only',
-        ports: {
-            port1: {
-                id: 'port1',
-                type: 'bottom',
-                properties: {
-                    custom: 'property',
-                },
+                type: 'right',
             },
         },
     },
     {
-        type: 'left-right',
+        type: 'NOISE',
+        ports: {
+            port1: {
+                id: 'port1',
+                type: 'right',
+            },
+        },
+    },
+    {
+        type: 'REFENRENCE SOURCE',
+        ports: {
+            port1: {
+                id: 'port1',
+                type: 'right',
+            },
+        },
+    },
+    {
+        type: 'MONITOR',
         ports: {
             port1: {
                 id: 'port1',
                 type: 'left',
-                properties: {
-                    custom: 'property',
-                },
-            },
-            port2: {
-                id: 'port2',
-                type: 'right',
-                properties: {
-                    custom: 'property',
-                },
             },
         },
     },
     {
-        type: 'all-sides',
+        type: 'COMMUNICATION LINE',
         ports: {
             port1: {
                 id: 'port1',
@@ -63,13 +46,27 @@ export const nodesConfig = [
                 id: 'port2',
                 type: 'right',
             },
-            port3: {
-                id: 'port3',
-                type: 'top',
+        },
+    },
+    {
+        type: 'CORRELATOR',
+        ports: {
+            port1: {
+                id: 'port1',
+                type: 'left',
             },
-            port4: {
-                id: 'port4',
-                type: 'bottom',
+            port2: {
+                id: 'port2',
+                type: 'right',
+            },
+        },
+    },
+    {
+        type: 'CLOCK GENERATOR',
+        ports: {
+            port1: {
+                id: 'port1',
+                type: 'right',
             },
         },
     },
