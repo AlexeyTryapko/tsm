@@ -35,15 +35,3 @@ body {
     flex-direction: column;
     flex-shrink: 0;
 }
-
-.sidebar-item {
-    padding: 20px 30px;
-    font-size: 14px;
-    cursor: move;
-}
-
-.sidebar-title {
-    margin: 10px;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.05);
-}
