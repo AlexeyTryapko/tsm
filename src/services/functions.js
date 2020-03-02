@@ -1,21 +1,23 @@
 const {PI, sin, ceil} = Math
 
-function signalSource(simulationParams, blockParams, t) {
-    let A = blockParams[amplitude];
-    let f = blockParams[frequency];
-    let message = blockParams[sequence];
-    let current = ceil(t/simulationParams[T]);
+function signalSource(simulationParams, blockParams, step) {
+    let A = blockParams['amplitude'];
+    let f = blockParams['frequency'];
+    let message = blockParams['sequence'];
+    let T = simulationParams['periodOfSignalUnit'];
+    let dt = simulationParams['quantizationPeriod']
+    let current = ceil(step*dt/T);
 
     if(current <= message.lenght-1) {
-        if(blockParams[signalType] == 'manchesterСode'){
+        if(blockParams['signalType'] == 'manchesterСode'){
             if(message[current] == '1'){
-                if((t/simulationParams[T]-current) <= 0.5) {
+                if((step*dt/T-current) <= 0.5) {
                     return A;
                 } else {
                     return -A;
                 }
             } else {
-                if((t/simulationParams[T]-current) <= 0.5) {
+                if((step*dt/T-current) <= 0.5) {
                     return -A;
                 } else {
                     return A;
@@ -23,9 +25,9 @@ function signalSource(simulationParams, blockParams, t) {
             }
         } else {
             if(message[current] == '1') {
-                return A*sin(2*PI*f*t);
+                return A*sin(2*PI*f*step*dt);
             } else {
-                return A*sin(2*PI*f*t + PI);
+                return A*sin(2*PI*f*step*dt + PI);
             }
         }
     }
