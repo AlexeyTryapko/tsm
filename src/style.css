@@ -29,7 +29,7 @@ body {
 }
 
 .sidebar {
-    width: 300px;
+    width: 220px;
     background: white;
     display: flex;
     flex-direction: column;
