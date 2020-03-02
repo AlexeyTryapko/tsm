@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { withFormik, Field } from 'formik';
-import FormikInput from '../FormikInput';
+import FormikInput from '../../FormikInput';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
 
-const CorrelatorForm = props => {
+const ClockGeneratorForm = props => {
     const { submitForm, errors, touched } = props;
     const defaultProps = name => ({
         name,
@@ -16,16 +16,11 @@ const CorrelatorForm = props => {
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
-                Correlator
+                Clock genearator
             </Heading>
             <Field
-                {...defaultProps('samplesPerPeriodOrAlphabetChar')}
-                label="Number of samples per period / per alphabet character"
-                required
-            />
-            <Field
-                {...defaultProps('samplesPerMessage')}
-                label="Number of samples per message"
+                {...defaultProps('samplesPerSignal')}
+                label="Number of samples per signal"
                 required
             />
             <Pane display="flex" justifyContent="flex-end">
@@ -43,18 +38,11 @@ export default withFormik({
         props.onConfirmBtnClick();
     },
     validationSchema: Yup.object({
-        samplesPerPeriodOrAlphabetChar: Yup.number().required(
-            'Field is required'
-        ),
-        samplesPerMessage: Yup.number().required('Field is required'),
+        samplesPerSignal: Yup.number().required('Field is required'),
     }),
-    mapPropsToValues: ({
-        samplesPerPeriodOrAlphabetChar = '',
-        samplesPerMessage = '',
-    }) => ({
-        samplesPerPeriodOrAlphabetChar,
-        samplesPerMessage,
+    mapPropsToValues: ({ samplesPerSignal = '' }) => ({
+        samplesPerSignal,
     }),
     validateOnChange: false,
     validateOnBlur: false,
-})(CorrelatorForm);
+})(ClockGeneratorForm);

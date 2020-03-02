@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { withFormik, Field } from 'formik';
-import FormikInput from '../FormikInput';
+import FormikInput from '../../FormikInput';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
 
-const ClockGenearatorForm = props => {
+const MonitorForm = props => {
     const { submitForm, errors, touched } = props;
     const defaultProps = name => ({
         name,
@@ -16,11 +16,11 @@ const ClockGenearatorForm = props => {
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
-                Clock genearator
+                Monitor
             </Heading>
             <Field
-                {...defaultProps('samplesPerSignal')}
-                label="Number of samples per signal"
+                {...defaultProps('property')}
+                label="Some property"
                 required
             />
             <Pane display="flex" justifyContent="flex-end">
@@ -38,11 +38,11 @@ export default withFormik({
         props.onConfirmBtnClick();
     },
     validationSchema: Yup.object({
-        samplesPerSignal: Yup.number().required('Field is required'),
+        property: Yup.number().required('Field is required'),
     }),
-    mapPropsToValues: ({ samplesPerSignal = '' }) => ({
-        samplesPerSignal,
+    mapPropsToValues: ({ property = '' }) => ({
+        property,
     }),
     validateOnChange: false,
     validateOnBlur: false,
-})(ClockGenearatorForm);
+})(MonitorForm);

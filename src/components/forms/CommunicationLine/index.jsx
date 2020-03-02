@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { withFormik, Field } from 'formik';
-import FormikInput from '../FormikInput';
+import FormikInput from '../../FormikInput';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
 

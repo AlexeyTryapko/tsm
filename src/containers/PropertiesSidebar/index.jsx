@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { SideSheet } from 'evergreen-ui';
-import SignalSourceForm from '../../components/SignalSourceForm';
-import NoiseForm from '../../components/NoiseForm';
-import ReferenceSourceForm from '../../components/ReferenceSourceForm';
-import CommunicationLineForm from '../../components/CommunicationLineForm';
-import CorrelatorForm from '../../components/CorrelatorForm';
-import ClockGeneratorForm from '../../components/ClockGenearatorForm';
-import MonitorForm from '../../components/MonitorForm';
-import FormNotFound from '../../components/FormNotFound';
+import {
+    SignalSourceForm,
+    NoiseForm,
+    ReferenceSourceForm,
+    CommunicationLineForm,
+    CorrelatorForm,
+    ClockGeneratorForm,
+    MonitorForm,
+    FormNotFound,
+} from '../../components/forms';
 
 const getFormComponent = type => {
     switch (type) {

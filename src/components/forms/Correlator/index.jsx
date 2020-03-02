@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { withFormik, Field } from 'formik';
-import FormikInput from '../FormikInput';
+import FormikInput from '../../FormikInput';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
 
-const MonitorForm = props => {
+const CorrelatorForm = props => {
     const { submitForm, errors, touched } = props;
     const defaultProps = name => ({
         name,
@@ -16,11 +16,16 @@ const MonitorForm = props => {
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
-                Monitor
+                Correlator
             </Heading>
             <Field
-                {...defaultProps('property')}
-                label="Some property"
+                {...defaultProps('samplesPerPeriodOrAlphabetChar')}
+                label="Number of samples per period / per alphabet character"
+                required
+            />
+            <Field
+                {...defaultProps('samplesPerMessage')}
+                label="Number of samples per message"
                 required
             />
             <Pane display="flex" justifyContent="flex-end">
@@ -38,11 +43,18 @@ export default withFormik({
         props.onConfirmBtnClick();
     },
     validationSchema: Yup.object({
-        property: Yup.number().required('Field is required'),
+        samplesPerPeriodOrAlphabetChar: Yup.number().required(
+            'Field is required'
+        ),
+        samplesPerMessage: Yup.number().required('Field is required'),
     }),
-    mapPropsToValues: ({ property = '' }) => ({
-        property,
+    mapPropsToValues: ({
+        samplesPerPeriodOrAlphabetChar = '',
+        samplesPerMessage = '',
+    }) => ({
+        samplesPerPeriodOrAlphabetChar,
+        samplesPerMessage,
     }),
     validateOnChange: false,
     validateOnBlur: false,
-})(MonitorForm);
+})(CorrelatorForm);

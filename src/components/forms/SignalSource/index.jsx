@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { withFormik, Field } from 'formik';
-import FormikInput from '../FormikInput';
+import FormikInput from '../../FormikInput';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
 
-const ReferenceSourceForm = props => {
+const SignalSourceForm = props => {
     const { submitForm, errors, touched } = props;
     const defaultProps = name => ({
         name,
@@ -16,7 +16,7 @@ const ReferenceSourceForm = props => {
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
-                Reference source
+                Signal source
             </Heading>
             <Field
                 {...defaultProps('signalAmplitude')}
@@ -52,11 +52,6 @@ const ReferenceSourceForm = props => {
                 label="Number of characters transmitted alphabet"
                 required
             />
-            <Field
-                {...defaultProps('outOfSync')}
-                label="Out of sync"
-                required
-            />
             <Pane display="flex" justifyContent="flex-end">
                 <Button height={40} appearance="primary" onClick={submitForm}>
                     SAVE
@@ -80,7 +75,6 @@ export default withFormik({
         numberOfcharactersTransmittedAlphabet: Yup.number().required(
             'Field is required'
         ),
-        outOfSync: Yup.number().required('Field is required'),
     }),
     mapPropsToValues: ({
         signalAmplitude = '',
@@ -89,7 +83,6 @@ export default withFormik({
         samplesPerPeriod = '',
         samplesPerAlphabetCharacter = '',
         numberOfcharactersTransmittedAlphabet = '',
-        outOfSync = '',
     }) => ({
         signalAmplitude,
         signalFrequency,
@@ -97,8 +90,7 @@ export default withFormik({
         samplesPerPeriod,
         samplesPerAlphabetCharacter,
         numberOfcharactersTransmittedAlphabet,
-        outOfSync,
     }),
     validateOnChange: false,
     validateOnBlur: false,
-})(ReferenceSourceForm);
+})(SignalSourceForm);
