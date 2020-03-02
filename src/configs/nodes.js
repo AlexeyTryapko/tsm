@@ -2,8 +2,8 @@ export const nodesConfig = [
     {
         type: 'SIGNAL SOURCE',
         ports: {
-            port1: {
-                id: 'port1',
+            out: {
+                id: 'out',
                 type: 'right',
             },
         },
@@ -12,8 +12,8 @@ export const nodesConfig = [
     {
         type: 'NOISE',
         ports: {
-            port1: {
-                id: 'port1',
+            out: {
+                id: 'out',
                 type: 'right',
             },
         },
@@ -22,8 +22,8 @@ export const nodesConfig = [
     {
         type: 'REFERENCE SOURCE',
         ports: {
-            port1: {
-                id: 'port1',
+            out: {
+                id: 'out',
                 type: 'right',
             },
         },
@@ -32,8 +32,8 @@ export const nodesConfig = [
     {
         type: 'MONITOR',
         ports: {
-            port1: {
-                id: 'port1',
+            in: {
+                id: 'in',
                 type: 'left',
             },
         },
@@ -42,12 +42,12 @@ export const nodesConfig = [
     {
         type: 'COMMUNICATION LINE',
         ports: {
-            port1: {
-                id: 'port1',
+            in: {
+                id: 'in',
                 type: 'left',
             },
-            port2: {
-                id: 'port2',
+            out: {
+                id: 'out',
                 type: 'right',
             },
         },
@@ -56,12 +56,12 @@ export const nodesConfig = [
     {
         type: 'CORRELATOR',
         ports: {
-            port1: {
-                id: 'port1',
+            in: {
+                id: 'in',
                 type: 'left',
             },
-            port2: {
-                id: 'port2',
+            out: {
+                id: 'out',
                 type: 'right',
             },
         },
@@ -70,8 +70,8 @@ export const nodesConfig = [
     {
         type: 'CLOCK GENERATOR',
         ports: {
-            port1: {
-                id: 'port1',
+            out: {
+                id: 'out',
                 type: 'right',
             },
         },

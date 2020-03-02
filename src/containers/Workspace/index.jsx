@@ -10,6 +10,10 @@ export const Workspace = ({ chart, actions }) => (
             Components={{
                 NodeInner: Node,
             }}
+            config={{
+                validateLink: ({ fromPortId, toPortId }) =>
+                    fromPortId !== toPortId,
+            }}
         />
     </div>
 );
