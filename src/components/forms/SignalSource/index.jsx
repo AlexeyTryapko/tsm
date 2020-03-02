@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
 
 const SignalSourceForm = props => {
-    const { submitForm, errors, touched } = props;
+    const { submitForm, onDeleteNode, errors, touched } = props;
     const defaultProps = name => ({
         name,
         invalid: errors[name] && touched[name],
@@ -51,6 +51,15 @@ const SignalSourceForm = props => {
             />
             <Field {...defaultProps('sequece')} label="Sequece" required />
             <Pane display="flex" justifyContent="flex-end">
+                <Button
+                    height={40}
+                    marginRight={20}
+                    appearance="primary"
+                    intent="danger"
+                    onClick={onDeleteNode}
+                >
+                    REMOVE
+                </Button>
                 <Button height={40} appearance="primary" onClick={submitForm}>
                     SAVE
                 </Button>

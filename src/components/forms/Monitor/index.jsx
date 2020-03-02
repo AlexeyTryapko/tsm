@@ -5,7 +5,13 @@ import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
 
 const MonitorForm = props => {
-    const { submitForm, errors, touched, openSignalChartModal } = props;
+    const {
+        submitForm,
+        onDeleteNode,
+        errors,
+        touched,
+        openSignalChartModal,
+    } = props;
     const defaultProps = name => ({
         name,
         invalid: errors[name] && touched[name],
@@ -31,10 +37,24 @@ const MonitorForm = props => {
                 >
                     Show signal chart
                 </Button>
-
-                <Button height={40} appearance="primary" onClick={submitForm}>
-                    SAVE
-                </Button>
+                <Pane display="flex">
+                    <Button
+                        height={40}
+                        marginRight={20}
+                        appearance="primary"
+                        intent="danger"
+                        onClick={onDeleteNode}
+                    >
+                        REMOVE
+                    </Button>
+                    <Button
+                        height={40}
+                        appearance="primary"
+                        onClick={submitForm}
+                    >
+                        SAVE
+                    </Button>
+                </Pane>
             </Pane>
         </Pane>
     );
