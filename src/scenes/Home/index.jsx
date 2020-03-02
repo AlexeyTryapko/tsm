@@ -60,6 +60,7 @@ export class Home extends React.Component {
             {}
         );
         const selectedNodeId = chart.selected.id;
+        const showSideBar = chart.selected.id && chart.selected.type === 'node';
         return (
             <div className="page-content">
                 <NodesSidebar
@@ -68,7 +69,7 @@ export class Home extends React.Component {
                 />
                 <Workspace chart={chart} actions={stateActions} />
                 <PropertiesSidebar
-                    isShown={!!selectedNodeId}
+                    isShown={showSideBar}
                     type={this.getNodeType(selectedNodeId)}
                     properties={this.getNodeProperties(selectedNodeId)}
                     closeSidebar={() => this.clearSelectedItem()}
