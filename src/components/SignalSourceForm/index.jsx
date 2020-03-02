@@ -91,4 +91,6 @@ export default withFormik({
         samplesPerAlphabetCharacter,
         numberOfcharactersTransmittedAlphabet,
     }),
+    validateOnChange: false,
+    validateOnBlur: false,
 })(SignalSourceForm);

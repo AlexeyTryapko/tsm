@@ -1,21 +1,29 @@
 import * as React from 'react';
 import { SideSheet } from 'evergreen-ui';
 import SignalSourceForm from '../../components/SignalSourceForm';
+import NoiseForm from '../../components/NoiseForm';
 import FormNotFound from '../../components/FormNotFound';
 
-const getForm = (type, properties, updateProperties, closeSidebar) => {
+const getFormComponent = type => {
     switch (type) {
         case 'SIGNAL SOURCE':
-            return (
-                <SignalSourceForm
-                    updateAction={updateProperties}
-                    onConfirmBtnClick={closeSidebar}
-                    {...properties}
-                />
-            );
+            return SignalSourceForm;
+        case 'NOISE':
+            return NoiseForm;
         default:
-            return <FormNotFound />;
+            return FormNotFound;
     }
+};
+
+const getForm = (type, properties, updateProperties, closeSidebar) => {
+    const Component = getFormComponent(type);
+    return (
+        <Component
+            updateAction={updateProperties}
+            onConfirmBtnClick={closeSidebar}
+            {...properties}
+        />
+    );
 };
 
 const PropertiesSidebar = ({
