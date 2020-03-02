@@ -1,4 +1,4 @@
-const {PI, sin, ceil} = Math
+const {PI, sin, floor, random} = Math
 
 function signalSource(simulationParams, blockParams, step) {
     let A = blockParams['amplitude'];
@@ -6,7 +6,7 @@ function signalSource(simulationParams, blockParams, step) {
     let message = blockParams['sequence'];
     let T = simulationParams['periodOfSignalUnit'];
     let dt = simulationParams['quantizationPeriod']
-    let current = ceil(step*dt/T);
+    let current = floor(step*dt/T);
 
     if(current <= message.lenght-1) {
         if(blockParams['signalType'] == 'manchesterСode'){
@@ -41,7 +41,7 @@ function referenceSource(simulationParams, blockParams, step) {
     let outofsync = blockParams['outofsync'];
     let T = simulationParams['periodOfSignalUnit'];
     let dt = simulationParams['quantizationPeriod']
-    let current = ceil(step*dt/T);
+    let current = floor(step*dt/T);
 
     if(blockParams['signalType'] == 'manchesterСode'){
         if((step*dt/T-current+outofsync/100) <= 0.5) {
@@ -52,4 +52,35 @@ function referenceSource(simulationParams, blockParams, step) {
     } else {
         return A*sin(2*PI*f*(step*dt+T*outofsync/100));
     }
+}
+
+
+function noise(simulationParams, blockParams, step){
+    let noiseType = blockParams['noiseType'];
+    let A = blockParams['amplitude'];
+    let rand = 0;
+
+    if(noiseType == 'whiteNoise'){
+        rand = 2*(random()-0.5);
+    }
+    if(noiseType == 'pinkNoise'){
+        rand = 2*(random()-0.5);
+    }
+    if(noiseType == 'blueNoise'){
+        rand = 2*(random()-0.5);
+    }
+    if(noiseType == 'grayNoise'){
+        rand = 2*(random()-0.5);
+    }
+    if(noiseType == 'pinkNoise'){
+        rand = 2*(random()-0.5);
+    }
+    if(noiseType == 'impulseNoise'){
+        rand = 2*(random()-0.5);
+    }
+    if(noiseType == 'randomNoise'){
+        rand = 2*(random()-0.5);
+    }
+
+    return A*rand;
 }
