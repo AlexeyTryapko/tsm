@@ -3,18 +3,30 @@ import { SideSheet } from 'evergreen-ui';
 import SignalSourceForm from '../../components/SignalSourceForm';
 import FormNotFound from '../../components/FormNotFound';
 
-const getForm = type => {
+const getForm = (type, properties, updateProperties, closeSidebar) => {
     switch (type) {
         case 'SIGNAL SOURCE':
-            return <SignalSourceForm />;
+            return (
+                <SignalSourceForm
+                    updateAction={updateProperties}
+                    onConfirmBtnClick={closeSidebar}
+                    {...properties}
+                />
+            );
         default:
             return <FormNotFound />;
     }
 };
 
-const PropertiesSidebar = ({ isShown, closeSidebar, id, type }) => (
+const PropertiesSidebar = ({
+    isShown,
+    type,
+    properties,
+    closeSidebar,
+    updateProperties,
+}) => (
     <SideSheet isShown={isShown} onCloseComplete={closeSidebar}>
-        {getForm(type)}
+        {getForm(type, properties, updateProperties, closeSidebar)}
     </SideSheet>
 );
 

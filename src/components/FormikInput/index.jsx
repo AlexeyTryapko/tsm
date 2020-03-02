@@ -2,17 +2,14 @@ import * as React from 'react';
 import { Pane, TextInputField } from 'evergreen-ui';
 
 export const FormikInput = ({
-    takeFocus,
     label,
     hint,
     required,
     description,
-    type = 'text',
     field,
     placeholder,
+    validationMessage,
     invalid,
-    inputRef,
-    inputProps,
 }) => {
     return (
         <Pane>
@@ -23,12 +20,10 @@ export const FormikInput = ({
                 hint={hint}
                 isInvalid={invalid}
                 description={description}
-                autoFocus={takeFocus}
-                type={type}
+                type="number"
                 placeholder={placeholder}
+                validationMessage={validationMessage}
                 inputHeight={40}
-                ref={inputRef}
-                {...inputProps}
             />
         </Pane>
     );

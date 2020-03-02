@@ -15,9 +15,25 @@ export class Home extends React.Component {
             selected: {},
         });
     }
+    getNodeProperties(id) {
+        const { nodes } = this.state;
+        return nodes[id]?.properties;
+    }
     getNodeType(id) {
         const { nodes } = this.state;
         return nodes[id]?.type;
+    }
+    updateProperties(id, properties) {
+        const { nodes } = this.state;
+        this.setState({
+            nodes: {
+                ...nodes,
+                [id]: {
+                    ...nodes[id],
+                    properties,
+                },
+            },
+        });
     }
     render() {
         const chart = this.state;
@@ -28,16 +44,20 @@ export class Home extends React.Component {
             }),
             {}
         );
-
+        const selectedNodeId = chart.selected.id;
         return (
             <div className="page-content">
                 <NodesSidebar nodes={nodesConfig} />
                 <Workspace chart={chart} actions={stateActions} />
                 <PropertiesSidebar
-                    isShown={!!chart.selected.id}
-                    id={chart.selected.id}
-                    type={this.getNodeType(chart.selected.id)}
+                    isShown={!!selectedNodeId}
+                    type={this.getNodeType(selectedNodeId)}
+                    properties={this.getNodeProperties(selectedNodeId)}
                     closeSidebar={() => this.clearSelectedItem()}
+                    updateProperties={this.updateProperties.bind(
+                        this,
+                        selectedNodeId
+                    )}
                 />
             </div>
         );

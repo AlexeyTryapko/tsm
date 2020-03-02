@@ -4,9 +4,12 @@ import FormikInput from '../FormikInput';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
 
-const SignalSourceForm = () => {
+const SignalSourceForm = props => {
+    const { submitForm, errors, touched } = props;
     const defaultProps = name => ({
         name,
+        invalid: errors[name] && touched[name],
+        validationMessage: errors[name],
         component: FormikInput,
     });
 
@@ -50,7 +53,7 @@ const SignalSourceForm = () => {
                 required
             />
             <Pane display="flex" justifyContent="flex-end">
-                <Button height={40} appearance="primary">
+                <Button height={40} appearance="primary" onClick={submitForm}>
                     SAVE
                 </Button>
             </Pane>
