@@ -35,6 +35,9 @@ export class Home extends React.Component {
             },
         });
     }
+    simulate() {
+        return;
+    }
     render() {
         const chart = this.state;
         const stateActions = Object.keys(actions).reduce(
@@ -47,7 +50,10 @@ export class Home extends React.Component {
         const selectedNodeId = chart.selected.id;
         return (
             <div className="page-content">
-                <NodesSidebar nodes={nodesConfig} />
+                <NodesSidebar
+                    nodes={nodesConfig}
+                    handleRunClick={this.simulate}
+                />
                 <Workspace chart={chart} actions={stateActions} />
                 <PropertiesSidebar
                     isShown={!!selectedNodeId}
