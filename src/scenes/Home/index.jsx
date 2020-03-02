@@ -8,6 +8,79 @@ import Workspace from '../../containers/Workspace';
 import { start } from '../../services/simulation';
 import SignalChartModal from '../../containers/SignalChartModal';
 
+const mocked = [
+    {
+        id: 'noise',
+        data: [
+            {
+                x: 10,
+                y: 246,
+            },
+            {
+                x: 23,
+                y: 153,
+            },
+            {
+                x: 37,
+                y: 1,
+            },
+            {
+                x: 44,
+                y: 286,
+            },
+            {
+                x: 54,
+                y: 223,
+            },
+            {
+                x: 68,
+                y: 282,
+            },
+            {
+                x: 92,
+                y: 142,
+            },
+            {
+                x: 102,
+                y: 135,
+            },
+            {
+                x: 123,
+                y: 263,
+            },
+        ],
+    },
+    {
+        id: 'signal source',
+        data: [
+            {
+                x: 20,
+                y: 238,
+            },
+            {
+                x: 43,
+                y: 44,
+            },
+            {
+                x: 45,
+                y: 75,
+            },
+            {
+                x: 77,
+                y: 162,
+            },
+            {
+                x: 89,
+                y: 226,
+            },
+            {
+                x: 106,
+                y: 9,
+            },
+        ],
+    },
+];
+
 export class Home extends React.Component {
     constructor() {
         super();
@@ -23,7 +96,7 @@ export class Home extends React.Component {
             selected: {},
         });
     }
-    toggleSignalChartModal(val) {
+    toggleSignalChartModal() {
         this.setState({
             showSignalChartModal: !this.state.showSignalChartModal,
         });
@@ -96,6 +169,10 @@ export class Home extends React.Component {
                 <SignalChartModal
                     isShown={chart.showSignalChartModal}
                     closeModal={() => this.toggleSignalChartModal()}
+                    data={
+                        this.getNodeProperties(selectedNodeId)?.chartData ||
+                        mocked
+                    }
                 />
                 <PropertiesSidebar
                     isShown={chart.showGlobalSettings}
