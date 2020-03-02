@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { withFormik, Field } from 'formik';
 import FormikInput from '../../FormikInput';
+import FormiKSelect from '../../FormikSelect';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
 
@@ -12,18 +13,50 @@ const NoiseForm = props => {
         validationMessage: errors[name],
         component: FormikInput,
     });
+    const defaultSelectProps = name => ({
+        name,
+        invalid: errors[name] && touched[name],
+        validationMessage: errors[name],
+        component: FormiKSelect,
+    });
 
+    const types = [
+        {
+            value: 'whiteNoise',
+            label: 'White noise',
+        },
+        {
+            value: 'pinkNoise',
+            label: 'Pink noise',
+        },
+        {
+            value: 'blueNoise',
+            label: 'Blue noise',
+        },
+        {
+            value: 'grayNoise',
+            label: 'Gray noise',
+        },
+        {
+            value: 'impulseNoise',
+            label: 'Impulse noise',
+        },
+        {
+            value: 'randomNoise',
+            label: 'Random noise',
+        },
+    ];
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
                 Noise
             </Heading>
-            <Field {...defaultProps('amplitude')} label="Amplitude" required />
             <Field
-                {...defaultProps('samplesPerAlphabetCharacter')}
-                label="Number of samples per alphabet character"
-                required
+                {...defaultSelectProps('type')}
+                label="Noise type"
+                options={types}
             />
+            <Field {...defaultProps('amplitude')} label="Amplitude" required />
             <Pane display="flex" justifyContent="flex-end">
                 <Button height={40} appearance="primary" onClick={submitForm}>
                     SAVE
@@ -40,14 +73,10 @@ export default withFormik({
     },
     validationSchema: Yup.object({
         amplitude: Yup.number().required('Field is required'),
-        samplesPerAlphabetCharacter: Yup.number().required('Field is required'),
     }),
-    mapPropsToValues: ({
-        amplitude = '',
-        samplesPerAlphabetCharacter = '',
-    }) => ({
+    mapPropsToValues: ({ type = '', amplitude = '' }) => ({
+        type,
         amplitude,
-        samplesPerAlphabetCharacter,
     }),
     validateOnChange: false,
     validateOnBlur: false,
