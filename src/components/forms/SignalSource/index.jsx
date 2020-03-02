@@ -42,14 +42,10 @@ const SignalSourceForm = props => {
                 label="Signal type"
                 options={signalTypes}
             />
-            <Field
-                {...defaultProps('amplitude')}
-                label="Signal amplitude"
-                required
-            />
+            <Field {...defaultProps('amplitude')} label="Amplitude" required />
             <Field
                 {...defaultProps('frequency')}
-                label="Signal frequency"
+                label="Frequency"
                 description="For analog signals"
                 required
             />
