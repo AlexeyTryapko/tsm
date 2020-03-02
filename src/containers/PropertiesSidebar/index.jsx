@@ -2,6 +2,7 @@ import * as React from 'react';
 import { SideSheet } from 'evergreen-ui';
 import SignalSourceForm from '../../components/SignalSourceForm';
 import NoiseForm from '../../components/NoiseForm';
+import ReferenceSourceForm from '../../components/ReferenceSourceForm';
 import FormNotFound from '../../components/FormNotFound';
 
 const getFormComponent = type => {
@@ -10,6 +11,8 @@ const getFormComponent = type => {
             return SignalSourceForm;
         case 'NOISE':
             return NoiseForm;
+        case 'REFERENCE SOURCE':
+            return ReferenceSourceForm;
         default:
             return FormNotFound;
     }

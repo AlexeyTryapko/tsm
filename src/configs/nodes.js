@@ -20,7 +20,7 @@ export const nodesConfig = [
         properties: {},
     },
     {
-        type: 'REFENRENCE SOURCE',
+        type: 'REFERENCE SOURCE',
         ports: {
             port1: {
                 id: 'port1',
