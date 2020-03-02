@@ -5,6 +5,7 @@ import NoiseForm from '../../components/NoiseForm';
 import ReferenceSourceForm from '../../components/ReferenceSourceForm';
 import CommunicationLineForm from '../../components/CommunicationLineForm';
 import CorrelatorForm from '../../components/CorrelatorForm';
+import ClockGeneratorForm from '../../components/ClockGenearatorForm';
 import FormNotFound from '../../components/FormNotFound';
 
 const getFormComponent = type => {
@@ -19,6 +20,8 @@ const getFormComponent = type => {
             return CommunicationLineForm;
         case 'CORRELATOR':
             return CorrelatorForm;
+        case 'CLOCK GENERATOR':
+            return ClockGeneratorForm;
         default:
             return FormNotFound;
     }
