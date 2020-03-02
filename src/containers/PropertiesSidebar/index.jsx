@@ -4,6 +4,7 @@ import SignalSourceForm from '../../components/SignalSourceForm';
 import NoiseForm from '../../components/NoiseForm';
 import ReferenceSourceForm from '../../components/ReferenceSourceForm';
 import CommunicationLineForm from '../../components/CommunicationLineForm';
+import CorrelatorForm from '../../components/CorrelatorForm';
 import FormNotFound from '../../components/FormNotFound';
 
 const getFormComponent = type => {
@@ -16,6 +17,8 @@ const getFormComponent = type => {
             return ReferenceSourceForm;
         case 'COMMUNICATION LINE':
             return CommunicationLineForm;
+        case 'CORRELATOR':
+            return CorrelatorForm;
         default:
             return FormNotFound;
     }
