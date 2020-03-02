@@ -13,7 +13,9 @@ export class Home extends React.Component {
         super();
         this.state = {
             ...defaultChart,
+            globalProperties: {},
             showSignalChartModal: false,
+            showGlobalSettings: false,
         };
     }
     clearSelectedItem() {
@@ -21,9 +23,19 @@ export class Home extends React.Component {
             selected: {},
         });
     }
-    toggleSignalChartModal() {
+    toggleSignalChartModal(val) {
         this.setState({
             showSignalChartModal: !this.state.showSignalChartModal,
+        });
+    }
+    toggleGlobalSettings(val) {
+        this.setState({
+            showGlobalSettings: val,
+        });
+    }
+    updateGlobalSettings(props) {
+        this.setState({
+            globalProperties: props,
         });
     }
     getNodeProperties(id) {
@@ -66,6 +78,7 @@ export class Home extends React.Component {
                 <NodesSidebar
                     nodes={nodesConfig}
                     handleRunClick={() => this.simulate()}
+                    handleSettingsCLick={() => this.toggleGlobalSettings(true)}
                 />
                 <Workspace chart={chart} actions={stateActions} />
                 <PropertiesSidebar
@@ -82,6 +95,13 @@ export class Home extends React.Component {
                 <SignalChartModal
                     isShown={chart.showSignalChartModal}
                     closeModal={() => this.toggleSignalChartModal()}
+                />
+                <PropertiesSidebar
+                    isShown={chart.showGlobalSettings}
+                    type="GLOBAL"
+                    properties={chart.globalProperties}
+                    closeSidebar={() => this.toggleGlobalSettings(false)}
+                    updateProperties={props => this.updateGlobalSettings(props)}
                 />
             </div>
         );

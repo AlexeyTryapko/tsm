@@ -31,6 +31,7 @@ const SignalSourceForm = props => {
             label: 'Analog signal',
         },
     ];
+
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
@@ -42,32 +43,14 @@ const SignalSourceForm = props => {
                 options={signalTypes}
             />
             <Field
-                {...defaultProps('signalAmplitude')}
+                {...defaultProps('amplitude')}
                 label="Signal amplitude"
                 required
             />
             <Field
-                {...defaultProps('signalFrequency')}
+                {...defaultProps('frequency')}
                 label="Signal frequency"
                 description="For analog signals"
-                required
-            />
-            <Field
-                {...defaultProps('periodsPerLogicalSymbol')}
-                label="The number of periods per logical symbol of the alphabet"
-                description="For analog harmonic signals of type sin x"
-                required
-            />
-            <Field
-                {...defaultProps('samplesPerPeriod')}
-                label="Number of samples per period"
-                description="For analog signals"
-                required
-            />
-            <Field
-                {...defaultProps('samplesPerAlphabetCharacter')}
-                label="Number of samples per alphabet character"
-                description="For discrete signals"
                 required
             />
             <Field {...defaultProps('sequece')} label="Sequece" required />
@@ -87,28 +70,19 @@ export default withFormik({
     },
     validationSchema: Yup.object({
         signalType: Yup.string().required('Field is required'),
-        signalAmplitude: Yup.number().required('Field is required'),
-        signalFrequency: Yup.number().required('Field is required'),
-        periodsPerLogicalSymbol: Yup.number().required('Field is required'),
-        samplesPerPeriod: Yup.number().required('Field is required'),
-        samplesPerAlphabetCharacter: Yup.number().required('Field is required'),
+        amplitude: Yup.number().required('Field is required'),
+        frequency: Yup.number().required('Field is required'),
         sequece: Yup.number().required('Field is required'),
     }),
     mapPropsToValues: ({
-        signalType = '',
-        signalAmplitude = '',
-        signalFrequency = '',
-        periodsPerLogicalSymbol = '',
-        samplesPerPeriod = '',
-        samplesPerAlphabetCharacter = '',
+        signalType = 'manchesterСode',
+        amplitude = '',
+        frequency = '',
         sequece = '',
     }) => ({
         signalType,
-        signalAmplitude,
-        signalFrequency,
-        periodsPerLogicalSymbol,
-        samplesPerPeriod,
-        samplesPerAlphabetCharacter,
+        amplitude,
+        frequency,
         sequece,
     }),
     validateOnChange: false,
