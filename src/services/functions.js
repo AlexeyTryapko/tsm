@@ -33,3 +33,23 @@ function signalSource(simulationParams, blockParams, step) {
     }
     return 0;
 }
+
+
+function referenceSource(simulationParams, blockParams, step) {
+    let A = blockParams['amplitude'];
+    let f = blockParams['frequency'];
+    let outofsync = blockParams['outofsync'];
+    let T = simulationParams['periodOfSignalUnit'];
+    let dt = simulationParams['quantizationPeriod']
+    let current = ceil(step*dt/T);
+
+    if(blockParams['signalType'] == 'manchesterСode'){
+        if((step*dt/T-current+outofsync/100) <= 0.5) {
+            return A;
+        } else {
+            return -A;
+        }
+    } else {
+        return A*sin(2*PI*f*(step*dt+T*outofsync/100));
+    }
+}
