@@ -90,6 +90,7 @@ export class Home extends React.Component {
                         this,
                         selectedNodeId
                     )}
+                    deleteNode={() => stateActions.onDeleteKey({})}
                     openSignalChartModal={() => this.toggleSignalChartModal()}
                 />
                 <SignalChartModal

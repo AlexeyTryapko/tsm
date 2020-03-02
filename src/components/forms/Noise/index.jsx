@@ -46,6 +46,7 @@ const NoiseForm = props => {
             label: 'Random noise',
         },
     ];
+
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
