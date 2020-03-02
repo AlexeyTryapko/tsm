@@ -3,6 +3,7 @@ import { SideSheet } from 'evergreen-ui';
 import SignalSourceForm from '../../components/SignalSourceForm';
 import NoiseForm from '../../components/NoiseForm';
 import ReferenceSourceForm from '../../components/ReferenceSourceForm';
+import CommunicationLineForm from '../../components/CommunicationLineForm';
 import FormNotFound from '../../components/FormNotFound';
 
 const getFormComponent = type => {
@@ -13,6 +14,8 @@ const getFormComponent = type => {
             return NoiseForm;
         case 'REFERENCE SOURCE':
             return ReferenceSourceForm;
+        case 'COMMUNICATION LINE':
+            return CommunicationLineForm;
         default:
             return FormNotFound;
     }
