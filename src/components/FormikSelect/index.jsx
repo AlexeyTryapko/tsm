@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Pane, TextInputField } from 'evergreen-ui';
+import { Pane, SelectField } from 'evergreen-ui';
 
-export const FormikInput = ({
+export const FormikSelect = ({
     label,
     hint,
     required,
@@ -10,10 +10,11 @@ export const FormikInput = ({
     placeholder,
     validationMessage,
     invalid,
+    options,
 }) => {
     return (
         <Pane>
-            <TextInputField
+            <SelectField
                 {...field}
                 label={label}
                 required={required}
@@ -24,9 +25,15 @@ export const FormikInput = ({
                 placeholder={placeholder}
                 validationMessage={validationMessage}
                 inputHeight={40}
-            />
+            >
+                {options.map(({ label, value }) => (
+                    <option key={value} value={value}>
+                        {label}
+                    </option>
+                ))}
+            </SelectField>
         </Pane>
     );
 };
 
-export default FormikInput;
+export default FormikSelect;
