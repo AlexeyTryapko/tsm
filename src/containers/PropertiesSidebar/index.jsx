@@ -9,6 +9,7 @@ import {
     ClockGeneratorForm,
     MonitorForm,
     FormNotFound,
+    GlobalPropertiesForm,
 } from '../../components/forms';
 
 const getFormComponent = type => {
@@ -27,17 +28,28 @@ const getFormComponent = type => {
             return ClockGeneratorForm;
         case 'MONITOR':
             return MonitorForm;
+        case 'GLOBAL':
+            return GlobalPropertiesForm;
         default:
             return FormNotFound;
     }
 };
 
-const getForm = (type, properties, updateProperties, closeSidebar) => {
+const getForm = (
+    type,
+    properties,
+    updateProperties,
+    closeSidebar,
+    openSignalChartModal,
+    deleteNode
+) => {
     const Component = getFormComponent(type);
     return (
         <Component
             updateAction={updateProperties}
             onConfirmBtnClick={closeSidebar}
+            openSignalChartModal={openSignalChartModal}
+            onDeleteNode={deleteNode}
             {...properties}
         />
     );
@@ -49,9 +61,18 @@ const PropertiesSidebar = ({
     properties,
     closeSidebar,
     updateProperties,
+    openSignalChartModal,
+    deleteNode,
 }) => (
     <SideSheet isShown={isShown} onCloseComplete={closeSidebar}>
-        {getForm(type, properties, updateProperties, closeSidebar)}
+        {getForm(
+            type,
+            properties,
+            updateProperties,
+            closeSidebar,
+            openSignalChartModal,
+            deleteNode
+        )}
     </SideSheet>
 );
 

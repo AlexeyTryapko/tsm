@@ -4,8 +4,8 @@ import FormikInput from '../../FormikInput';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
 
-const CorrelatorForm = props => {
-    const { submitForm, onDeleteNode, errors, touched } = props;
+const GlobalPropertiesForm = props => {
+    const { submitForm, errors, touched } = props;
     const defaultProps = name => ({
         name,
         invalid: errors[name] && touched[name],
@@ -16,28 +16,19 @@ const CorrelatorForm = props => {
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
-                Correlator
+                Global properties
             </Heading>
             <Field
-                {...defaultProps('samplesPerPeriodOrAlphabetChar')}
-                label="Number of samples per period / per alphabet character"
+                {...defaultProps('quantizationPeriod')}
+                label="Quantization period"
                 required
             />
             <Field
-                {...defaultProps('samplesPerMessage')}
-                label="Number of samples per message"
+                {...defaultProps('periodOfSignalUnit')}
+                label="Period of signal unit"
                 required
             />
             <Pane display="flex" justifyContent="flex-end">
-                <Button
-                    height={40}
-                    marginRight={20}
-                    appearance="primary"
-                    intent="danger"
-                    onClick={onDeleteNode}
-                >
-                    REMOVE
-                </Button>
                 <Button height={40} appearance="primary" onClick={submitForm}>
                     SAVE
                 </Button>
@@ -52,18 +43,16 @@ export default withFormik({
         props.onConfirmBtnClick();
     },
     validationSchema: Yup.object({
-        samplesPerPeriodOrAlphabetChar: Yup.number().required(
-            'Field is required'
-        ),
-        samplesPerMessage: Yup.number().required('Field is required'),
+        quantizationPeriod: Yup.number().required('Field is required'),
+        periodOfSignalUnit: Yup.number().required('Field is required'),
     }),
     mapPropsToValues: ({
-        samplesPerPeriodOrAlphabetChar = '',
-        samplesPerMessage = '',
+        quantizationPeriod = '',
+        periodOfSignalUnit = '',
     }) => ({
-        samplesPerPeriodOrAlphabetChar,
-        samplesPerMessage,
+        quantizationPeriod,
+        periodOfSignalUnit,
     }),
     validateOnChange: false,
     validateOnBlur: false,
-})(CorrelatorForm);
+})(GlobalPropertiesForm);
