@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { withFormik, Field } from 'formik';
-import FormikInput from '../FormikInput';
+import FormikInput from '../../FormikInput';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
 
-const NoiseForm = props => {
+const MonitorForm = props => {
     const { submitForm, errors, touched } = props;
     const defaultProps = name => ({
         name,
@@ -16,12 +16,11 @@ const NoiseForm = props => {
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
-                Noise
+                Monitor
             </Heading>
-            <Field {...defaultProps('amplitude')} label="Amplitude" required />
             <Field
-                {...defaultProps('samplesPerAlphabetCharacter')}
-                label="Number of samples per alphabet character"
+                {...defaultProps('property')}
+                label="Some property"
                 required
             />
             <Pane display="flex" justifyContent="flex-end">
@@ -39,16 +38,11 @@ export default withFormik({
         props.onConfirmBtnClick();
     },
     validationSchema: Yup.object({
-        amplitude: Yup.number().required('Field is required'),
-        samplesPerAlphabetCharacter: Yup.number().required('Field is required'),
+        property: Yup.number().required('Field is required'),
     }),
-    mapPropsToValues: ({
-        amplitude = '',
-        samplesPerAlphabetCharacter = '',
-    }) => ({
-        amplitude,
-        samplesPerAlphabetCharacter,
+    mapPropsToValues: ({ property = '' }) => ({
+        property,
     }),
     validateOnChange: false,
     validateOnBlur: false,
-})(NoiseForm);
+})(MonitorForm);
