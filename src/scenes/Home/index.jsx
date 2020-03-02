@@ -6,15 +6,24 @@ import NodesSidebar from '../../containers/NodesSidebar';
 import PropertiesSidebar from '../../containers/PropertiesSidebar';
 import Workspace from '../../containers/Workspace';
 import { start } from '../../services/simulation';
+import SignalChartModal from '../../containers/SignalChartModal';
 
 export class Home extends React.Component {
     constructor() {
         super();
-        this.state = defaultChart;
+        this.state = {
+            ...defaultChart,
+            showSignalChartModal: false,
+        };
     }
     clearSelectedItem() {
         this.setState({
             selected: {},
+        });
+    }
+    toggleSignalChartModal() {
+        this.setState({
+            showSignalChartModal: !this.state.showSignalChartModal,
         });
     }
     getNodeProperties(id) {
@@ -67,6 +76,11 @@ export class Home extends React.Component {
                         this,
                         selectedNodeId
                     )}
+                    openSignalChartModal={() => this.toggleSignalChartModal()}
+                />
+                <SignalChartModal
+                    isShown={chart.showSignalChartModal}
+                    closeModal={() => this.toggleSignalChartModal()}
                 />
             </div>
         );

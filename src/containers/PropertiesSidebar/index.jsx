@@ -32,12 +32,19 @@ const getFormComponent = type => {
     }
 };
 
-const getForm = (type, properties, updateProperties, closeSidebar) => {
+const getForm = (
+    type,
+    properties,
+    updateProperties,
+    closeSidebar,
+    openSignalChartModal
+) => {
     const Component = getFormComponent(type);
     return (
         <Component
             updateAction={updateProperties}
             onConfirmBtnClick={closeSidebar}
+            openSignalChartModal={openSignalChartModal}
             {...properties}
         />
     );
@@ -49,9 +56,16 @@ const PropertiesSidebar = ({
     properties,
     closeSidebar,
     updateProperties,
+    openSignalChartModal,
 }) => (
     <SideSheet isShown={isShown} onCloseComplete={closeSidebar}>
-        {getForm(type, properties, updateProperties, closeSidebar)}
+        {getForm(
+            type,
+            properties,
+            updateProperties,
+            closeSidebar,
+            openSignalChartModal
+        )}
     </SideSheet>
 );
 
