@@ -73,9 +73,10 @@ export default withFormik({
         props.onConfirmBtnClick();
     },
     validationSchema: Yup.object({
+        type: Yup.string().required('Field is required'),
         amplitude: Yup.number().required('Field is required'),
     }),
-    mapPropsToValues: ({ type = '', amplitude = '' }) => ({
+    mapPropsToValues: ({ type = 'whiteNoise', amplitude = '' }) => ({
         type,
         amplitude,
     }),
