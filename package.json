@@ -5,6 +5,7 @@
     "main": "public/electron.js",
     "dependencies": {
         "@mrblenny/react-flow-chart": "^0.0.9",
+        "@nivo/line": "^0.61.1",
         "electron-is-dev": "^1.1.0",
         "evergreen-ui": "^4.23.0",
         "formik": "^2.1.4",
