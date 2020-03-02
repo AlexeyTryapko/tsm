@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { defaultChart, nodesConfig } from '../../configs';
 import { actions } from '@mrblenny/react-flow-chart';
+import { cloneDeep } from 'lodash';
 import NodesSidebar from '../../containers/NodesSidebar';
 import PropertiesSidebar from '../../containers/PropertiesSidebar';
 import Workspace from '../../containers/Workspace';
+import { start } from '../../services/simulation';
 
 export class Home extends React.Component {
     constructor() {
@@ -36,7 +38,8 @@ export class Home extends React.Component {
         });
     }
     simulate() {
-        return;
+        const chart = cloneDeep(this.state);
+        start(chart);
     }
     render() {
         const chart = this.state;
@@ -52,7 +55,7 @@ export class Home extends React.Component {
             <div className="page-content">
                 <NodesSidebar
                     nodes={nodesConfig}
-                    handleRunClick={this.simulate}
+                    handleRunClick={() => this.simulate()}
                 />
                 <Workspace chart={chart} actions={stateActions} />
                 <PropertiesSidebar
