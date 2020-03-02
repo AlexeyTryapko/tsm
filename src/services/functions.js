@@ -7,8 +7,27 @@ function signalSource(simulationParams, blockParams, t) {
     let current = ceil(t/simulationParams[T]);
 
     if(current <= message.lenght-1) {
-        if(message[current] == 
+        if(blockParams[signalType] == 'manchesterСode'){
+            if(message[current] == '1'){
+                if((t/simulationParams[T]-current) <= 0.5) {
+                    return A;
+                } else {
+                    return -A;
+                }
+            } else {
+                if((t/simulationParams[T]-current) <= 0.5) {
+                    return -A;
+                } else {
+                    return A;
+                }
+            }
+        } else {
+            if(message[current] == '1') {
+                return A*sin(2*PI*f*t);
+            } else {
+                return A*sin(2*PI*f*t + PI);
+            }
+        }
     }
-    let output = A*sin(2*PI*f*t);
-    return output;
+    return 0;
 }
