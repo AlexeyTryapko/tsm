@@ -35,3 +35,8 @@ body {
     flex-direction: column;
     flex-shrink: 0;
 }
+
+.chart {
+    width: 980px !important;
+    height: 500px !important;
+}
