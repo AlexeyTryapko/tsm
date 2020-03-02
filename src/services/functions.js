@@ -84,3 +84,15 @@ function noise(simulationParams, blockParams, step){
 
     return A*rand;
 }
+
+
+function communicationLine(blockParams, inputSignal, inputNoise){
+    let kSignal = blockParams['coeffForTheFirstIncomingSignal'];
+    let kNoise = blockParams['coeffForTheSecondIncomingSignal'];
+
+    return inputSignal*kSignal + inputNoise*kNoise;
+}
+
+function correlator(simulationParams, blockParams, inputSignal, referenceSignal){
+    blockParams.correlation += inputSignal*referenceSignal*simulationParams['quantizationPeriod'];
+}
