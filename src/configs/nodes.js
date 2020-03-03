@@ -7,7 +7,9 @@ export const nodesConfig = [
                 type: 'right',
             },
         },
-        properties: {},
+        properties: {
+            name: 'SIGNAL SOURCE',
+        },
     },
     {
         type: 'NOISE',
@@ -17,7 +19,9 @@ export const nodesConfig = [
                 type: 'right',
             },
         },
-        properties: {},
+        properties: {
+            type: 'NOISE',
+        },
     },
     {
         type: 'REFERENCE SOURCE',
@@ -27,7 +31,9 @@ export const nodesConfig = [
                 type: 'right',
             },
         },
-        properties: {},
+        properties: {
+            name: 'REFERENCE SOURCE',
+        },
     },
     {
         type: 'MONITOR',
@@ -37,7 +43,9 @@ export const nodesConfig = [
                 type: 'left',
             },
         },
-        properties: {},
+        properties: {
+            name: 'MONITOR',
+        },
     },
     {
         type: 'COMMUNICATION LINE',
@@ -51,7 +59,9 @@ export const nodesConfig = [
                 type: 'right',
             },
         },
-        properties: {},
+        properties: {
+            name: 'COMMUNICATION LINE',
+        },
     },
     {
         type: 'CORRELATOR',
@@ -65,7 +75,9 @@ export const nodesConfig = [
                 type: 'right',
             },
         },
-        properties: {},
+        properties: {
+            name: 'CORRELATOR',
+        },
     },
     {
         type: 'CLOCK GENERATOR',
@@ -75,6 +87,8 @@ export const nodesConfig = [
                 type: 'right',
             },
         },
-        properties: {},
+        properties: {
+            name: 'CLOCK GENERATOR',
+        },
     },
 ];
