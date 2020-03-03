@@ -105,3 +105,26 @@ export function monitor(x, simulationParams, blockParams, step) {
         }
     }
 }
+
+
+export function communicationLine(x, simulationParams, blockParams, step){
+    let inputSignal = 0;
+    let inputNoise = 0;
+    let kSignal = blockParams['coeffForIncomingSignal'];
+    let kNoise = blockParams['coeffForTheNoise'];
+
+    for(let input_x in x){
+        if(input_x.name.includes("SIGNAL SOURCE")){
+            inputSignal = input_x.data;
+        }
+        if(input_x.name.includes("NOISE")){
+            inputNoise = input_x.data;
+        }
+    }
+    return inputSignal*kSignal + inputNoise*kNoise;
+}
+
+
+export function correlator(x, simulationParams, blockParams, step){
+
+}
