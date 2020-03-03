@@ -121,12 +121,16 @@ export class Home extends React.Component {
     }
     updateProperties(id, properties) {
         const { nodes } = this.state;
+        const { properties: oldProps } = nodes[id];
         this.setState({
             nodes: {
                 ...nodes,
                 [id]: {
                     ...nodes[id],
-                    properties,
+                    properties: {
+                        ...oldProps,
+                        ...properties,
+                    },
                 },
             },
         });
