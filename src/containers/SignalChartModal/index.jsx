@@ -21,7 +21,6 @@ const SignalChart = ({ isShown, closeModal, data = [] }) => (
                     type: 'linear',
                     min: 'auto',
                     max: 'auto',
-                    stacked: true,
                     reverse: false,
                 }}
                 axisTop={null}
