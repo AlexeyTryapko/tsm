@@ -55,10 +55,10 @@ export default withFormik({
         step: Yup.number().required('Field is required'),
     }),
     mapPropsToValues: ({
-        quantizationPeriod = '',
-        periodOfSignalUnit = '',
-        executionTime = '',
-        step = '',
+        quantizationPeriod = '0.1',
+        periodOfSignalUnit = '1',
+        executionTime = '5',
+        step = '0',
     }) => ({
         quantizationPeriod,
         periodOfSignalUnit,

@@ -49,7 +49,7 @@ const SignalSourceForm = props => {
                 description="For analog signals"
                 required
             />
-            <Field {...defaultProps('sequece')} label="Sequece" required />
+            <Field {...defaultProps('sequence')} label="Sequece" required />
             <Pane display="flex" justifyContent="flex-end">
                 <Button
                     height={40}
@@ -77,18 +77,18 @@ export default withFormik({
         signalType: Yup.string().required('Field is required'),
         amplitude: Yup.number().required('Field is required'),
         frequency: Yup.number().required('Field is required'),
-        sequece: Yup.number().required('Field is required'),
+        sequence: Yup.number().required('Field is required'),
     }),
     mapPropsToValues: ({
         signalType = 'manchesterСode',
-        amplitude = '',
-        frequency = '',
-        sequece = '',
+        amplitude = '1',
+        frequency = '3',
+        sequence = '101',
     }) => ({
         signalType,
         amplitude,
         frequency,
-        sequece,
+        sequence,
     }),
     validateOnChange: false,
     validateOnBlur: false,
