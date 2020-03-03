@@ -80,10 +80,10 @@ export default withFormik({
         sequence: Yup.number().required('Field is required'),
     }),
     mapPropsToValues: ({
-        signalType = 'manchesterСode',
-        amplitude = '1',
-        frequency = '3',
-        sequence = '101',
+        signalType = '',
+        amplitude = '',
+        frequency = '',
+        sequence = '',
     }) => ({
         signalType,
         amplitude,

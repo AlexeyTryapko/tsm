@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { defaultChart, nodesConfig } from '../../configs';
+import { defaultChart, nodesConfig, globalProperties } from '../../configs';
 import { actions } from '@mrblenny/react-flow-chart';
 import { cloneDeep } from 'lodash';
 import NodesSidebar from '../../containers/NodesSidebar';
@@ -7,86 +7,14 @@ import PropertiesSidebar from '../../containers/PropertiesSidebar';
 import Workspace from '../../containers/Workspace';
 import { start } from '../../services/simulation';
 import SignalChartModal from '../../containers/SignalChartModal';
-
-const mocked = [
-    {
-        id: 'noise',
-        data: [
-            {
-                x: 10,
-                y: 246,
-            },
-            {
-                x: 23,
-                y: 153,
-            },
-            {
-                x: 37,
-                y: 1,
-            },
-            {
-                x: 44,
-                y: 286,
-            },
-            {
-                x: 54,
-                y: 223,
-            },
-            {
-                x: 68,
-                y: 282,
-            },
-            {
-                x: 92,
-                y: 142,
-            },
-            {
-                x: 102,
-                y: 135,
-            },
-            {
-                x: 123,
-                y: 263,
-            },
-        ],
-    },
-    {
-        id: 'signal source',
-        data: [
-            {
-                x: 20,
-                y: 238,
-            },
-            {
-                x: 43,
-                y: 44,
-            },
-            {
-                x: 45,
-                y: 75,
-            },
-            {
-                x: 77,
-                y: 162,
-            },
-            {
-                x: 89,
-                y: 226,
-            },
-            {
-                x: 106,
-                y: 9,
-            },
-        ],
-    },
-];
+import { toaster } from 'evergreen-ui';
 
 export class Home extends React.Component {
     constructor() {
         super();
         this.state = {
             ...defaultChart,
-            globalProperties: {},
+            globalProperties,
             showSignalChartModal: false,
             showGlobalSettings: false,
         };
@@ -108,7 +36,10 @@ export class Home extends React.Component {
     }
     updateGlobalSettings(props) {
         this.setState({
-            globalProperties: props,
+            globalProperties: {
+                ...this.state.globalProperties,
+                ...props,
+            },
         });
     }
     getNodeProperties(id) {
@@ -167,7 +98,8 @@ export class Home extends React.Component {
         do {
             res = start(chart);
         } while (res);
-        this.setState(chart);
+        toaster.success('Simulation is finished');
+        this.setState(cloneDeep(chart));
     }
     render() {
         const chart = this.state;
@@ -193,10 +125,7 @@ export class Home extends React.Component {
                 <SignalChartModal
                     isShown={chart.showSignalChartModal}
                     closeModal={() => this.toggleSignalChartModal()}
-                    data={
-                        this.getNodeProperties(selectedNodeId)?.chartData ||
-                        mocked
-                    }
+                    data={this.getNodeProperties(selectedNodeId)?.chartData}
                 />
             </div>
         );
