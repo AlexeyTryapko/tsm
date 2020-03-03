@@ -1,7 +1,11 @@
 import { signalSource, referenceSource, noise, monitor } from './functions';
+import { cloneDeep } from 'lodash';
 
 export const start = chart => {
     let step = chart.globalProperties['step'];
+    /**
+	 ** Clear temporart properties
+    **/
     if(step ===0){
     	let resetObj = {chartData: [],};
 	    const resetFields = (nodes, resetObj) => {
@@ -13,7 +17,7 @@ export const start = chart => {
 		        };
 		        Object.keys(resetObj).forEach(key => {
 		            if (res[key] !== undefined) {
-		                res[key] = resetObj[key];
+		                res[key] = cloneDeep(resetObj[key]);
 		            }
 		        });
 		        resetedNodes[nodeKey].properties = res;
@@ -23,6 +27,11 @@ export const start = chart => {
 		};
 	    chart.nodes=resetFields(chart.nodes,resetObj)
     }
+	/**
+	*	
+	*	Main logic
+	*
+	**/
     if (
         step <
         chart.globalProperties['executionTime'] /
@@ -32,7 +41,7 @@ export const start = chart => {
             'SIGNAL SOURCE': signalSource,
             'REFERENCE SOURCE': referenceSource,
             NOISE: noise,
-            MONITOR: monitor,
+            'MONITOR': monitor,
         };
 
         let obj_idxs = {};
