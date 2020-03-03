@@ -9,6 +9,10 @@ export const nodesConfig = [
         },
         properties: {
             name: 'SIGNAL SOURCE',
+            signalType: 'manchesterСode',
+            amplitude: 1,
+            frequency: 3,
+            sequence: 101,
         },
     },
     {
