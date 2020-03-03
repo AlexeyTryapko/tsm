@@ -33,7 +33,7 @@ export const start = chart => {
     }
 
     for (let [idx, value] of outputs.entries()) {
-        if (value == 0) {
+        if (value === 0) {
             Y[idx] = 'end-point';
         }
     }
@@ -55,6 +55,7 @@ export const start = chart => {
                 break;
             }
         }
+        const params = {}; //TDOD remove value
         return func_names[chart['nodes'][node_id]](x, params); //TODO Correct call
     }
 
