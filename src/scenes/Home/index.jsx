@@ -7,7 +7,7 @@ import PropertiesSidebar from '../../containers/PropertiesSidebar';
 import Workspace from '../../containers/Workspace';
 import { start } from '../../services/simulation';
 import SignalChartModal from '../../containers/SignalChartModal';
-
+import { toaster } from 'evergreen-ui';
 const mocked = [
     {
         id: 'noise',
@@ -167,6 +167,7 @@ export class Home extends React.Component {
         do {
             res = start(chart);
         } while (res);
+        toaster.success('Simulation is finished');
         this.setState(chart);
     }
     render() {
