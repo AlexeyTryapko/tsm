@@ -2,6 +2,27 @@ import { signalSource, referenceSource, noise, monitor } from './functions';
 
 export const start = chart => {
     let step = chart.globalProperties['step'];
+    if(step ===0){
+    	let resetObj = {chartData: [],};
+	    const resetFields = (nodes, resetObj) => {
+		    const resetedNodes = { ...nodes };
+		    Object.keys(resetedNodes).forEach(nodeKey => {
+		        const currNode = resetedNodes[nodeKey];
+		        const res = {
+		            ...currNode.properties,
+		        };
+		        Object.keys(resetObj).forEach(key => {
+		            if (res[key] !== undefined) {
+		                res[key] = resetObj[key];
+		            }
+		        });
+		        resetedNodes[nodeKey].properties = res;
+		    });
+
+		    return resetedNodes;
+		};
+	    chart.nodes=resetFields(chart.nodes,resetObj)
+    }
     if (
         step <
         chart.globalProperties['executionTime'] /
@@ -91,6 +112,7 @@ export const start = chart => {
         chart.globalProperties['step'] += 1;
         return Y;
     } else {
+    	chart.globalProperties['step'] = 0;
         return undefined;
     }
 };
