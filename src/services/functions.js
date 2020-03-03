@@ -3,14 +3,14 @@ const { PI, sin, floor, random } = Math;
 export function signalSource(x, simulationParams, blockParams, step) {
     let A = blockParams['amplitude'];
     let f = blockParams['frequency'];
-    let message = blockParams['sequence'];
+    let message = String(blockParams['sequence']);
     let T = simulationParams['periodOfSignalUnit'];
     let dt = simulationParams['quantizationPeriod'];
     let current = floor((step * dt) / T);
 
-    if (current <= String(message).length - 1) {
+    if (current <= message.length - 1) {
         if (blockParams['signalType'] === 'manchesterСode') {
-            if (message[current] === '1') {
+            if (message.charAt(current) === '1') {
                 if ((step * dt) / T - current <= 0.5) {
                     return A;
                 } else {
@@ -24,7 +24,7 @@ export function signalSource(x, simulationParams, blockParams, step) {
                 }
             }
         } else {
-            if (message[current] === '1') {
+            if (message.charAt(current)=== '1') {
                 return A * sin(2 * PI * f * step * dt);
             } else {
                 return A * sin(2 * PI * f * step * dt + PI);
