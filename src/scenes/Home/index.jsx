@@ -131,6 +131,32 @@ export class Home extends React.Component {
             },
         });
     }
+    getPropertiesSideBarProps(stateActions) {
+        const props = {};
+        const { selected, showGlobalSettings, globalProperties } = this.state;
+
+        if (showGlobalSettings) {
+            props.isShown = true;
+            props.type = 'GLOBAL';
+            props.properties = globalProperties;
+            props.closeSidebar = () => this.toggleGlobalSettings(false);
+            props.updateProperties = props => this.updateGlobalSettings(props);
+        }
+
+        if (selected.id && selected.type === 'node') {
+            props.isShown = true;
+            props.type = this.getNodeType(selected.id);
+            props.closeSidebar = () => this.clearSelectedItem();
+            props.updateProperties = this.updateProperties.bind(
+                this,
+                selected.id
+            );
+            props.properties = this.getNodeProperties(selected.id);
+            props.deleteNode = () => stateActions.onDeleteKey({});
+            props.openSignalChartModal = () => this.toggleSignalChartModal();
+        }
+        return props;
+    }
     simulate() {
         const chart = cloneDeep(this.state);
         start(chart);
@@ -145,7 +171,6 @@ export class Home extends React.Component {
             {}
         );
         const selectedNodeId = chart.selected.id;
-        const showSideBar = chart.selected.id && chart.selected.type === 'node';
         return (
             <div className="page-content">
                 <NodesSidebar
@@ -155,16 +180,7 @@ export class Home extends React.Component {
                 />
                 <Workspace chart={chart} actions={stateActions} />
                 <PropertiesSidebar
-                    isShown={showSideBar}
-                    type={this.getNodeType(selectedNodeId)}
-                    properties={this.getNodeProperties(selectedNodeId)}
-                    closeSidebar={() => this.clearSelectedItem()}
-                    updateProperties={this.updateProperties.bind(
-                        this,
-                        selectedNodeId
-                    )}
-                    deleteNode={() => stateActions.onDeleteKey({})}
-                    openSignalChartModal={() => this.toggleSignalChartModal()}
+                    {...this.getPropertiesSideBarProps(stateActions)}
                 />
                 <SignalChartModal
                     isShown={chart.showSignalChartModal}
@@ -173,13 +189,6 @@ export class Home extends React.Component {
                         this.getNodeProperties(selectedNodeId)?.chartData ||
                         mocked
                     }
-                />
-                <PropertiesSidebar
-                    isShown={chart.showGlobalSettings}
-                    type="GLOBAL"
-                    properties={chart.globalProperties}
-                    closeSidebar={() => this.toggleGlobalSettings(false)}
-                    updateProperties={props => this.updateGlobalSettings(props)}
                 />
             </div>
         );
