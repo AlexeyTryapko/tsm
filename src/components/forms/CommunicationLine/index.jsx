@@ -25,7 +25,7 @@ const CommunicationLineForm = props => {
             />
             <Field
                 {...defaultProps('coeffForTheNoise')}
-                label="Coefficient for the second incoming signal"
+                label="Coefficient for the noise"
                 required
             />
             <Pane display="flex" justifyContent="flex-end">
