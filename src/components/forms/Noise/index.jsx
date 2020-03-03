@@ -53,7 +53,7 @@ const NoiseForm = props => {
                 Noise
             </Heading>
             <Field
-                {...defaultSelectProps('type')}
+                {...defaultSelectProps('noiseType')}
                 label="Noise type"
                 options={types}
             />
@@ -82,11 +82,11 @@ export default withFormik({
         props.onConfirmBtnClick();
     },
     validationSchema: Yup.object({
-        type: Yup.string().required('Field is required'),
+        noiseType: Yup.string().required('Field is required'),
         amplitude: Yup.number().required('Field is required'),
     }),
-    mapPropsToValues: ({ type = 'whiteNoise', amplitude = '' }) => ({
-        type,
+    mapPropsToValues: ({ noiseType = '', amplitude = '' }) => ({
+        noiseType,
         amplitude,
     }),
     validateOnChange: false,

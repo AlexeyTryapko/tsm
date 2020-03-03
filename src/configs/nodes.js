@@ -24,7 +24,9 @@ export const nodesConfig = [
             },
         },
         properties: {
-            type: 'NOISE',
+            name: 'NOISE',
+            noiseType: 'whiteNoise',
+            amplitude: 0.1,
         },
     },
     {
