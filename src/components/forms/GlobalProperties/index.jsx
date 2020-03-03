@@ -33,6 +33,7 @@ const GlobalPropertiesForm = props => {
                 label="Time of execution"
                 required
             />
+            <Field {...defaultProps('step')} label="Step" required />
             <Pane display="flex" justifyContent="flex-end">
                 <Button height={40} appearance="primary" onClick={submitForm}>
                     SAVE
@@ -51,15 +52,18 @@ export default withFormik({
         quantizationPeriod: Yup.number().required('Field is required'),
         periodOfSignalUnit: Yup.number().required('Field is required'),
         executionTime: Yup.number().required('Field is required'),
+        step: Yup.number().required('Field is required'),
     }),
     mapPropsToValues: ({
         quantizationPeriod = '',
         periodOfSignalUnit = '',
         executionTime = '',
+        step = '',
     }) => ({
         quantizationPeriod,
         periodOfSignalUnit,
         executionTime,
+        step,
     }),
     validateOnChange: false,
     validateOnBlur: false,
