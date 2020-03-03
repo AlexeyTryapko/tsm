@@ -8,7 +8,7 @@ export function signalSource(x, simulationParams, blockParams, step) {
     let dt = simulationParams['quantizationPeriod'];
     let current = floor((step * dt) / T);
 
-    if (current <= String(message).lenght - 1) {
+    if (current <= String(message).length - 1) {
         if (blockParams['signalType'] === 'manchesterСode') {
             if (message[current] === '1') {
                 if ((step * dt) / T - current <= 0.5) {
