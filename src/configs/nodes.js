@@ -12,7 +12,7 @@ export const nodesConfig = [
             signalType: 'manchesterСode',
             amplitude: 1,
             frequency: 3,
-            sequence: 101,
+            sequence: 11101,
         },
     },
     {
