@@ -163,7 +163,11 @@ export class Home extends React.Component {
     }
     simulate() {
         const chart = cloneDeep(this.state);
-        start(chart);
+        let res = undefined;
+        
+        do{
+            res = start(chart);
+        }while(res)
     }
     render() {
         const chart = this.state;

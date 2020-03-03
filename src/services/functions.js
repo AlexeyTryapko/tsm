@@ -85,10 +85,10 @@ export function noise(x, simulationParams, blockParams, step) {
 
 export function monitor(x, simulationParams, blockParams, step) {
     let dt = simulationParams['quantizationPeriod'];
-    for (let input_x in x) {
+    for (let [in_i,input_x] of x.entries()) {
         let found = false;
-        for (let chart in blockParams['chartData']) {
-            if (input_x.name === chart.id) {
+        for (let [ch_i,chart] of blockParams['chartData'].entries()) {
+            if (input_x.name == chart.id) {
                 if (!chart.data) {
                     chart.data = [];
                 }
