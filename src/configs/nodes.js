@@ -68,6 +68,8 @@ export const nodesConfig = [
         },
         properties: {
             name: 'COMMUNICATION LINE',
+            coeffForIncomingSignal: 1,
+            coeffForTheNoise: 0.5,
         },
     },
     {
