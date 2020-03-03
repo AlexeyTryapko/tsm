@@ -19,18 +19,13 @@ const CommunicationLineForm = props => {
                 Communication line
             </Heading>
             <Field
-                {...defaultProps('coeffForTheFirstIncomingSignal')}
+                {...defaultProps('coeffForIncomingSignal')}
                 label="Coefficient for the first incoming signal"
                 required
             />
             <Field
-                {...defaultProps('coeffForTheSecondIncomingSignal')}
+                {...defaultProps('coeffForTheNoise')}
                 label="Coefficient for the second incoming signal"
-                required
-            />
-            <Field
-                {...defaultProps('samplesPerPeriodOrAlphabetChar')}
-                label="Number of samples per period / per alphabet character"
                 required
             />
             <Pane display="flex" justifyContent="flex-end">
@@ -57,24 +52,15 @@ export default withFormik({
         props.onConfirmBtnClick();
     },
     validationSchema: Yup.object({
-        coeffForTheFirstIncomingSignal: Yup.number().required(
-            'Field is required'
-        ),
-        coeffForTheSecondIncomingSignal: Yup.number().required(
-            'Field is required'
-        ),
-        samplesPerPeriodOrAlphabetChar: Yup.number().required(
-            'Field is required'
-        ),
+        coeffForIncomingSignal: Yup.number().required('Field is required'),
+        coeffForTheNoise: Yup.number().required('Field is required'),
     }),
     mapPropsToValues: ({
-        coeffForTheFirstIncomingSignal = '',
-        coeffForTheSecondIncomingSignal = '',
-        samplesPerPeriodOrAlphabetChar = '',
+        coeffForIncomingSignal = '',
+        coeffForTheNoise = '',
     }) => ({
-        coeffForTheFirstIncomingSignal,
-        coeffForTheSecondIncomingSignal,
-        samplesPerPeriodOrAlphabetChar,
+        coeffForIncomingSignal,
+        coeffForTheNoise,
     }),
     validateOnChange: false,
     validateOnBlur: false,
