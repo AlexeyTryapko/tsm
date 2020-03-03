@@ -40,7 +40,7 @@ export const start = chart => {
         let func_names = {
             'SIGNAL SOURCE': signalSource,
             'REFERENCE SOURCE': referenceSource,
-            NOISE: noise,
+            'NOISE': noise,
 			'MONITOR': monitor,
 			'COMMUNICATION LINE': communicationLine,
         };

@@ -113,7 +113,7 @@ export function communicationLine(x, simulationParams, blockParams, step){
     let kSignal = blockParams['coeffForIncomingSignal'];
     let kNoise = blockParams['coeffForTheNoise'];
 
-    for(let input_x in x){
+    for(let [in_i,input_x] of x.entries()){
         if(input_x.name.includes("SIGNAL SOURCE")){
             inputSignal = input_x.data;
         }
