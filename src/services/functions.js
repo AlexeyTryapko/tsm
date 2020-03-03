@@ -1,6 +1,6 @@
 const { PI, sin, floor, random } = Math;
 
-export function signalSource(x,simulationParams, blockParams, step) {
+export function signalSource(x, simulationParams, blockParams, step) {
     let A = blockParams['amplitude'];
     let f = blockParams['frequency'];
     let message = blockParams['sequence'];
@@ -8,7 +8,7 @@ export function signalSource(x,simulationParams, blockParams, step) {
     let dt = simulationParams['quantizationPeriod'];
     let current = floor((step * dt) / T);
 
-    if (current <= message.lenght - 1) {
+    if (current <= String(message).lenght - 1) {
         if (blockParams['signalType'] === 'manchesterСode') {
             if (message[current] === '1') {
                 if ((step * dt) / T - current <= 0.5) {
@@ -34,7 +34,7 @@ export function signalSource(x,simulationParams, blockParams, step) {
     return 0;
 }
 
-export function referenceSource(x,simulationParams, blockParams, step) {
+export function referenceSource(x, simulationParams, blockParams, step) {
     let A = blockParams['amplitude'];
     let f = blockParams['frequency'];
     let outofsync = blockParams['outofsync'];
@@ -53,7 +53,7 @@ export function referenceSource(x,simulationParams, blockParams, step) {
     }
 }
 
-export function noise(x,simulationParams, blockParams, step) {
+export function noise(x, simulationParams, blockParams, step) {
     let noiseType = blockParams['noiseType'];
     let A = blockParams['amplitude'];
     let rand = 0;
@@ -83,19 +83,25 @@ export function noise(x,simulationParams, blockParams, step) {
     return A * rand;
 }
 
-export function monitor(x,simulationParams, blockParams, step) {
+export function monitor(x, simulationParams, blockParams, step) {
     let dt = simulationParams['quantizationPeriod'];
-    for(let input_x in x){
-        let found= false;
-        for(let chart in blockParams['chartData']){
-            if(input_x.name===chart.id){
-                chart.data.push({'x':dt*step,'y':x.data,})
+    for (let input_x in x) {
+        let found = false;
+        for (let chart in blockParams['chartData']) {
+            if (input_x.name === chart.id) {
+                if (!chart.data) {
+                    chart.data = [];
+                }
+                chart.data.push({ x: dt * step, y: input_x.data });
                 found = true;
                 break;
             }
         }
-        if(!found){
-            blockParams['chartData'].push({id:input_x.name,data:[{'x':dt*step,'y':x.data,},]})
+        if (!found) {
+            blockParams['chartData'].push({
+                id: input_x.name,
+                data: [{ x: dt * step, y: input_x.data }],
+            });
         }
     }
 }

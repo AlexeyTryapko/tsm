@@ -45,6 +45,7 @@ export const nodesConfig = [
         },
         properties: {
             name: 'MONITOR',
+            chartData: [],
         },
     },
     {

@@ -25,7 +25,10 @@ export const start = chart => {
             }
         }
 
-        let matrix = new Array(obj_id).fill(new Array(obj_id).fill(0));
+        let matrix = new Array(obj_id);
+        for (let i = 0; i < matrix.length; i++) {
+            matrix[i] = new Array(obj_id).fill(0);
+        }
         let inputs = new Array(obj_id).fill(0);
         let outputs = new Array(obj_id).fill(0);
         let Y = new Array(obj_id).fill(undefined);
@@ -47,7 +50,7 @@ export const start = chart => {
 
         function get_node(idx) {
             let node_id = undefined;
-            for (let [_node_id, node_idx] of obj_idxs.entries()) {
+            for (let [_node_id, node_idx] of Object.entries(obj_idxs)) {
                 if (node_idx === idx) {
                     node_id = _node_id;
                     break;
