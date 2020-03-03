@@ -1,4 +1,5 @@
 import * as React from 'react';
+import uuid from 'uuid/v4';
 import { Pane, Text } from 'evergreen-ui';
 
 const SidebarItem = ({ type, ports, properties }) => (
@@ -14,7 +15,14 @@ const SidebarItem = ({ type, ports, properties }) => (
         onDragStart={event => {
             event.dataTransfer.setData(
                 'react-flow-chart',
-                JSON.stringify({ type, ports, properties })
+                JSON.stringify({
+                    type,
+                    ports,
+                    properties: {
+                        ...properties,
+                        name: properties.name + uuid(),
+                    },
+                })
             );
         }}
     >
