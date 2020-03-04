@@ -6,6 +6,7 @@ import CorrelatorForm from './Correlator';
 import ClockGeneratorForm from './ClockGenerator';
 import FormNotFound from './NotFound';
 import GlobalPropertiesForm from './GlobalProperties';
+import DesicionMakerDeviceForm from './DesicionMakerDevice';
 
 export {
     SignalSourceForm,
@@ -16,4 +17,5 @@ export {
     ClockGeneratorForm,
     FormNotFound,
     GlobalPropertiesForm,
+    DesicionMakerDeviceForm,
 };

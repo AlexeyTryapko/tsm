@@ -102,4 +102,16 @@ export const nodesConfig = [
             name: 'CLOCK GENERATOR',
         },
     },
+    {
+        type: 'DECISION MAKER DEVICE',
+        ports: {
+            in: {
+                id: 'in',
+                type: 'left',
+            },
+        },
+        properties: {
+            name: 'DECISION MAKER DEVICE',
+        },
+    },
 ];
