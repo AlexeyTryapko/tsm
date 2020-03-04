@@ -1,4 +1,4 @@
-const { PI, sin, floor, random } = Math;
+const { PI, sin, floor, random, sign } = Math;
 
 export function signalSource(x, simulationParams, blockParams, step) {
     let A = blockParams['amplitude'];
@@ -37,19 +37,15 @@ export function signalSource(x, simulationParams, blockParams, step) {
 export function referenceSource(x, simulationParams, blockParams, step) {
     let A = blockParams['amplitude'];
     let f = blockParams['frequency'];
-    let outofsync = blockParams['outofsync'];
+    let outofsync = blockParams['outOfSync'];
     let T = simulationParams['periodOfSignalUnit'];
     let dt = simulationParams['quantizationPeriod'];
     let current = floor((step * dt) / T);
 
     if (blockParams['signalType'] === 'manchesterСode') {
-        if ((step * dt) / T - current <= 0.5) {
-            return A;
-        } else {
-            return -A;
-        }
+       return A*sign( sin(2 * PI  * (step * dt )/T/(1 + outofsync / 100)));
     } else {
-        return A * sin(2 * PI * f * (step * dt + (T * outofsync) / 100));
+        return A * sin(2 * PI * f * (step * dt )/(1 + outofsync / 100));
     }
 }
 
