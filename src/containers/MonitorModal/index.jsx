@@ -2,19 +2,21 @@ import * as React from 'react';
 import { Dialog } from 'evergreen-ui';
 import { ResponsiveLine } from '@nivo/line';
 
-const SignalChart = ({ isShown, closeModal, data = [] }) => (
+const SignalChart = ({ isShown, closeModal, data = [], deleteNode }) => (
     <Dialog
         isShown={isShown}
         onCloseComplete={closeModal}
-        hasFooter={false}
-        hasHeader={false}
+        title="Monitor"
+        intent="danger"
+        onConfirm={deleteNode}
+        confirmLabel="REMOVE"
         width={1000}
         minHeightContent={500}
     >
         <div className="chart">
             <ResponsiveLine
                 width={980}
-                height={500}
+                height={400}
                 data={data}
                 margin={{ top: 50, right: 60, bottom: 50, left: 60 }}
                 yScale={{

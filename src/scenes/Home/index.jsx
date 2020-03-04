@@ -6,7 +6,7 @@ import NodesSidebar from '../../containers/NodesSidebar';
 import PropertiesSidebar from '../../containers/PropertiesSidebar';
 import Workspace from '../../containers/Workspace';
 import { start } from '../../services/simulation';
-import SignalChartModal from '../../containers/SignalChartModal';
+import MonitorModal from '../../containers/MonitorModal';
 import { toaster } from 'evergreen-ui';
 
 export class Home extends React.Component {
@@ -15,18 +15,12 @@ export class Home extends React.Component {
         this.state = {
             ...defaultChart,
             globalProperties,
-            showSignalChartModal: false,
             showGlobalSettings: false,
         };
     }
     clearSelectedItem() {
         this.setState({
             selected: {},
-        });
-    }
-    toggleSignalChartModal() {
-        this.setState({
-            showSignalChartModal: !this.state.showSignalChartModal,
         });
     }
     toggleGlobalSettings(val) {
@@ -66,31 +60,54 @@ export class Home extends React.Component {
             },
         });
     }
-    getPropertiesSideBarProps(stateActions) {
-        const props = {};
-        const { selected, showGlobalSettings, globalProperties } = this.state;
+    getMonitorModal(selectedNodeId, stateActions) {
+        return (
+            <MonitorModal
+                isShown={true}
+                closeModal={() => this.clearSelectedItem()}
+                deleteNode={() => stateActions.onDeleteKey({})}
+                data={this.getNodeProperties(selectedNodeId)?.chartData}
+            />
+        );
+    }
+    getBlockPropertiesSideBar(stateActions) {
+        const { id: selectedId } = this.state.selected;
+        const props = {
+            isShown: true,
+            type: this.getNodeType(selectedId),
+            closeSidebar: () => this.clearSelectedItem(),
+            updateProperties: this.updateProperties.bind(this, selectedId),
+            properties: this.getNodeProperties(selectedId),
+            deleteNode: () => stateActions.onDeleteKey({}),
+            openSignalChartModal: () => this.toggleSignalChartModal(),
+        };
 
+        return <PropertiesSidebar {...props} />;
+    }
+    getGlobalPropertiesSideBar() {
+        const { globalProperties } = this.state;
+        const props = {
+            isShown: true,
+            type: 'GLOBAL',
+            properties: globalProperties,
+            closeSidebar: () => this.toggleGlobalSettings(false),
+            updateProperties: props => this.updateGlobalSettings(props),
+        };
+
+        return <PropertiesSidebar {...props} />;
+    }
+    getInfoBlock(stateActions) {
+        const { selected, showGlobalSettings } = this.state;
         if (showGlobalSettings) {
-            props.isShown = true;
-            props.type = 'GLOBAL';
-            props.properties = globalProperties;
-            props.closeSidebar = () => this.toggleGlobalSettings(false);
-            props.updateProperties = props => this.updateGlobalSettings(props);
+            return this.getGlobalPropertiesSideBar();
         }
 
         if (selected.id && selected.type === 'node') {
-            props.isShown = true;
-            props.type = this.getNodeType(selected.id);
-            props.closeSidebar = () => this.clearSelectedItem();
-            props.updateProperties = this.updateProperties.bind(
-                this,
-                selected.id
-            );
-            props.properties = this.getNodeProperties(selected.id);
-            props.deleteNode = () => stateActions.onDeleteKey({});
-            props.openSignalChartModal = () => this.toggleSignalChartModal();
+            const { name } = this.getNodeProperties(selected.id);
+            return name.includes('MONITOR')
+                ? this.getMonitorModal(selected.id, stateActions)
+                : this.getBlockPropertiesSideBar(stateActions);
         }
-        return props;
     }
     simulate() {
         const chart = cloneDeep(this.state);
@@ -110,7 +127,6 @@ export class Home extends React.Component {
             }),
             {}
         );
-        const selectedNodeId = chart.selected.id;
         return (
             <div className="page-content">
                 <NodesSidebar
@@ -119,14 +135,7 @@ export class Home extends React.Component {
                     handleSettingsCLick={() => this.toggleGlobalSettings(true)}
                 />
                 <Workspace chart={chart} actions={stateActions} />
-                <PropertiesSidebar
-                    {...this.getPropertiesSideBarProps(stateActions)}
-                />
-                <SignalChartModal
-                    isShown={chart.showSignalChartModal}
-                    closeModal={() => this.toggleSignalChartModal()}
-                    data={this.getNodeProperties(selectedNodeId)?.chartData}
-                />
+                {this.getInfoBlock(stateActions)}
             </div>
         );
     }

@@ -7,7 +7,6 @@ import {
     CommunicationLineForm,
     CorrelatorForm,
     ClockGeneratorForm,
-    MonitorForm,
     FormNotFound,
     GlobalPropertiesForm,
 } from '../../components/forms';
@@ -26,8 +25,6 @@ const getFormComponent = type => {
             return CorrelatorForm;
         case 'CLOCK GENERATOR':
             return ClockGeneratorForm;
-        case 'MONITOR':
-            return MonitorForm;
         case 'GLOBAL':
             return GlobalPropertiesForm;
         default:
