@@ -39,6 +39,11 @@ export const nodesConfig = [
         },
         properties: {
             name: 'REFERENCE SOURCE',
+            signalType: 'manchesterСode',
+            referenceSymbol: '1',
+            amplitude: 1,
+            frequency: 1,
+            outOfSync: 0,
         },
     },
     {
