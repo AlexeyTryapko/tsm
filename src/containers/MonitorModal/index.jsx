@@ -11,7 +11,7 @@ const SignalChart = ({ isShown, closeModal, data = [], deleteNode }) => (
         onConfirm={deleteNode}
         confirmLabel="REMOVE"
         width={1000}
-        minHeightContent={500}
+        minHeightContent={400}
     >
         <div className="chart">
             <ResponsiveLine
