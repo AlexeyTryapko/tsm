@@ -117,6 +117,9 @@ export const nodesConfig = [
         },
         properties: {
             name: 'COMPARATOR',
+            compSum: 0,
+            previousInput: 0,
+            sequence:'',
         },
     },
 ];
