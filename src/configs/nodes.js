@@ -122,4 +122,17 @@ export const nodesConfig = [
             sequence: '',
         },
     },
+    {
+        type: 'SPECTRE',
+        ports: {
+            in: {
+                id: 'in',
+                type: 'left',
+            },
+        },
+        properties: {
+            name: 'SPECTRE',
+            chartData: [],
+        },
+    },
 ];

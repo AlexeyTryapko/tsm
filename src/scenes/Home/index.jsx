@@ -6,8 +6,11 @@ import NodesSidebar from '../../containers/NodesSidebar';
 import PropertiesSidebar from '../../containers/PropertiesSidebar';
 import Workspace from '../../containers/Workspace';
 import { start } from '../../services/simulation';
-import MonitorModal from '../../components/modals/Monitor';
-import ComporatorModal from '../../components/modals/Comparator';
+import {
+    ComparatorModal,
+    MonitorModal,
+    SpectreModal,
+} from '../../components/modals';
 
 import { toaster } from 'evergreen-ui';
 
@@ -78,6 +81,16 @@ export class Home extends React.Component {
             />
         );
     }
+    getSpectreModal(selectedNodeId, stateActions) {
+        return (
+            <SpectreModal
+                isShown={true}
+                closeModal={() => this.clearSelectedItem()}
+                deleteNode={() => stateActions.onDeleteKey({})}
+                data={this.getNodeProperties(selectedNodeId)?.chartData}
+            />
+        );
+    }
     getBlockPropertiesSideBar(stateActions) {
         const { id: selectedId } = this.state.selected;
         const props = {
@@ -115,6 +128,9 @@ export class Home extends React.Component {
             if (name.includes('MONITOR')) {
                 return this.getMonitorModal(selected.id, stateActions);
             }
+            if (name.includes('SPECTRE')) {
+                return this.getSpectreModal(selected.id, stateActions);
+            }
             if (name.includes('CORRELATOR')) {
                 return undefined;
             }
@@ -148,7 +164,7 @@ export class Home extends React.Component {
                 />
                 <Workspace chart={chart} actions={stateActions} />
                 {this.getInfoBlock(stateActions)}
-                <ComporatorModal
+                <ComparatorModal
                     isShown={chart.showComparatorModal}
                     closeModal={() => this.toggleComporatorModal(false)}
                     sequence={
