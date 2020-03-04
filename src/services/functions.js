@@ -160,7 +160,7 @@ export function correlator(x, simulationParams, blockParams, step){
 }
 
 
-export function decisionMakerDevice(x, simulationParams, blockParams, step){
+export function comparator(x, simulationParams, blockParams, step){
     let h = blockParams['compSum'];
     let prevIn = blockParams['previousInput'];
     let lowLevel1 = blockParams['lowLevel1'];
