@@ -4,7 +4,7 @@ import FormikInput from '../../FormikInput';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
 
-const DesicionMakerDeviceForm = props => {
+const ComparatorForm = props => {
     const { submitForm, onDeleteNode, errors, touched } = props;
     const defaultProps = name => ({
         name,
@@ -61,4 +61,4 @@ export default withFormik({
     }),
     validateOnChange: false,
     validateOnBlur: false,
-})(DesicionMakerDeviceForm);
+})(ComparatorForm);

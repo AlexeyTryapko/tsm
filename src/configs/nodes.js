@@ -108,7 +108,7 @@ export const nodesConfig = [
         },
     },
     {
-        type: 'DECISION MAKER DEVICE',
+        type: 'COMPARATOR',
         ports: {
             in: {
                 id: 'in',
@@ -116,7 +116,7 @@ export const nodesConfig = [
             },
         },
         properties: {
-            name: 'DECISION MAKER DEVICE',
+            name: 'COMPARATOR',
         },
     },
 ];

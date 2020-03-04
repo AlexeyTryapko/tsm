@@ -9,7 +9,7 @@ import {
     ClockGeneratorForm,
     FormNotFound,
     GlobalPropertiesForm,
-    DesicionMakerDeviceForm,
+    ComparatorForm,
 } from '../../components/forms';
 
 const getFormComponent = type => {
@@ -28,8 +28,8 @@ const getFormComponent = type => {
             return ClockGeneratorForm;
         case 'GLOBAL':
             return GlobalPropertiesForm;
-        case 'DECISION MAKER DEVICE':
-            return DesicionMakerDeviceForm;
+        case 'COMPARATOR':
+            return ComparatorForm;
         default:
             return FormNotFound;
     }
