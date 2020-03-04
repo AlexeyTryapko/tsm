@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Dialog } from 'evergreen-ui';
 import { ResponsiveLine } from '@nivo/line';
 
-const SignalChart = ({ isShown, closeModal, data = [], deleteNode }) => (
+const MonitorModal = ({ isShown, closeModal, data = [], deleteNode }) => (
     <Dialog
         isShown={isShown}
         onCloseComplete={closeModal}
@@ -76,4 +76,4 @@ const SignalChart = ({ isShown, closeModal, data = [], deleteNode }) => (
     </Dialog>
 );
 
-export default SignalChart;
+export default MonitorModal;

@@ -5,7 +5,13 @@ import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
 
 const ComparatorForm = props => {
-    const { submitForm, onDeleteNode, errors, touched } = props;
+    const {
+        submitForm,
+        onDeleteNode,
+        errors,
+        touched,
+        openComporatorModal,
+    } = props;
     const defaultProps = name => ({
         name,
         invalid: errors[name] && touched[name],
@@ -16,7 +22,7 @@ const ComparatorForm = props => {
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
-                Desicion maker device
+                Comparator
             </Heading>
             <Field
                 {...defaultProps('lowLevel1')}
@@ -29,19 +35,28 @@ const ComparatorForm = props => {
                 required
             />
             <Field {...defaultProps('sequence')} label="Sequence" required />
-            <Pane display="flex" justifyContent="flex-end">
-                <Button
-                    height={40}
-                    marginRight={20}
-                    appearance="primary"
-                    intent="danger"
-                    onClick={onDeleteNode}
-                >
-                    REMOVE
+            <Pane display="flex" justifyContent="space-between">
+                <Button height={40} onClick={openComporatorModal}>
+                    SHOW OUTPUT
                 </Button>
-                <Button height={40} appearance="primary" onClick={submitForm}>
-                    SAVE
-                </Button>
+                <Pane display="flex" justifyContent="flex-end">
+                    <Button
+                        height={40}
+                        marginRight={20}
+                        appearance="primary"
+                        intent="danger"
+                        onClick={onDeleteNode}
+                    >
+                        REMOVE
+                    </Button>
+                    <Button
+                        height={40}
+                        appearance="primary"
+                        onClick={submitForm}
+                    >
+                        SAVE
+                    </Button>
+                </Pane>
             </Pane>
         </Pane>
     );

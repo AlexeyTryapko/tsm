@@ -37,7 +37,7 @@ const getForm = (
     properties,
     updateProperties,
     closeSidebar,
-    openSignalChartModal,
+    openComporatorModal,
     deleteNode
 ) => {
     const Component = getFormComponent(type);
@@ -45,7 +45,7 @@ const getForm = (
         <Component
             updateAction={updateProperties}
             onConfirmBtnClick={closeSidebar}
-            openSignalChartModal={openSignalChartModal}
+            openComporatorModal={openComporatorModal}
             onDeleteNode={deleteNode}
             {...properties}
         />
@@ -58,7 +58,7 @@ const PropertiesSidebar = ({
     properties,
     closeSidebar,
     updateProperties,
-    openSignalChartModal,
+    openComporatorModal,
     deleteNode,
 }) => (
     <SideSheet isShown={isShown} onCloseComplete={closeSidebar}>
@@ -67,7 +67,7 @@ const PropertiesSidebar = ({
             properties,
             updateProperties,
             closeSidebar,
-            openSignalChartModal,
+            openComporatorModal,
             deleteNode
         )}
     </SideSheet>

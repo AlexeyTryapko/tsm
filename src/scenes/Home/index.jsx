@@ -6,7 +6,9 @@ import NodesSidebar from '../../containers/NodesSidebar';
 import PropertiesSidebar from '../../containers/PropertiesSidebar';
 import Workspace from '../../containers/Workspace';
 import { start } from '../../services/simulation';
-import MonitorModal from '../../containers/MonitorModal';
+import MonitorModal from '../../components/modals/Monitor';
+import ComporatorModal from '../../components/modals/Comparator';
+
 import { toaster } from 'evergreen-ui';
 
 export class Home extends React.Component {
@@ -16,11 +18,17 @@ export class Home extends React.Component {
             ...defaultChart,
             globalProperties,
             showGlobalSettings: false,
+            showComparatorModal: false,
         };
     }
     clearSelectedItem() {
         this.setState({
             selected: {},
+        });
+    }
+    toggleComporatorModal(val) {
+        this.setState({
+            showComparatorModal: val,
         });
     }
     toggleGlobalSettings(val) {
@@ -79,7 +87,7 @@ export class Home extends React.Component {
             updateProperties: this.updateProperties.bind(this, selectedId),
             properties: this.getNodeProperties(selectedId),
             deleteNode: () => stateActions.onDeleteKey({}),
-            openSignalChartModal: () => this.toggleSignalChartModal(),
+            openComporatorModal: () => this.toggleComporatorModal(true),
         };
 
         return <PropertiesSidebar {...props} />;
@@ -140,6 +148,13 @@ export class Home extends React.Component {
                 />
                 <Workspace chart={chart} actions={stateActions} />
                 {this.getInfoBlock(stateActions)}
+                <ComporatorModal
+                    isShown={chart.showComparatorModal}
+                    closeModal={() => this.toggleComporatorModal(false)}
+                    sequence={
+                        this.getNodeProperties(chart.selected.id)?.sequence
+                    }
+                />
             </div>
         );
     }
