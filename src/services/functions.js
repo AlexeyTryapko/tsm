@@ -193,6 +193,7 @@ export function comparator(x, simulationParams, blockParams, step){
             } else {
                 output = '?';
             }
+            blockParams['sequence'] += output;
             return output;
         }
     } else {
