@@ -32,6 +32,17 @@ const ReferenceSourceForm = props => {
         },
     ];
 
+    const referenceSymbol = [
+        {
+            value: '1',
+            label: '1',
+        },
+        {
+            value: '0',
+            label: '0',
+        },
+    ];
+
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
@@ -41,6 +52,11 @@ const ReferenceSourceForm = props => {
                 {...defaultSelectProps('signalType')}
                 label="Signal type"
                 options={signalTypes}
+            />
+            <Field
+                {...defaultSelectProps('referenceSymbol')}
+                label="Referenece symbol"
+                options={referenceSymbol}
             />
             <Field {...defaultProps('amplitude')} label="Amplitude" required />
             <Field
@@ -79,17 +95,20 @@ export default withFormik({
     },
     validationSchema: Yup.object({
         signalType: Yup.string().required('Field is required'),
+        referenceSymbol: Yup.string().required('Field is required'),
         amplitude: Yup.number().required('Field is required'),
         frequency: Yup.number().required('Field is required'),
         outOfSync: Yup.number().required('Field is required'),
     }),
     mapPropsToValues: ({
         signalType = 'manchesterСode',
+        referenceSymbol = '1',
         amplitude = '',
         frequency = '',
         outOfSync = '',
     }) => ({
         signalType,
+        referenceSymbol,
         amplitude,
         frequency,
         outOfSync,
