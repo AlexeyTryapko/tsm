@@ -43,7 +43,7 @@ export function referenceSource(x, simulationParams, blockParams, step) {
     let current = floor((step * dt) / T);
 
     if (blockParams['signalType'] === 'manchesterСode') {
-        if ((step * dt) / T - current + outofsync / 100 <= 0.5) {
+        if ((step * dt) / T - current <= 0.5) {
             return A;
         } else {
             return -A;
@@ -126,5 +126,31 @@ export function communicationLine(x, simulationParams, blockParams, step){
 
 
 export function correlator(x, simulationParams, blockParams, step){
+    let inputSignal = 0;
+    let referenceSignal = 0;
+    let dt = simulationParams['quantizationPeriod'];
+    let T = simulationParams['periodOfSignalUnit'];
+    let sum = blockParams['integralSum'];
 
+    for(let [in_i,input_x] of x.entries()){
+        if(input_x.name.includes("COMMUNICATION LINE")){
+            inputSignal = input_x.data;
+        }
+        if(input_x.name.includes("REFERENCE SOURCE")){
+            referenceSignal = input_x.data;
+        }
+    }
+
+    sum += inputSignal*referenceSignal*dt;
+
+    if(blockParams['reset']){
+        sum = 0;
+        blockParams['reset'] = false;
+    }
+    if(dt*step - floor(step*dt/T)*T == 0){ 
+        blockParams['reset'] = true;
+    }
+
+    blockParams['integralSum'] = sum;
+    return sum;
 }

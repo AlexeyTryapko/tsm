@@ -84,6 +84,8 @@ export const nodesConfig = [
         },
         properties: {
             name: 'CORRELATOR',
+            integralSum: 0,
+            reset: false,
         },
     },
     {
