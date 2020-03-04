@@ -3,6 +3,24 @@
     "version": "0.1.0",
     "private": true,
     "main": "public/electron.js",
+    "author": "ALexey <aatryapko1201@gmail.com>",
+    "homepage": "./",
+    "build": {
+        "appId": "tsm",
+        "linux": {
+            "target": [
+                "deb",
+                "rpm",
+                "snap"
+            ],
+            "category": "Utility"
+        },
+        "win": {
+            "target": [
+                "msi"
+            ]
+        }
+    },
     "dependencies": {
         "@mrblenny/react-flow-chart": "^0.0.9",
         "@nivo/line": "^0.61.1",
@@ -19,7 +37,11 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "electron": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\""
+        "electron": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+        "postinstall": "electron-builder install-app-deps",
+        "preelectron-pack": "yarn build",
+        "electron-pack:linux": "electron-builder build --linux",
+        "electron-pack:win": "electron-builder build --win"
     },
     "browserslist": {
         "production": [
@@ -37,6 +59,7 @@
         "babel-eslint": "10.0.3",
         "concurrently": "^5.1.0",
         "electron": "^8.0.2",
+        "electron-builder": "^22.3.6",
         "eslint": "^6.8.0",
         "eslint-config-babel": "^9.0.0",
         "eslint-config-prettier": "^6.10.0",

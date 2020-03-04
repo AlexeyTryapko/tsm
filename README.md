@@ -37,3 +37,7 @@ Builds the app for production to the `build` folder.
 ### `yarn electron`
 
 Runs the app in development mode in Electron.
+
+### `yarn electron-pack:linux`
+
+Builds the app for linux production to the `dist` folder.
