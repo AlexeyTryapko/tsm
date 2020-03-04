@@ -40,12 +40,20 @@ export function referenceSource(x, simulationParams, blockParams, step) {
     let outofsync = blockParams['outOfSync'];
     let T = simulationParams['periodOfSignalUnit'];
     let dt = simulationParams['quantizationPeriod'];
-    let current = floor((step * dt) / T);
+    let referenceSymbol = blockParams['referenceSymbol'];
 
-    if (blockParams['signalType'] === 'manchesterСode') {
-       return A*sign( sin(2 * PI  * (step * dt )/T/(1 + outofsync / 100)));
+    if (referenceSymbol === '1') {
+        if (blockParams['signalType'] === 'manchesterСode') {
+        return A*sign( sin(2 * PI  * (step * dt )/T/(1 + outofsync / 100)));
+        } else {
+            return A * sin(2 * PI * f * (step * dt )/(1 + outofsync / 100));
+        }
     } else {
-        return A * sin(2 * PI * f * (step * dt )/(1 + outofsync / 100));
+        if (blockParams['signalType'] === 'manchesterСode') {
+            return A*sign( sin(2 * PI  * (step * dt )/T/(1 + outofsync / 100) + PI));
+        } else {
+            return A * sin(2 * PI * f * (step * dt )/(1 + outofsync / 100) + PI);
+        }
     }
 }
 
@@ -149,4 +157,45 @@ export function correlator(x, simulationParams, blockParams, step){
 
     blockParams['integralSum'] = sum;
     return sum;
+}
+
+
+export function decisionMakerDevice(x, simulationParams, blockParams, step){
+    let h = blockParams['compSum'];
+    let prevIn = blockParams['previousInput'];
+    let lowLevel1 = blockParams['lowLevel1'];
+    let highLevel0 = blockParams['highLevel0'];
+    let dt = simulationParams['quantizationPeriod'];
+    let T = simulationParams['periodOfSignalUnit'];
+    let inputSignal = 0;
+    let output;
+
+    for(let [in_i,input_x] of x.entries()){
+        if(input_x.name.includes("CORRELATOR")){
+            inputSignal = input_x.data;
+        }
+    }
+    
+    let current = floor(step*dt/T)
+    if(step !== 0){
+        if(inputSignal >= prevIn){
+            h += 1;
+        } else {
+            h -= 1;
+        }
+        blockParams['previousInput'] = inputSignal;
+        blockParams['compSum'] = h;
+        if(step*dt - current === 0){
+            if(h >= lowLevel1){
+                output = '1';
+            } else if(h <= highLevel0) {
+                output = '0';
+            } else {
+                output = '?';
+            }
+            return output;
+        }
+    } else {
+        blockParams['previousInput'] = inputSignal;
+    }
 }
