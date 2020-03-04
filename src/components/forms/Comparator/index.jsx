@@ -28,6 +28,7 @@ const ComparatorForm = props => {
                 label="Hight level 0"
                 required
             />
+            <Field {...defaultProps('sequence')} label="Sequence" required />
             <Pane display="flex" justifyContent="flex-end">
                 <Button
                     height={40}
@@ -54,10 +55,12 @@ export default withFormik({
     validationSchema: Yup.object({
         lowLevel1: Yup.number().required('Field is required'),
         highLevel0: Yup.number().required('Field is required'),
+        sequence: Yup.string().required('Field is required'),
     }),
-    mapPropsToValues: ({ lowLevel1 = '', highLevel0 = '' }) => ({
+    mapPropsToValues: ({ lowLevel1 = '', highLevel0 = '', sequence = '' }) => ({
         lowLevel1,
         highLevel0,
+        sequence,
     }),
     validateOnChange: false,
     validateOnBlur: false,
