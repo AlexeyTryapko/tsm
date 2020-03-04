@@ -101,8 +101,8 @@ export default withFormik({
         outOfSync: Yup.number().required('Field is required'),
     }),
     mapPropsToValues: ({
-        signalType = 'manchesterСode',
-        referenceSymbol = '1',
+        signalType = '',
+        referenceSymbol = '',
         amplitude = '',
         frequency = '',
         outOfSync = '',

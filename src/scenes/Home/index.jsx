@@ -104,9 +104,13 @@ export class Home extends React.Component {
 
         if (selected.id && selected.type === 'node') {
             const { name } = this.getNodeProperties(selected.id);
-            return name.includes('MONITOR')
-                ? this.getMonitorModal(selected.id, stateActions)
-                : this.getBlockPropertiesSideBar(stateActions);
+            if (name.includes('MONITOR')) {
+                return this.getMonitorModal(selected.id, stateActions);
+            }
+            if (name.includes('CORRELATOR')) {
+                return undefined;
+            }
+            return this.getBlockPropertiesSideBar(stateActions);
         }
     }
     simulate() {
