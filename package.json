@@ -7,6 +7,10 @@
     "homepage": "./",
     "build": {
         "appId": "tsm",
+        "files": [
+            "build/**/*",
+            "node_modules/**/*"
+        ],
         "linux": {
             "target": [
                 "deb",
@@ -14,11 +18,6 @@
                 "snap"
             ],
             "category": "Utility"
-        },
-        "win": {
-            "target": [
-                "msi"
-            ]
         }
     },
     "dependencies": {
@@ -41,7 +40,7 @@
         "postinstall": "electron-builder install-app-deps",
         "preelectron-pack": "yarn build",
         "electron-pack:linux": "electron-builder build --linux",
-        "electron-pack:win": "electron-builder build --win"
+        "electron-pack:win": "electron-builder build -w"
     },
     "browserslist": {
         "production": [
