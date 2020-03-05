@@ -24,7 +24,7 @@ export function signalSource(x, simulationParams, blockParams, step) {
                 }
             }
         } else {
-            if (message.charAt(current)=== '1') {
+            if (message.charAt(current) === '1') {
                 return A * sin(2 * PI * f * step * dt);
             } else {
                 return A * sin(2 * PI * f * step * dt + PI);
@@ -44,15 +44,25 @@ export function referenceSource(x, simulationParams, blockParams, step) {
 
     if (referenceSymbol === '1') {
         if (blockParams['signalType'] === 'manchesterСode') {
-        return A*sign( sin(2 * PI  * (step * dt )/T/(1 + outofsync / 100)));
+            return (
+                A *
+                sign(sin((2 * PI * (step * dt)) / T / (1 + outofsync / 100)))
+            );
         } else {
-            return A * sin(2 * PI * f * (step * dt )/(1 + outofsync / 100));
+            return A * sin((2 * PI * f * (step * dt)) / (1 + outofsync / 100));
         }
     } else {
         if (blockParams['signalType'] === 'manchesterСode') {
-            return A*sign( sin(2 * PI  * (step * dt )/T/(1 + outofsync / 100) + PI));
+            return (
+                A *
+                sign(
+                    sin((2 * PI * (step * dt)) / T / (1 + outofsync / 100) + PI)
+                )
+            );
         } else {
-            return A * sin(2 * PI * f * (step * dt )/(1 + outofsync / 100) + PI);
+            return (
+                A * sin((2 * PI * f * (step * dt)) / (1 + outofsync / 100) + PI)
+            );
         }
     }
 }
@@ -89,9 +99,9 @@ export function noise(x, simulationParams, blockParams, step) {
 
 export function monitor(x, simulationParams, blockParams, step) {
     let dt = simulationParams['quantizationPeriod'];
-    for (let [in_i,input_x] of x.entries()) {
+    for (let [in_i, input_x] of x.entries()) {
         let found = false;
-        for (let [ch_i,chart] of blockParams['chartData'].entries()) {
+        for (let [ch_i, chart] of blockParams['chartData'].entries()) {
             if (input_x.name == chart.id) {
                 if (!chart.data) {
                     chart.data = [];
@@ -110,48 +120,46 @@ export function monitor(x, simulationParams, blockParams, step) {
     }
 }
 
-
-export function communicationLine(x, simulationParams, blockParams, step){
+export function communicationLine(x, simulationParams, blockParams, step) {
     let inputSignal = 0;
     let inputNoise = 0;
     let kSignal = blockParams['coeffForIncomingSignal'];
     let kNoise = blockParams['coeffForTheNoise'];
 
-    for(let [in_i,input_x] of x.entries()){
-        if(input_x.name.includes("SIGNAL SOURCE")){
+    for (let [in_i, input_x] of x.entries()) {
+        if (input_x.name.includes('SIGNAL SOURCE')) {
             inputSignal = input_x.data;
         }
-        if(input_x.name.includes("NOISE")){
+        if (input_x.name.includes('NOISE')) {
             inputNoise = input_x.data;
         }
     }
-    return inputSignal*kSignal + inputNoise*kNoise;
+    return inputSignal * kSignal + inputNoise * kNoise;
 }
 
-
-export function correlator(x, simulationParams, blockParams, step){
+export function correlator(x, simulationParams, blockParams, step) {
     let inputSignal = 0;
     let referenceSignal = 0;
     let dt = simulationParams['quantizationPeriod'];
     let T = simulationParams['periodOfSignalUnit'];
     let sum = blockParams['integralSum'];
 
-    for(let [in_i,input_x] of x.entries()){
-        if(input_x.name.includes("COMMUNICATION LINE")){
+    for (let [in_i, input_x] of x.entries()) {
+        if (input_x.name.includes('COMMUNICATION LINE')) {
             inputSignal = input_x.data;
         }
-        if(input_x.name.includes("REFERENCE SOURCE")){
+        if (input_x.name.includes('REFERENCE SOURCE')) {
             referenceSignal = input_x.data;
         }
     }
 
-    sum += inputSignal*referenceSignal*dt;
+    sum += inputSignal * referenceSignal * dt;
 
-    if(blockParams['reset']){
+    if (blockParams['reset']) {
         sum = 0;
         blockParams['reset'] = false;
     }
-    if(dt*step - floor(step*dt/T)*T == 0){ 
+    if (dt * step - floor((step * dt) / T) * T == 0) {
         blockParams['reset'] = true;
     }
 
@@ -159,8 +167,7 @@ export function correlator(x, simulationParams, blockParams, step){
     return sum;
 }
 
-
-export function comparator(x, simulationParams, blockParams, step){
+export function comparator(x, simulationParams, blockParams, step) {
     let h = blockParams['compSum'];
     let prevIn = blockParams['previousInput'];
     let lowLevel1 = blockParams['lowLevel1'];
@@ -170,33 +177,36 @@ export function comparator(x, simulationParams, blockParams, step){
     let inputSignal = 0;
     let output;
 
-    for(let [in_i,input_x] of x.entries()){
-        if(input_x.name.includes("CORRELATOR")){
+    for (let [in_i, input_x] of x.entries()) {
+        if (input_x.name.includes('CORRELATOR')) {
             inputSignal = input_x.data;
         }
     }
-    
-    let current = floor(step*dt/T)
-    if(step !== 0){
-        if(inputSignal >= prevIn){
+
+    let current = floor((step * dt) / T);
+    if (step !== 0) {
+        if (inputSignal >= prevIn) {
             h += 1;
         } else {
             h -= 1;
         }
         blockParams['previousInput'] = inputSignal;
         blockParams['compSum'] = h;
-        if(step*dt - current === 0){
-            if(h >= lowLevel1){
+        if ((step * dt) / T - current === 0) {
+            if (h >= lowLevel1) {
                 output = '1';
-            } else if(h <= highLevel0) {
+            } else if (h <= highLevel0) {
                 output = '0';
             } else {
                 output = '?';
             }
             blockParams['sequence'] += output;
+            h = 0;
+            blockParams['compSum'] = h;
             return output;
         }
     } else {
+        blockParams['sequence'] = '';
         blockParams['previousInput'] = inputSignal;
     }
 }

@@ -95,18 +95,18 @@ export const nodesConfig = [
             reset: false,
         },
     },
-    {
-        type: 'CLOCK GENERATOR',
-        ports: {
-            out: {
-                id: 'out',
-                type: 'right',
-            },
-        },
-        properties: {
-            name: 'CLOCK GENERATOR',
-        },
-    },
+    // {
+    //     type: 'CLOCK GENERATOR',
+    //     ports: {
+    //         out: {
+    //             id: 'out',
+    //             type: 'right',
+    //         },
+    //     },
+    //     properties: {
+    //         name: 'CLOCK GENERATOR',
+    //     },
+    // },
     {
         type: 'COMPARATOR',
         ports: {
@@ -122,17 +122,17 @@ export const nodesConfig = [
             sequence: '',
         },
     },
-    {
-        type: 'SPECTRE',
-        ports: {
-            in: {
-                id: 'in',
-                type: 'left',
-            },
-        },
-        properties: {
-            name: 'SPECTRE',
-            chartData: [],
-        },
-    },
+    // {
+    //     type: 'SPECTRE',
+    //     ports: {
+    //         in: {
+    //             id: 'in',
+    //             type: 'left',
+    //         },
+    //     },
+    //     properties: {
+    //         name: 'SPECTRE',
+    //         chartData: [],
+    //     },
+    // },
 ];
