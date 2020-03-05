@@ -3,15 +3,9 @@ import { defaultChart, nodesConfig, globalProperties } from '../../configs';
 import { actions } from '@mrblenny/react-flow-chart';
 import { cloneDeep } from 'lodash';
 import NodesSidebar from '../../containers/NodesSidebar';
-import PropertiesSidebar from '../../containers/PropertiesSidebar';
 import Workspace from '../../containers/Workspace';
+import InfoBlock from '../../containers/InfoBlock';
 import { start } from '../../services/simulation';
-import {
-    ComparatorModal,
-    MonitorModal,
-    SpectreModal,
-} from '../../components/modals';
-
 import { toaster } from 'evergreen-ui';
 
 export class Home extends React.Component {
@@ -21,17 +15,11 @@ export class Home extends React.Component {
             ...defaultChart,
             globalProperties,
             showGlobalSettings: false,
-            showComparatorModal: false,
         };
     }
     clearSelectedItem() {
         this.setState({
             selected: {},
-        });
-    }
-    toggleComporatorModal(val) {
-        this.setState({
-            showComparatorModal: val,
         });
     }
     toggleGlobalSettings(val) {
@@ -71,70 +59,37 @@ export class Home extends React.Component {
             },
         });
     }
-    getMonitorModal(selectedNodeId, stateActions) {
-        return (
-            <MonitorModal
-                isShown={true}
-                closeModal={() => this.clearSelectedItem()}
-                deleteNode={() => stateActions.onDeleteKey({})}
-                data={this.getNodeProperties(selectedNodeId)?.chartData}
-            />
-        );
-    }
-    getSpectreModal(selectedNodeId, stateActions) {
-        return (
-            <SpectreModal
-                isShown={true}
-                closeModal={() => this.clearSelectedItem()}
-                deleteNode={() => stateActions.onDeleteKey({})}
-                data={this.getNodeProperties(selectedNodeId)?.chartData}
-            />
-        );
-    }
-    getBlockPropertiesSideBar(stateActions) {
+    getNodeInfoBlock(stateActions) {
         const { id: selectedId } = this.state.selected;
         const props = {
-            isShown: true,
             type: this.getNodeType(selectedId),
-            closeSidebar: () => this.clearSelectedItem(),
+            closeInfo: () => this.clearSelectedItem(),
             updateProperties: this.updateProperties.bind(this, selectedId),
             properties: this.getNodeProperties(selectedId),
+            data: this.getNodeProperties(selectedId).chartData,
             deleteNode: () => stateActions.onDeleteKey({}),
-            openComporatorModal: () => this.toggleComporatorModal(true),
         };
-
-        return <PropertiesSidebar {...props} />;
+        return <InfoBlock {...props} />;
     }
-    getGlobalPropertiesSideBar() {
+    getGlobalInfoBlock() {
         const { globalProperties } = this.state;
         const props = {
-            isShown: true,
             type: 'GLOBAL',
             properties: globalProperties,
-            closeSidebar: () => this.toggleGlobalSettings(false),
+            closeInfo: () => this.toggleGlobalSettings(false),
             updateProperties: props => this.updateGlobalSettings(props),
         };
 
-        return <PropertiesSidebar {...props} />;
+        return <InfoBlock {...props} />;
     }
     getInfoBlock(stateActions) {
         const { selected, showGlobalSettings } = this.state;
         if (showGlobalSettings) {
-            return this.getGlobalPropertiesSideBar();
+            return this.getGlobalInfoBlock();
         }
 
         if (selected.id && selected.type === 'node') {
-            const { name } = this.getNodeProperties(selected.id);
-            if (name.includes('MONITOR')) {
-                return this.getMonitorModal(selected.id, stateActions);
-            }
-            if (name.includes('SPECTRE')) {
-                return this.getSpectreModal(selected.id, stateActions);
-            }
-            if (name.includes('CORRELATOR')) {
-                return undefined;
-            }
-            return this.getBlockPropertiesSideBar(stateActions);
+            return this.getNodeInfoBlock(stateActions);
         }
     }
     simulate() {
@@ -164,13 +119,6 @@ export class Home extends React.Component {
                 />
                 <Workspace chart={chart} actions={stateActions} />
                 {this.getInfoBlock(stateActions)}
-                <ComparatorModal
-                    isShown={chart.showComparatorModal}
-                    closeModal={() => this.toggleComporatorModal(false)}
-                    sequence={
-                        this.getNodeProperties(chart.selected.id)?.sequence
-                    }
-                />
             </div>
         );
     }

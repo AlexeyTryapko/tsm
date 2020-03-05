@@ -1,17 +1,13 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { withFormik, Field } from 'formik';
 import FormikInput from '../../FormikInput';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
+import ComporatorModal from '../../modals/Comparator';
 
 const ComparatorForm = props => {
-    const {
-        submitForm,
-        onDeleteNode,
-        errors,
-        touched,
-        openComporatorModal,
-    } = props;
+    const [showModal, toggleModal] = useState(false);
+    const { submitForm, onDeleteNode, errors, touched, values } = props;
     const defaultProps = name => ({
         name,
         invalid: errors[name] && touched[name],
@@ -36,7 +32,7 @@ const ComparatorForm = props => {
             />
             <Field {...defaultProps('sequence')} label="Sequence" required />
             <Pane display="flex" justifyContent="space-between">
-                <Button height={40} onClick={openComporatorModal}>
+                <Button height={40} onClick={() => toggleModal(true)}>
                     SHOW OUTPUT
                 </Button>
                 <Pane display="flex" justifyContent="flex-end">
@@ -58,6 +54,11 @@ const ComparatorForm = props => {
                     </Button>
                 </Pane>
             </Pane>
+            <ComporatorModal
+                isShown={showModal}
+                closeModal={() => toggleModal(false)}
+                sequence={values.sequence}
+            />
         </Pane>
     );
 };

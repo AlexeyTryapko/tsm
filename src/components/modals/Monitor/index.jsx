@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Dialog } from 'evergreen-ui';
 import { ResponsiveLine } from '@nivo/line';
 
-const MonitorModal = ({ isShown, closeModal, data = [], deleteNode }) => (
+const MonitorModal = ({ closeModal, data = [], deleteNode }) => (
     <Dialog
-        isShown={isShown}
+        isShown={true}
         onCloseComplete={closeModal}
         title="Monitor"
         intent="danger"

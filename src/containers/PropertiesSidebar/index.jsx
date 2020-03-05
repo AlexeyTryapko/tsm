@@ -37,7 +37,6 @@ const getForm = (
     properties,
     updateProperties,
     closeSidebar,
-    openComporatorModal,
     deleteNode
 ) => {
     const Component = getFormComponent(type);
@@ -45,7 +44,6 @@ const getForm = (
         <Component
             updateAction={updateProperties}
             onConfirmBtnClick={closeSidebar}
-            openComporatorModal={openComporatorModal}
             onDeleteNode={deleteNode}
             {...properties}
         />
@@ -53,23 +51,14 @@ const getForm = (
 };
 
 const PropertiesSidebar = ({
-    isShown,
     type,
     properties,
     closeSidebar,
     updateProperties,
-    openComporatorModal,
     deleteNode,
 }) => (
-    <SideSheet isShown={isShown} onCloseComplete={closeSidebar}>
-        {getForm(
-            type,
-            properties,
-            updateProperties,
-            closeSidebar,
-            openComporatorModal,
-            deleteNode
-        )}
+    <SideSheet isShown={true} onCloseComplete={closeSidebar}>
+        {getForm(type, properties, updateProperties, closeSidebar, deleteNode)}
     </SideSheet>
 );
 
