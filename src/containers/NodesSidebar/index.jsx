@@ -1,17 +1,32 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import SidebarItem from '../../components/SidebarItem';
-import { Paragraph, Pane, IconButton } from 'evergreen-ui';
+import { Paragraph, Pane, IconButton, SelectMenu, Button } from 'evergreen-ui';
 
 const NodesSidebar = ({
     nodes = [],
     handleRunClick,
     handleSettingsCLick,
     handleFileUpload,
+    hrefForDownload,
+    workspaceList = [],
+    selectWorkspace,
+    workspaceTitle,
+    workspaceId,
 }) => {
     const fileInput = React.createRef();
-
     return (
         <div className="sidebar">
+            <SelectMenu
+                marginX={20}
+                marginY={10}
+                title="Select name"
+                options={workspaceList}
+                selected={workspaceId}
+                onSelect={item => selectWorkspace(item.value)}
+            >
+                <Button>{workspaceTitle}</Button>
+            </SelectMenu>
+
             <Pane
                 paddingX={20}
                 paddingY={10}
@@ -30,6 +45,13 @@ const NodesSidebar = ({
                     accept=".json"
                     hidden
                     onChange={event => handleFileUpload(event.target.files[0])}
+                />
+                <IconButton
+                    marginRight={10}
+                    icon="download"
+                    is="a"
+                    href={hrefForDownload}
+                    download="schema.json"
                 />
                 <IconButton
                     marginRight={10}
