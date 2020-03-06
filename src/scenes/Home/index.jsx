@@ -35,6 +35,12 @@ export class Home extends React.Component {
             },
         });
     }
+    handleFileUpload(file) {
+        console.log(file.then(res => res.json()));
+        this.setState({
+            ...file,
+        });
+    }
     getNodeProperties(id) {
         const { nodes } = this.state;
         return nodes[id]?.properties;
@@ -116,6 +122,7 @@ export class Home extends React.Component {
                     nodes={nodesConfig}
                     handleRunClick={() => this.simulate()}
                     handleSettingsCLick={() => this.toggleGlobalSettings(true)}
+                    handleFileUpload={file => this.handleFileUpload(file)}
                 />
                 <Workspace chart={chart} actions={stateActions} />
                 {this.getInfoBlock(stateActions)}
