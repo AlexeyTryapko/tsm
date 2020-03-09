@@ -71,7 +71,7 @@ const NodesSidebar = ({
                         icon="download"
                         is="a"
                         href={hrefForDownload}
-                        download="schema.json"
+                        download={`${workspaceTitle}.json`}
                     />
                 </Tooltip>
             </Pane>
