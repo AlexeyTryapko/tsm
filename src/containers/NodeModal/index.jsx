@@ -13,6 +13,8 @@ const getModalComponent = type => {
             return SpectreModal;
         case 'COMPORATOR':
             return ComparatorModal;
+        default:
+            return undefined;
     }
 };
 
