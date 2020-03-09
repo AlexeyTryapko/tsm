@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { defaultChart, nodesConfig, globalProperties } from '../../configs';
-import { actions } from '@mrblenny/react-flow-chart';
+import React, { useState } from 'react';
+import { nodesConfig } from '../../configs';
 import { cloneDeep } from 'lodash';
 import NodesSidebar from '../../containers/NodesSidebar';
 import Schema from '../../containers/Schema';
@@ -8,49 +7,52 @@ import InfoBlock from '../../containers/InfoBlock';
 import { start } from '../../services/simulation';
 import { toaster } from 'evergreen-ui';
 
-export class Workspace extends React.Component {
-    constructor(props) {
-        super();
-        this.state = {
-            ...props.workspace,
-            showGlobalSettings: false,
-        };
-    }
-    clearSelectedItem() {
-        this.setState({
+export const Workspace = ({
+    handleWorkspaceUpload,
+    selectWorkspace,
+    updateWorkspace,
+    removeWorkspace,
+    workspaceActions,
+    workspace,
+    workspaceList,
+}) => {
+    const [showGlobalSettings, toggleGlobalSettings] = useState(false);
+
+    const clearSelectedItem = () => {
+        updateWorkspace({
             selected: {},
         });
-    }
-    toggleGlobalSettings(val) {
-        this.setState({
-            showGlobalSettings: val,
-        });
-    }
-    updateGlobalSettings(props) {
-        this.setState({
+    };
+
+    const updateGlobalSettings = newParams => {
+        updateWorkspace({
             globalProperties: {
-                ...this.state.globalProperties,
-                ...props,
+                ...workspace.globalProperties,
+                ...newParams,
             },
         });
-    }
-    getSchemaDownloadHref() {
-        const schema = JSON.stringify(this.state);
+    };
+
+    const getSchemaDownloadHref = () => {
+        const schema = JSON.stringify(workspace);
         const blob = new Blob([schema], { type: 'application/octet-stream' });
         return URL.createObjectURL(blob);
-    }
-    getNodeProperties(id) {
-        const { nodes } = this.state;
+    };
+
+    const getNodeProperties = id => {
+        const { nodes } = workspace;
         return nodes[id]?.properties;
-    }
-    getNodeType(id) {
-        const { nodes } = this.state;
+    };
+
+    const getNodeType = id => {
+        const { nodes } = workspace;
         return nodes[id]?.type;
-    }
-    updateProperties(id, properties) {
-        const { nodes } = this.state;
+    };
+
+    const updateProperties = (id, properties) => {
+        const { nodes } = workspace;
         const { properties: oldProps } = nodes[id];
-        this.setState({
+        updateWorkspace({
             nodes: {
                 ...nodes,
                 [id]: {
@@ -62,83 +64,72 @@ export class Workspace extends React.Component {
                 },
             },
         });
-    }
-    getNodeInfoBlock(stateActions) {
-        const { id: selectedId } = this.state.selected;
+    };
+
+    const getNodeInfoBlock = () => {
+        const { id: selectedId } = workspace.selected;
         const props = {
-            type: this.getNodeType(selectedId),
-            closeInfo: () => this.clearSelectedItem(),
-            updateProperties: this.updateProperties.bind(this, selectedId),
-            properties: this.getNodeProperties(selectedId),
-            data: this.getNodeProperties(selectedId).chartData,
-            deleteNode: () => stateActions.onDeleteKey({}),
+            type: getNodeType(selectedId),
+            closeInfo: () => clearSelectedItem(),
+            updateProperties: updateProperties.bind(null, selectedId),
+            properties: getNodeProperties(selectedId),
+            data: getNodeProperties(selectedId).chartData,
+            deleteNode: () => workspaceActions.onDeleteKey({}),
         };
         return <InfoBlock {...props} />;
-    }
-    getGlobalInfoBlock() {
-        const { globalProperties } = this.state;
+    };
+
+    const getGlobalInfoBlock = () => {
+        const { globalProperties } = workspace;
         const props = {
             type: 'GLOBAL',
             properties: globalProperties,
-            closeInfo: () => this.toggleGlobalSettings(false),
-            updateProperties: props => this.updateGlobalSettings(props),
+            closeInfo: () => toggleGlobalSettings(false),
+            updateProperties: props => updateGlobalSettings(props),
         };
 
         return <InfoBlock {...props} />;
-    }
-    getInfoBlock(stateActions) {
-        const { selected, showGlobalSettings } = this.state;
+    };
+
+    const getInfoBlock = () => {
+        const { selected, globalProperties } = workspace;
         if (showGlobalSettings) {
-            return this.getGlobalInfoBlock();
+            return getGlobalInfoBlock(globalProperties);
         }
 
         if (selected.id && selected.type === 'node') {
-            return this.getNodeInfoBlock(stateActions);
+            return getNodeInfoBlock(workspaceActions);
         }
-    }
-    simulate() {
-        const chart = cloneDeep(this.state);
+    };
+
+    const simulate = () => {
+        const chart = cloneDeep(workspace);
         let res = undefined;
         do {
             res = start(chart);
         } while (res);
         toaster.success('Simulation is finished');
-        this.setState(cloneDeep(chart));
-    }
-    render() {
-        const {
-            handleWorkspaceUpload,
-            workspaceList,
-            selectWorkspace,
-            removeWorkspace,
-        } = this.props;
-        const chart = this.state;
-        const stateActions = Object.keys(actions).reduce(
-            (res, key) => ({
-                ...res,
-                [key]: (...args) => this.setState(actions[key](...args)),
-            }),
-            {}
-        );
-        return (
-            <div className="page-content">
-                <NodesSidebar
-                    nodes={nodesConfig}
-                    handleRunClick={() => this.simulate()}
-                    handleSettingsCLick={() => this.toggleGlobalSettings(true)}
-                    handleFileUpload={handleWorkspaceUpload}
-                    hrefForDownload={this.getSchemaDownloadHref()}
-                    workspaceList={workspaceList}
-                    selectWorkspace={selectWorkspace}
-                    removeWorkspace={removeWorkspace}
-                    workspaceTitle={chart.schemaTitle}
-                    workspaceId={chart.id}
-                />
-                <Schema chart={chart} actions={stateActions} />
-                {this.getInfoBlock(stateActions)}
-            </div>
-        );
-    }
-}
+        updateWorkspace(cloneDeep(chart));
+    };
+
+    return (
+        <div className="page-content">
+            <NodesSidebar
+                nodes={nodesConfig}
+                handleRunClick={() => simulate()}
+                handleSettingsCLick={() => toggleGlobalSettings(true)}
+                handleFileUpload={handleWorkspaceUpload}
+                hrefForDownload={getSchemaDownloadHref()}
+                workspaceList={workspaceList}
+                selectWorkspace={selectWorkspace}
+                removeWorkspace={removeWorkspace}
+                workspaceTitle={workspace.schemaTitle}
+                workspaceId={workspace.id}
+            />
+            <Schema chart={workspace} actions={workspaceActions} />
+            {getInfoBlock()}
+        </div>
+    );
+};
 
 export default Workspace;

@@ -1,64 +1,113 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { defaultChart, globalProperties } from '../../configs';
 import { cloneDeep } from 'lodash';
 import Workspace from '../../containers/Workspace';
 import uuid from 'uuid/v4';
+import { actions } from '@mrblenny/react-flow-chart';
 
-export const Home = () => {
-    const getDefaultWorkspace = () =>
-        cloneDeep({
+export class Home extends React.Component {
+    constructor() {
+        super();
+        const defaultWorkspace = this.getDefaultWorkspace();
+        this.state = {
+            workspaces: [defaultWorkspace],
+            currentWorkspaceId: defaultWorkspace.id,
+        };
+    }
+    getDefaultWorkspace() {
+        return cloneDeep({
             ...defaultChart,
             globalProperties,
             id: uuid(),
         });
-
-    const [workspaces, setWorkspaces] = useState([getDefaultWorkspace()]);
-    const [currentWorkspaceId, setCurrentWorkspaceId] = useState(
-        workspaces[0].id
-    );
-
-    const getCurrentWorkspace = () =>
-        workspaces.find(({ id }) => currentWorkspaceId === id);
-    const workspaceList = workspaces.map(({ id, schemaTitle }) => ({
-        value: id,
-        label: schemaTitle,
-    }));
-    const setCurrentWorkspace = id => setCurrentWorkspaceId(id);
-
-    const addWorkspace = (newWorkspace = getDefaultWorkspace()) =>
-        setWorkspaces([...workspaces, newWorkspace]);
-
-    const removeWorkspace = id => {
-        setWorkspaces(workspaces.filter(({ wId }) => wId !== id));
-        if (workspaces.length === 1) {
-            addWorkspace();
+    }
+    selectWorkspace(id) {
+        this.setState({
+            currentWorkspaceId: id,
+        });
+    }
+    updateWorkspace(newData) {
+        const { currentWorkspaceId, workspaces } = this.state;
+        const workspaceIndex = workspaces.findIndex(
+            ({ id }) => id === currentWorkspaceId
+        );
+        workspaces[workspaceIndex] = cloneDeep({
+            ...workspaces[workspaceIndex],
+            ...newData,
+        });
+        this.setState({
+            workspaces,
+        });
+    }
+    addWorkspace(newWorkspace = this.getDefaultWorkspace()) {
+        const sameWorkspace = this.state.workspaces.findIndex(
+            ({ id }) => id === newWorkspace.id
+        );
+        if (sameWorkspace !== -1) {
+            newWorkspace.id = uuid();
         }
-        setCurrentWorkspace(workspaces[0].id);
-    };
-
-    const handleWorkspaceUpload = file => {
+        this.setState({
+            workspaces: [...this.state.workspaces, newWorkspace],
+        });
+    }
+    handleWorkspaceUpload(file) {
         const fr = new FileReader();
         fr.addEventListener('load', () => {
             const newWorkspace = {
                 ...JSON.parse(fr.result),
                 schemaTitle: file.name.replace('.json', ''),
             };
-            addWorkspace(newWorkspace);
-            setCurrentWorkspace(newWorkspace.id);
+            this.addWorkspace(newWorkspace);
+            this.selectWorkspace(newWorkspace.id);
         });
+        try {
+            fr.readAsText(file);
+        } catch (e) {
+            console.warn(e);
+        }
+    }
+    getWorkspaceActions() {
+        return Object.keys(actions).reduce(
+            (res, key) => ({
+                ...res,
+                [key]: (...args) => {
+                    const { currentWorkspaceId, workspaces } = this.state;
 
-        fr.readAsText(file);
-    };
-
-    return (
-        <Workspace
-            handleWorkspaceUpload={handleWorkspaceUpload}
-            selectWorkspace={setCurrentWorkspace}
-            removeWorkspace={removeWorkspace}
-            workspace={getCurrentWorkspace()}
-            workspaceList={workspaceList}
-        />
-    );
-};
+                    const workspaceIndex = workspaces.findIndex(
+                        ({ id }) => id === currentWorkspaceId
+                    );
+                    workspaces[workspaceIndex] = actions[key](...args)(
+                        workspaces[workspaceIndex]
+                    );
+                    this.setState({
+                        workspaces,
+                    });
+                },
+            }),
+            {}
+        );
+    }
+    render() {
+        const { workspaces, currentWorkspaceId } = this.state;
+        const currentWorkspace = workspaces.find(
+            ({ id }) => currentWorkspaceId === id
+        );
+        const workspaceList = workspaces.map(({ id, schemaTitle }) => ({
+            value: id,
+            label: schemaTitle,
+        }));
+        return (
+            <Workspace
+                handleWorkspaceUpload={file => this.handleWorkspaceUpload(file)}
+                selectWorkspace={id => this.selectWorkspace(id)}
+                updateWorkspace={newData => this.updateWorkspace(newData)}
+                workspaceActions={this.getWorkspaceActions()}
+                workspace={currentWorkspace || this.getDefaultWorkspace()}
+                workspaceList={workspaceList}
+                removeWorkspace={() => {}}
+            />
+        );
+    }
+}
 
 export default Home;
