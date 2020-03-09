@@ -87,6 +87,16 @@ export class Home extends React.Component {
             {}
         );
     }
+    removeWorkspace() {
+        const { currentWorkspaceId, workspaces } = this.state;
+        const filteredWorkspaces = workspaces.filter(
+            ({ id }) => currentWorkspaceId !== id
+        );
+        this.setState({
+            workspaces: filteredWorkspaces,
+        });
+        this.selectWorkspace(filteredWorkspaces[0].id);
+    }
     render() {
         const { workspaces, currentWorkspaceId } = this.state;
         const currentWorkspace = workspaces.find(
@@ -104,7 +114,7 @@ export class Home extends React.Component {
                 workspaceActions={this.getWorkspaceActions()}
                 workspace={currentWorkspace || this.getDefaultWorkspace()}
                 workspaceList={workspaceList}
-                removeWorkspace={() => {}}
+                removeWorkspace={() => this.removeWorkspace()}
             />
         );
     }

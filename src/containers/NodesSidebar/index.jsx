@@ -19,6 +19,7 @@ const NodesSidebar = ({
     selectWorkspace,
     workspaceTitle,
     workspaceId,
+    removeWorkspace,
 }) => {
     const fileInput = React.createRef();
     return (
@@ -39,8 +40,17 @@ const NodesSidebar = ({
                 paddingX={20}
                 paddingY={10}
                 display="flex"
-                justifyContent="space-between"
+                justifyContent="flex-start"
             >
+                <Tooltip content="Remove schema">
+                    <IconButton
+                        marginRight={10}
+                        icon="trash"
+                        intent="danger"
+                        disabled={workspaceList.length === 1}
+                        onClick={removeWorkspace}
+                    />
+                </Tooltip>
                 <Tooltip content="Open schema">
                     <IconButton
                         marginRight={10}
@@ -58,13 +68,19 @@ const NodesSidebar = ({
                 />
                 <Tooltip content="Save schema">
                     <IconButton
-                        marginRight={10}
                         icon="download"
                         is="a"
                         href={hrefForDownload}
                         download="schema.json"
                     />
                 </Tooltip>
+            </Pane>
+            <Pane
+                paddingX={20}
+                paddingY={10}
+                display="flex"
+                justifyContent="flex-start"
+            >
                 <Tooltip content="Open global settings">
                     <IconButton
                         marginRight={10}
