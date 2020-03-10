@@ -1,4 +1,17 @@
 {
     "instructionOfAddingNodes": "Перетащи ці компоненти на робочу область.",
-    "selectSchema": "Оберіть схему"
+    "selectSchema": "Оберіть схему",
+    "closeSchema": "Закрити схему",
+    "newSchema": "Нова схема",
+    "openSchema": "Відкрити схему",
+    "saveSchema": "Зберегти схему",
+    "openGlobalSettings": "Відкрити глобальні налаштування",
+    "startSimulation": "Почати симуляцію",
+    "SIGNAL SOURCE": "ДЖЕРЕЛО СИГНАЛУ",
+    "NOISE": "ШУМ",
+    "REFERENCE SOURCE": "ДЖЕРЕЛО ЕТАЛОННОГО СИГНАЛУ",
+    "MONITOR": "МОНІТОР",
+    "COMMUNICATION LINE": "ЛІНІЯ ЗВ'ЯЗКУ",
+    "CORRELATOR": "КОРЕЛЯТОР",
+    "COMPARATOR": "КОМПАРАТОР"
 }

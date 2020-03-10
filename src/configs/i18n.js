@@ -22,10 +22,12 @@ const resources = {
     },
 };
 
+const lng = window.localStorage.getItem('lang') || 'en';
 i18n.use(initReactI18next).init({
     resources,
-    lng: 'en',
+    lng,
     keySeparator: false,
+    fallbackLng: ['en', 'ru', 'ua'],
     interpolation: {
         escapeValue: false,
     },

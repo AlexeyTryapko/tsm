@@ -6,5 +6,12 @@
     "openSchema": "Open schema",
     "saveSchema": "Save schema",
     "openGlobalSettings": "Open global settings",
-    "startSimulation": "Start simulation"
+    "startSimulation": "Start simulation",
+    "SIGNAL SOURCE": "SIGNAL SOURCE",
+    "NOISE": "NOISE",
+    "REFERENCE SOURCE": "REFERENCE SOURCE",
+    "MONITOR": "MONITOR",
+    "COMMUNICATION LINE": "COMMUNICATION LINE",
+    "CORRELATOR": "CORRELATOR",
+    "COMPARATOR": "COMPARATOR"
 }

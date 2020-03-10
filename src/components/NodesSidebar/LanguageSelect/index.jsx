@@ -5,6 +5,7 @@ import { Pane, Select } from 'evergreen-ui';
 const LanguageSelect = ({ i18n }) => {
     const changeLanguage = value => {
         i18n.changeLanguage(value);
+        window.localStorage.setItem('lang', value);
     };
     return (
         <Pane
@@ -15,7 +16,7 @@ const LanguageSelect = ({ i18n }) => {
         >
             <Select
                 onChange={event => changeLanguage(event.target.value)}
-                defaultValue="en"
+                defaultValue={i18n.language}
             >
                 <option value="en">EN</option>
                 <option value="ua">UA</option>

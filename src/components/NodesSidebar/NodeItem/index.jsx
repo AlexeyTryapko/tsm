@@ -1,8 +1,9 @@
 import * as React from 'react';
+import { withTranslation } from 'react-i18next';
 import uuid from 'uuid/v4';
 import { Pane, Text } from 'evergreen-ui';
 
-const NodeItem = ({ type, ports, properties }) => (
+const NodeItem = ({ type, ports, properties, t }) => (
     <Pane
         marginBottom={10}
         padding={15}
@@ -26,8 +27,10 @@ const NodeItem = ({ type, ports, properties }) => (
             );
         }}
     >
-        <Text size={400}>{type}</Text>
+        <Text size={400} textAlign="center">
+            {t(type)}
+        </Text>
     </Pane>
 );
 
-export default NodeItem;
+export default withTranslation()(NodeItem);
