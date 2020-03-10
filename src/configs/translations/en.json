@@ -1,0 +1,17 @@
+{
+    "instructionOfAddingNodes": "Drag and drop these items onto the workspace.",
+    "selectSchema": "Select schema",
+    "closeSchema": "Close schema",
+    "newSchema": "New schema",
+    "openSchema": "Open schema",
+    "saveSchema": "Save schema",
+    "openGlobalSettings": "Open global settings",
+    "startSimulation": "Start simulation",
+    "SIGNAL SOURCE": "SIGNAL SOURCE",
+    "NOISE": "NOISE",
+    "REFERENCE SOURCE": "REFERENCE SOURCE",
+    "MONITOR": "MONITOR",
+    "COMMUNICATION LINE": "COMMUNICATION LINE",
+    "CORRELATOR": "CORRELATOR",
+    "COMPARATOR": "COMPARATOR"
+}
