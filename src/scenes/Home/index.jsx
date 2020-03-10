@@ -58,8 +58,8 @@ export class Home extends React.Component {
                 ...JSON.parse(fr.result),
                 schemaTitle: file.name.replace('.json', ''),
             };
-            this.addWorkspace(newWorkspace);
-            this.selectWorkspace(newWorkspace.id);
+            const workspace = this.addWorkspace(newWorkspace);
+            this.selectWorkspace(workspace.id);
         });
         try {
             fr.readAsText(file);

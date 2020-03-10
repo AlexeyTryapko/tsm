@@ -12,6 +12,8 @@ export const Schema = ({ chart, actions }) => (
             }}
             config={{
                 validateLink: ({ fromPortId, toPortId }) =>
+                    fromPortId === 'out' &&
+                    toPortId === 'in' &&
                     fromPortId !== toPortId,
             }}
         />
