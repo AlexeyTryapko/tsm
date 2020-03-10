@@ -1,14 +1,7 @@
 import React from 'react';
-import SidebarItem from '../../components/SidebarItem';
-import {
-    Paragraph,
-    Pane,
-    IconButton,
-    SelectMenu,
-    Button,
-    Tooltip,
-    Select,
-} from 'evergreen-ui';
+import SidebarItem from '../../components/NodesSidebar/SidebarItem';
+import WorkspaceSelect from '../../components/NodesSidebar/WorkspaceSelect';
+import { Paragraph, Pane, IconButton, Tooltip, Select } from 'evergreen-ui';
 import { withTranslation } from 'react-i18next';
 
 const NodesSidebar = ({
@@ -32,18 +25,12 @@ const NodesSidebar = ({
     };
     return (
         <div className="sidebar">
-            <SelectMenu
-                title="Select name"
+            <WorkspaceSelect
                 options={workspaceList}
-                selected={workspaceId}
-                onSelect={item => selectWorkspace(item.value)}
-            >
-                <Tooltip content="Select schema">
-                    <Button marginX={20} marginY={10}>
-                        {workspaceTitle}
-                    </Button>
-                </Tooltip>
-            </SelectMenu>
+                selectedValue={workspaceId}
+                selectedLabel={workspaceTitle}
+                handleSelect={selectWorkspace}
+            />
             <Pane
                 paddingX={20}
                 paddingY={10}
