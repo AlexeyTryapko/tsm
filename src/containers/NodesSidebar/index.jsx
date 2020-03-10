@@ -52,6 +52,13 @@ const NodesSidebar = ({
                         onClick={removeWorkspace}
                     />
                 </Tooltip>
+                <Tooltip content="New schema">
+                    <IconButton
+                        marginRight={10}
+                        icon="plus"
+                        onClick={addWorkspace}
+                    />
+                </Tooltip>
                 <Tooltip content="Open schema">
                     <IconButton
                         marginRight={10}
@@ -67,13 +74,6 @@ const NodesSidebar = ({
                     hidden
                     onChange={event => handleFileUpload(event.target.files[0])}
                 />
-                <Tooltip content="New schema">
-                    <IconButton
-                        marginRight={10}
-                        icon="plus"
-                        onClick={addWorkspace}
-                    />
-                </Tooltip>
                 <Tooltip content="Save schema">
                     <IconButton
                         icon="download"
