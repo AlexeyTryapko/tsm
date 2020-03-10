@@ -2,7 +2,7 @@ import * as React from 'react';
 import uuid from 'uuid/v4';
 import { Pane, Text } from 'evergreen-ui';
 
-const SidebarItem = ({ type, ports, properties }) => (
+const NodeItem = ({ type, ports, properties }) => (
     <Pane
         marginBottom={10}
         padding={15}
@@ -30,4 +30,4 @@ const SidebarItem = ({ type, ports, properties }) => (
     </Pane>
 );
 
-export default SidebarItem;
+export default NodeItem;

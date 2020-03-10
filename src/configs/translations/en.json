@@ -1,4 +1,10 @@
 {
     "instructionOfAddingNodes": "Drag and drop these items onto the workspace.",
-    "selectSchema": "Select schema"
+    "selectSchema": "Select schema",
+    "closeSchema": "Close schema",
+    "newSchema": "New schema",
+    "openSchema": "Open schema",
+    "saveSchema": "Save schema",
+    "openGlobalSettings": "Open global settings",
+    "startSimulation": "Start simulation"
 }
