@@ -20,6 +20,7 @@ const NodesSidebar = ({
     workspaceTitle,
     workspaceId,
     removeWorkspace,
+    addWorkspace,
 }) => {
     const fileInput = React.createRef();
     return (
@@ -42,10 +43,10 @@ const NodesSidebar = ({
                 display="flex"
                 justifyContent="flex-start"
             >
-                <Tooltip content="Remove schema">
+                <Tooltip content="Close schema">
                     <IconButton
                         marginRight={10}
-                        icon="trash"
+                        icon="cross"
                         intent="danger"
                         disabled={workspaceList.length === 1}
                         onClick={removeWorkspace}
@@ -66,6 +67,13 @@ const NodesSidebar = ({
                     hidden
                     onChange={event => handleFileUpload(event.target.files[0])}
                 />
+                <Tooltip content="New schema">
+                    <IconButton
+                        marginRight={10}
+                        icon="plus"
+                        onClick={addWorkspace}
+                    />
+                </Tooltip>
                 <Tooltip content="Save schema">
                     <IconButton
                         icon="download"

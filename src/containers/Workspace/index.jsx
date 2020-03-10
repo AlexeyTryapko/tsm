@@ -15,6 +15,7 @@ export const Workspace = ({
     workspaceActions,
     workspace,
     workspaceList,
+    addWorkspace,
 }) => {
     const [showGlobalSettings, toggleGlobalSettings] = useState(false);
 
@@ -120,6 +121,7 @@ export const Workspace = ({
                 handleSettingsCLick={() => toggleGlobalSettings(true)}
                 handleFileUpload={handleWorkspaceUpload}
                 hrefForDownload={getSchemaDownloadHref()}
+                addWorkspace={addWorkspace}
                 workspaceList={workspaceList}
                 selectWorkspace={selectWorkspace}
                 removeWorkspace={removeWorkspace}

@@ -49,6 +49,7 @@ export class Home extends React.Component {
         this.setState({
             workspaces: [...this.state.workspaces, newWorkspace],
         });
+        return newWorkspace;
     }
     handleWorkspaceUpload(file) {
         const fr = new FileReader();
@@ -87,6 +88,10 @@ export class Home extends React.Component {
             {}
         );
     }
+    newWorkspace() {
+        const workspace = this.addWorkspace();
+        this.selectWorkspace(workspace.id);
+    }
     removeWorkspace() {
         const { currentWorkspaceId, workspaces } = this.state;
         const filteredWorkspaces = workspaces.filter(
@@ -115,6 +120,7 @@ export class Home extends React.Component {
                 workspace={currentWorkspace || this.getDefaultWorkspace()}
                 workspaceList={workspaceList}
                 removeWorkspace={() => this.removeWorkspace()}
+                addWorkspace={() => this.newWorkspace()}
             />
         );
     }
