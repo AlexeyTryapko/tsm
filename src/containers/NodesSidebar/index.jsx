@@ -7,7 +7,9 @@ import {
     SelectMenu,
     Button,
     Tooltip,
+    Select,
 } from 'evergreen-ui';
+import { withTranslation } from 'react-i18next';
 
 const NodesSidebar = ({
     nodes = [],
@@ -21,8 +23,13 @@ const NodesSidebar = ({
     workspaceId,
     removeWorkspace,
     addWorkspace,
+    t,
+    i18n,
 }) => {
     const fileInput = React.createRef();
+    const changeLanguage = value => {
+        i18n.changeLanguage(value);
+    };
     return (
         <div className="sidebar">
             <SelectMenu
@@ -37,6 +44,21 @@ const NodesSidebar = ({
                     </Button>
                 </Tooltip>
             </SelectMenu>
+            <Pane
+                paddingX={20}
+                paddingY={10}
+                display="flex"
+                justifyContent="flex-start"
+            >
+                <Select
+                    onChange={event => changeLanguage(event.target.value)}
+                    defaultValue="en"
+                >
+                    <option value="en">EN</option>
+                    <option value="ua">UA</option>
+                    <option value="ru">RU</option>
+                </Select>
+            </Pane>
             <Pane
                 paddingX={20}
                 paddingY={10}
@@ -105,9 +127,7 @@ const NodesSidebar = ({
                 </Tooltip>
             </Pane>
             <Pane padding={20} marginBottom={20}>
-                <Paragraph>
-                    Drag and drop these items onto the workspace.
-                </Paragraph>
+                <Paragraph>{t('instructionOfAddingNodes')}.</Paragraph>
             </Pane>
             {nodes.map((node, i) => (
                 <SidebarItem key={i} {...node} />
@@ -116,4 +136,4 @@ const NodesSidebar = ({
     );
 };
 
-export default NodesSidebar;
+export default withTranslation()(NodesSidebar);
