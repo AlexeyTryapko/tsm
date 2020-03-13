@@ -1,4 +1,4 @@
-import { signalSource, referenceSource, noise, monitor, communicationLine, correlator, comparator } from './functions';
+import { signalSource, referenceSource, noise, monitor, communicationLine, correlator, comparator, signalEnergy } from './functions';
 import { cloneDeep } from 'lodash';
 
 export const start = chart => {
@@ -44,7 +44,8 @@ export const start = chart => {
 			'MONITOR': monitor,
             'COMMUNICATION LINE': communicationLine,
             'CORRELATOR': correlator,
-            'COMPARATOR':comparator,
+            'COMPARATOR': comparator,
+            'Signal Energy': signalEnergy,
         };
 
         let obj_idxs = {};

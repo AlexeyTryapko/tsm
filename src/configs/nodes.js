@@ -60,6 +60,19 @@ export const nodesConfig = [
         },
     },
     {
+        type: 'Signal Energy',
+        ports: {
+            in: {
+                id: 'in',
+                type: 'left',
+            },
+        },
+        properties: {
+            name: 'Signal Energy',
+            chartData: [],
+        },
+    },
+    {
         type: 'COMMUNICATION LINE',
         ports: {
             in: {

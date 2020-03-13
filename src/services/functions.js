@@ -6,18 +6,28 @@ export function signalSource(x, simulationParams, blockParams, step) {
     let message = String(blockParams['sequence']);
     let T = simulationParams['periodOfSignalUnit'];
     let dt = simulationParams['quantizationPeriod'];
+    let n = simulationParams['samplesPerUnit'];
+    let period = simulationParams['samplesPerPeriod'];
     let current = floor((step * dt) / T);
 
+    if(simulationParams['useSamples']){
+        f = 1/(period*dt);
+        current = floor(step/n);
+    }
     if (current <= message.length - 1) {
         if (blockParams['signalType'] === 'manchesterСode') {
             if (message.charAt(current) === '1') {
-                if ((step * dt) / T - current <= 0.5) {
+                if (!simulationParams['useSamples'] && ((step * dt) / T - current <= 0.5)) {
+                    return A;
+                } else if(simulationParams['useSamples'] && ((step % n)/n <= 0.5)) {
                     return A;
                 } else {
                     return -A;
                 }
             } else {
-                if ((step * dt) / T - current <= 0.5) {
+                if (!simulationParams['useSamples'] && ((step * dt) / T - current <= 0.5)) {
+                    return -A;
+                } else if(simulationParams['useSamples'] && ((step % n)/n <= 0.5)) {
                     return -A;
                 } else {
                     return A;
@@ -41,28 +51,24 @@ export function referenceSource(x, simulationParams, blockParams, step) {
     let T = simulationParams['periodOfSignalUnit'];
     let dt = simulationParams['quantizationPeriod'];
     let referenceSymbol = blockParams['referenceSymbol'];
+    let n = simulationParams['samplesPerUnit'];
+    let period = simulationParams['samplesPerPeriod'];
 
+    if(simulationParams['useSamples']){
+        f = 1/(period*dt);
+        T = n*dt;
+    }
     if (referenceSymbol === '1') {
         if (blockParams['signalType'] === 'manchesterСode') {
-            return (
-                A *
-                sign(sin((2 * PI * (step * dt)) / T / (1 + outofsync / 100)))
-            );
+            return A * sign(sin((2 * PI * (step * dt)) / T / (1 + outofsync / 100)));
         } else {
             return A * sin((2 * PI * f * (step * dt)) / (1 + outofsync / 100));
         }
     } else {
         if (blockParams['signalType'] === 'manchesterСode') {
-            return (
-                A *
-                sign(
-                    sin((2 * PI * (step * dt)) / T / (1 + outofsync / 100) + PI)
-                )
-            );
+            return A * sign(sin((2 * PI * (step * dt)) / T / (1 + outofsync / 100) + PI));
         } else {
-            return (
-                A * sin((2 * PI * f * (step * dt)) / (1 + outofsync / 100) + PI)
-            );
+            return A * sin((2 * PI * f * (step * dt)) / (1 + outofsync / 100) + PI);
         }
     }
 }
@@ -143,7 +149,11 @@ export function correlator(x, simulationParams, blockParams, step) {
     let dt = simulationParams['quantizationPeriod'];
     let T = simulationParams['periodOfSignalUnit'];
     let sum = blockParams['integralSum'];
+    let n = simulationParams['samplesPerUnit'];
 
+    if(simulationParams['useSamples']){
+        T = n*dt;
+    }
     for (let [in_i, input_x] of x.entries()) {
         if (input_x.name.includes('COMMUNICATION LINE')) {
             inputSignal = input_x.data;
@@ -174,9 +184,13 @@ export function comparator(x, simulationParams, blockParams, step) {
     let highLevel0 = blockParams['highLevel0'];
     let dt = simulationParams['quantizationPeriod'];
     let T = simulationParams['periodOfSignalUnit'];
+    let n = simulationParams['samplesPerUnit'];
     let inputSignal = 0;
     let output;
 
+    if(simulationParams['useSamples']){
+        T = n*dt;
+    }
     for (let [in_i, input_x] of x.entries()) {
         if (input_x.name.includes('CORRELATOR')) {
             inputSignal = input_x.data;
@@ -208,5 +222,32 @@ export function comparator(x, simulationParams, blockParams, step) {
     } else {
         blockParams['sequence'] = '';
         blockParams['previousInput'] = inputSignal;
+    }
+}
+
+
+export function signalEnergy(x, simulationParams, blockParams, step){
+    let dt = simulationParams['quantizationPeriod'];
+
+    for (let [in_i, input_x] of x.entries()) {
+        let found = false;
+        for (let [ch_i, chart] of blockParams['chartData'].entries()) {
+            if (input_x.name == chart.id) {
+                if (!chart.data) {
+                    chart.data = [];
+                    chart.data.push({ x: dt * step, y: input_x.data*input_x.data*dt });
+                } else {
+                    chart.data.push({ x: dt * step, y: input_x.data*input_x.data*dt + chart.data.filter(obj => obj.x == dt*(step-1))[0].y});
+                }
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            blockParams['chartData'].push({
+                id: input_x.name,
+                data: [{ x: dt * step, y: input_x.data*input_x.data*dt }],
+            });
+        }
     }
 }
