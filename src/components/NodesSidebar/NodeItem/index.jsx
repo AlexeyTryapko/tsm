@@ -6,6 +6,7 @@ import { Pane, Text } from 'evergreen-ui';
 const NodeItem = ({ type, ports, properties, t }) => (
     <Pane
         marginBottom={10}
+        marginX={4}
         padding={15}
         cursor="pointer"
         border="default"

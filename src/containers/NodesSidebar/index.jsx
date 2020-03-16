@@ -1,4 +1,5 @@
 import React from 'react';
+import { Pane } from 'evergreen-ui';
 import NodeItem from '../../components/NodesSidebar/NodeItem';
 import WorkspaceSelect from '../../components/NodesSidebar/WorkspaceSelect';
 import LanguageSelect from '../../components/NodesSidebar/LanguageSelect';
@@ -27,7 +28,6 @@ const NodesSidebar = ({
             selectedLabel={workspaceTitle}
             handleSelect={selectWorkspace}
         />
-        <LanguageSelect />
         <WorkspaceControls
             disableClodeBtn={workspaceList.length === 1}
             removeWorkspace={removeWorkspace}
@@ -36,10 +36,20 @@ const NodesSidebar = ({
             workspaceTitle={workspaceTitle}
             hrefForDownload={hrefForDownload}
         />
-        <SimulationControls
-            handleRunClick={handleRunClick}
-            handleSettingsCLick={handleSettingsCLick}
-        />
+        <Pane
+            display="flex"
+            justifyContent="flex-start"
+            paddingX={20}
+            paddingY={10}
+            marginBottom={10}
+        >
+            <LanguageSelect />
+            <SimulationControls
+                handleRunClick={handleRunClick}
+                handleSettingsCLick={handleSettingsCLick}
+            />
+        </Pane>
+
         <div className="scrollable-list">
             {nodes.map((node, i) => (
                 <NodeItem key={i} {...node} />

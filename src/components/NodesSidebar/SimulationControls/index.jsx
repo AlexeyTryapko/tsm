@@ -3,12 +3,7 @@ import { withTranslation } from 'react-i18next';
 import { Pane, Tooltip, IconButton } from 'evergreen-ui';
 
 const SimulationControls = ({ handleSettingsCLick, handleRunClick, t }) => (
-    <Pane
-        paddingX={20}
-        paddingY={10}
-        display="flex"
-        justifyContent="flex-start"
-    >
+    <Pane display="flex" justifyContent="flex-start">
         <Tooltip content={t('openGlobalSettings')}>
             <IconButton
                 marginRight={10}

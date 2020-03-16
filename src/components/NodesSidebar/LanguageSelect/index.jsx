@@ -9,10 +9,10 @@ const LanguageSelect = ({ i18n }) => {
     };
     return (
         <Pane
-            paddingX={20}
-            paddingY={10}
             display="flex"
             justifyContent="flex-start"
+            marginRight={10}
+            width={74}
         >
             <Select
                 onChange={event => changeLanguage(event.target.value)}
