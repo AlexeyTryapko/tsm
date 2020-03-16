@@ -35,16 +35,16 @@ const GlobalPropertiesForm = props => {
                 label="Use samples"
                 required
             />
+            <Field
+                {...defaultProps('quantizationPeriod')}
+                label="Quantization period"
+                required
+            />
             {useSamples ? (
                 <>
                     <Field
                         {...defaultProps('numberOfSamples')}
                         label="Number of smaples"
-                        required
-                    />
-                    <Field
-                        {...defaultProps('samplesPerPeriod')}
-                        label="Samples per period"
                         required
                     />
                     <Field
@@ -55,11 +55,6 @@ const GlobalPropertiesForm = props => {
                 </>
             ) : (
                 <>
-                    <Field
-                        {...defaultProps('quantizationPeriod')}
-                        label="Quantization period"
-                        required
-                    />
                     <Field
                         {...defaultProps('periodOfSignalUnit')}
                         label="Period of signal unit"
@@ -91,7 +86,6 @@ export default withFormik({
         periodOfSignalUnit: Yup.number().required('Field is required'),
         executionTime: Yup.number().required('Field is required'),
         numberOfSamples: Yup.number().required('Field is required'),
-        samplesPerPeriod: Yup.number().required('Field is required'),
         useSamples: Yup.boolean().required('Field is required'),
         samplesPerUnit: Yup.number().required('Field is required'),
     }),
@@ -101,7 +95,6 @@ export default withFormik({
         executionTime = '',
         numberOfSamples = '',
         useSamples = false,
-        samplesPerPeriod = '',
         samplesPerUnit = '',
     }) => ({
         quantizationPeriod,
@@ -109,7 +102,6 @@ export default withFormik({
         executionTime,
         numberOfSamples,
         useSamples,
-        samplesPerPeriod,
         samplesPerUnit,
     }),
     validateOnChange: false,

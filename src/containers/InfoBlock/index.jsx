@@ -20,6 +20,7 @@ const InfoBlock = ({
     updateProperties,
     deleteNode,
     properties,
+    useSamples,
 }) => (
     <>
         {NODES_WITH_MODAL.includes(type) && (
@@ -37,6 +38,7 @@ const InfoBlock = ({
                 properties={properties}
                 deleteNode={deleteNode}
                 updateProperties={updateProperties}
+                useSamples={useSamples}
             />
         )}
     </>

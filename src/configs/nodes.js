@@ -13,6 +13,7 @@ export const nodesConfig = [
             amplitude: 1,
             frequency: 3,
             sequence: 11101,
+            samplesPerPeriod: 20,
         },
     },
     {
@@ -44,6 +45,7 @@ export const nodesConfig = [
             amplitude: 1,
             frequency: 1,
             outOfSync: 0,
+            samplesPerPeriod: 20,
         },
     },
     {

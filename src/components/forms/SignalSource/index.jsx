@@ -5,8 +5,13 @@ import FormikSelect from '../../FormikSelect';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
 
-const SignalSourceForm = props => {
-    const { submitForm, onDeleteNode, errors, touched } = props;
+const SignalSourceForm = ({
+    submitForm,
+    onDeleteNode,
+    errors,
+    touched,
+    useSamples,
+}) => {
     const defaultProps = name => ({
         name,
         invalid: errors[name] && touched[name],
@@ -43,12 +48,20 @@ const SignalSourceForm = props => {
                 options={signalTypes}
             />
             <Field {...defaultProps('amplitude')} label="Amplitude" required />
-            <Field
-                {...defaultProps('frequency')}
-                label="Frequency"
-                description="For analog signals"
-                required
-            />
+            {useSamples ? (
+                <Field
+                    {...defaultProps('samplesPerPeriod')}
+                    label="Samples per period"
+                    required
+                />
+            ) : (
+                <Field
+                    {...defaultProps('frequency')}
+                    label="Frequency"
+                    description="For analog signals"
+                    required
+                />
+            )}
             <Field {...defaultProps('sequence')} label="Sequece" required />
             <Pane display="flex" justifyContent="flex-end">
                 <Button
@@ -78,17 +91,20 @@ export default withFormik({
         amplitude: Yup.number().required('Field is required'),
         frequency: Yup.number().required('Field is required'),
         sequence: Yup.number().required('Field is required'),
+        samplesPerPeriod: Yup.number().required('Field is required'),
     }),
     mapPropsToValues: ({
         signalType = '',
         amplitude = '',
         frequency = '',
         sequence = '',
+        samplesPerPeriod = '',
     }) => ({
         signalType,
         amplitude,
         frequency,
         sequence,
+        samplesPerPeriod,
     }),
     validateOnChange: false,
     validateOnBlur: false,

@@ -37,7 +37,8 @@ const getForm = (
     properties,
     updateProperties,
     closeSidebar,
-    deleteNode
+    deleteNode,
+    useSamples
 ) => {
     const Component = getFormComponent(type);
     return (
@@ -45,6 +46,7 @@ const getForm = (
             updateAction={updateProperties}
             onConfirmBtnClick={closeSidebar}
             onDeleteNode={deleteNode}
+            useSamples={useSamples}
             {...properties}
         />
     );
@@ -56,9 +58,17 @@ const PropertiesSidebar = ({
     closeSidebar,
     updateProperties,
     deleteNode,
+    useSamples,
 }) => (
     <SideSheet isShown={true} onCloseComplete={closeSidebar}>
-        {getForm(type, properties, updateProperties, closeSidebar, deleteNode)}
+        {getForm(
+            type,
+            properties,
+            updateProperties,
+            closeSidebar,
+            deleteNode,
+            useSamples
+        )}
     </SideSheet>
 );
 
