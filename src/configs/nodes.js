@@ -110,18 +110,6 @@ export const nodesConfig = [
             reset: false,
         },
     },
-    // {
-    //     type: 'CLOCK GENERATOR',
-    //     ports: {
-    //         out: {
-    //             id: 'out',
-    //             type: 'right',
-    //         },
-    //     },
-    //     properties: {
-    //         name: 'CLOCK GENERATOR',
-    //     },
-    // },
     {
         type: 'COMPARATOR',
         ports: {

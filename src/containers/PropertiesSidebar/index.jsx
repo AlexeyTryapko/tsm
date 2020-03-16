@@ -5,7 +5,6 @@ import {
     NoiseForm,
     ReferenceSourceForm,
     CommunicationLineForm,
-    ClockGeneratorForm,
     FormNotFound,
     GlobalPropertiesForm,
     ComparatorForm,
@@ -21,8 +20,6 @@ const getFormComponent = type => {
             return ReferenceSourceForm;
         case 'COMMUNICATION LINE':
             return CommunicationLineForm;
-        case 'CLOCK GENERATOR':
-            return ClockGeneratorForm;
         case 'GLOBAL':
             return GlobalPropertiesForm;
         case 'COMPARATOR':
