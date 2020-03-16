@@ -4,7 +4,6 @@ import WorkspaceSelect from '../../components/NodesSidebar/WorkspaceSelect';
 import LanguageSelect from '../../components/NodesSidebar/LanguageSelect';
 import WorkspaceControls from '../../components/NodesSidebar/WorkspaceControls';
 import SimulationControls from '../../components/NodesSidebar/SimulationControls';
-import { Paragraph, Pane } from 'evergreen-ui';
 import { withTranslation } from 'react-i18next';
 
 const NodesSidebar = ({
@@ -41,9 +40,6 @@ const NodesSidebar = ({
             handleRunClick={handleRunClick}
             handleSettingsCLick={handleSettingsCLick}
         />
-        <Pane padding={20} marginBottom={20}>
-            <Paragraph>{t('instructionOfAddingNodes')}.</Paragraph>
-        </Pane>
         <div className="scrollable-list">
             {nodes.map((node, i) => (
                 <NodeItem key={i} {...node} />
