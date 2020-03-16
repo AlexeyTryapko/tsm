@@ -1,5 +1,4 @@
 {
-    "instructionOfAddingNodes": "Перетащи ці компоненти на робочу область.",
     "selectSchema": "Оберіть схему",
     "closeSchema": "Закрити схему",
     "newSchema": "Нова схема",
@@ -13,5 +12,6 @@
     "MONITOR": "МОНІТОР",
     "COMMUNICATION LINE": "ЛІНІЯ ЗВ'ЯЗКУ",
     "CORRELATOR": "КОРЕЛЯТОР",
-    "COMPARATOR": "КОМПАРАТОР"
+    "COMPARATOR": "КОМПАРАТОР",
+    "SIGNAL ENREGY": "ЕНЕРГІЯ СИГНАЛУ"
 }

@@ -2,13 +2,12 @@ import * as React from 'react';
 import NodeModal from '../NodeModal';
 import PropertiesSidebar from '../PropertiesSidebar';
 
-const NODES_WITH_MODAL = ['MONITOR', 'SPECTRE'];
+const NODES_WITH_MODAL = ['MONITOR', 'SPECTRE', 'SIGNAL ENREGY'];
 const NODES_WITH_SIDEBAR = [
     'SIGNAL SOURCE',
     'NOISE',
     'REFERENCE SOURCE',
     'COMMUNICATION LINE',
-    'CLOCK GENERATOR',
     'GLOBAL',
     'COMPARATOR',
 ];
@@ -20,6 +19,7 @@ const InfoBlock = ({
     updateProperties,
     deleteNode,
     properties,
+    useSamples,
 }) => (
     <>
         {NODES_WITH_MODAL.includes(type) && (
@@ -37,6 +37,7 @@ const InfoBlock = ({
                 properties={properties}
                 deleteNode={deleteNode}
                 updateProperties={updateProperties}
+                useSamples={useSamples}
             />
         )}
     </>

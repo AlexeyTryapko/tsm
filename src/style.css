@@ -40,3 +40,8 @@ body {
     width: 980px !important;
     height: 400px !important;
 }
+
+.scrollable-list {
+    height: 100%;
+    overflow-y: auto;
+}

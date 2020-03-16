@@ -13,6 +13,7 @@ export const nodesConfig = [
             amplitude: 1,
             frequency: 3,
             sequence: 11101,
+            samplesPerPeriod: 20,
         },
     },
     {
@@ -44,6 +45,7 @@ export const nodesConfig = [
             amplitude: 1,
             frequency: 1,
             outOfSync: 0,
+            samplesPerPeriod: 20,
         },
     },
     {
@@ -56,6 +58,19 @@ export const nodesConfig = [
         },
         properties: {
             name: 'MONITOR',
+            chartData: [],
+        },
+    },
+    {
+        type: 'SIGNAL ENREGY',
+        ports: {
+            in: {
+                id: 'in',
+                type: 'left',
+            },
+        },
+        properties: {
+            name: 'SIGNAL ENREGY',
             chartData: [],
         },
     },
@@ -95,18 +110,6 @@ export const nodesConfig = [
             reset: false,
         },
     },
-    // {
-    //     type: 'CLOCK GENERATOR',
-    //     ports: {
-    //         out: {
-    //             id: 'out',
-    //             type: 'right',
-    //         },
-    //     },
-    //     properties: {
-    //         name: 'CLOCK GENERATOR',
-    //     },
-    // },
     {
         type: 'COMPARATOR',
         ports: {

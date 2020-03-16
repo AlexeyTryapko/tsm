@@ -5,8 +5,13 @@ import FormikSelect from '../../FormikSelect';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
 
-const ReferenceSourceForm = props => {
-    const { submitForm, onDeleteNode, errors, touched } = props;
+const ReferenceSourceForm = ({
+    submitForm,
+    onDeleteNode,
+    errors,
+    touched,
+    useSamples,
+}) => {
     const defaultProps = name => ({
         name,
         invalid: errors[name] && touched[name],
@@ -59,12 +64,20 @@ const ReferenceSourceForm = props => {
                 options={referenceSymbol}
             />
             <Field {...defaultProps('amplitude')} label="Amplitude" required />
-            <Field
-                {...defaultProps('frequency')}
-                label="Frequency"
-                description="For analog signals"
-                required
-            />
+            {useSamples ? (
+                <Field
+                    {...defaultProps('samplesPerPeriod')}
+                    label="Samples per period"
+                    required
+                />
+            ) : (
+                <Field
+                    {...defaultProps('frequency')}
+                    label="Frequency"
+                    description="For analog signals"
+                    required
+                />
+            )}
             <Field
                 {...defaultProps('outOfSync')}
                 label="Out of sync"
@@ -99,6 +112,7 @@ export default withFormik({
         amplitude: Yup.number().required('Field is required'),
         frequency: Yup.number().required('Field is required'),
         outOfSync: Yup.number().required('Field is required'),
+        samplesPerPeriod: Yup.number().required('Field is required'),
     }),
     mapPropsToValues: ({
         signalType = '',
@@ -106,12 +120,14 @@ export default withFormik({
         amplitude = '',
         frequency = '',
         outOfSync = '',
+        samplesPerPeriod = '',
     }) => ({
         signalType,
         referenceSymbol,
         amplitude,
         frequency,
         outOfSync,
+        samplesPerPeriod,
     }),
     validateOnChange: false,
     validateOnBlur: false,

@@ -1,5 +1,4 @@
 {
-    "instructionOfAddingNodes": "Drag and drop these items onto the workspace.",
     "selectSchema": "Select schema",
     "closeSchema": "Close schema",
     "newSchema": "New schema",
@@ -13,5 +12,6 @@
     "MONITOR": "MONITOR",
     "COMMUNICATION LINE": "COMMUNICATION LINE",
     "CORRELATOR": "CORRELATOR",
-    "COMPARATOR": "COMPARATOR"
+    "COMPARATOR": "COMPARATOR",
+    "SIGNAL ENREGY": "SIGNAL ENREGY"
 }

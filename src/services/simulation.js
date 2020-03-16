@@ -1,37 +1,46 @@
-import { signalSource, referenceSource, noise, monitor, communicationLine, correlator, comparator } from './functions';
+import {
+    signalSource,
+    referenceSource,
+    noise,
+    monitor,
+    communicationLine,
+    correlator,
+    comparator,
+    signalEnergy,
+} from './functions';
 import { cloneDeep } from 'lodash';
 
 export const start = chart => {
     let step = chart.globalProperties['step'];
     /**
-	 ** Clear temporart properties
-    **/
-    if(step ===0){
-    	let resetObj = {chartData: [],};
-	    const resetFields = (nodes, resetObj) => {
-		    const resetedNodes = { ...nodes };
-		    Object.keys(resetedNodes).forEach(nodeKey => {
-		        const currNode = resetedNodes[nodeKey];
-		        const res = {
-		            ...currNode.properties,
-		        };
-		        Object.keys(resetObj).forEach(key => {
-		            if (res[key] !== undefined) {
-		                res[key] = cloneDeep(resetObj[key]);
-		            }
-		        });
-		        resetedNodes[nodeKey].properties = res;
-		    });
+     ** Clear temporart properties
+     **/
+    if (step === 0) {
+        let resetObj = { chartData: [] };
+        const resetFields = (nodes, resetObj) => {
+            const resetedNodes = { ...nodes };
+            Object.keys(resetedNodes).forEach(nodeKey => {
+                const currNode = resetedNodes[nodeKey];
+                const res = {
+                    ...currNode.properties,
+                };
+                Object.keys(resetObj).forEach(key => {
+                    if (res[key] !== undefined) {
+                        res[key] = cloneDeep(resetObj[key]);
+                    }
+                });
+                resetedNodes[nodeKey].properties = res;
+            });
 
-		    return resetedNodes;
-		};
-	    chart.nodes=resetFields(chart.nodes,resetObj)
+            return resetedNodes;
+        };
+        chart.nodes = resetFields(chart.nodes, resetObj);
     }
-	/**
-	*	
-	*	Main logic
-	*
-	**/
+    /**
+     *
+     *	Main logic
+     *
+     **/
     if (
         step <
         chart.globalProperties['executionTime'] /
@@ -40,11 +49,12 @@ export const start = chart => {
         let func_names = {
             'SIGNAL SOURCE': signalSource,
             'REFERENCE SOURCE': referenceSource,
-            'NOISE': noise,
-			'MONITOR': monitor,
+            NOISE: noise,
+            MONITOR: monitor,
             'COMMUNICATION LINE': communicationLine,
-            'CORRELATOR': correlator,
-            'COMPARATOR':comparator,
+            CORRELATOR: correlator,
+            COMPARATOR: comparator,
+            'SIGNAL ENREGY': signalEnergy,
         };
 
         let obj_idxs = {};
@@ -124,7 +134,7 @@ export const start = chart => {
         chart.globalProperties['step'] += 1;
         return Y;
     } else {
-    	chart.globalProperties['step'] = 0;
+        chart.globalProperties['step'] = 0;
         return undefined;
     }
 };
