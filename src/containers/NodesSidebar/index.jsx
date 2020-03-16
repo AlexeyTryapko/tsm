@@ -44,9 +44,11 @@ const NodesSidebar = ({
         <Pane padding={20} marginBottom={20}>
             <Paragraph>{t('instructionOfAddingNodes')}.</Paragraph>
         </Pane>
-        {nodes.map((node, i) => (
-            <NodeItem key={i} {...node} />
-        ))}
+        <div className="scrollable-list">
+            {nodes.map((node, i) => (
+                <NodeItem key={i} {...node} />
+            ))}
+        </div>
     </div>
 );
 
