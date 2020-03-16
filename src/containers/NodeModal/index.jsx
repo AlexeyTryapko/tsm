@@ -3,6 +3,7 @@ import {
     ComparatorModal,
     MonitorModal,
     SpectreModal,
+    SignalEnergy,
 } from '../../components/modals';
 
 const getModalComponent = type => {
@@ -13,6 +14,8 @@ const getModalComponent = type => {
             return SpectreModal;
         case 'COMPORATOR':
             return ComparatorModal;
+        case 'SIGNAL ENREGY':
+            return SignalEnergy;
         default:
             return undefined;
     }

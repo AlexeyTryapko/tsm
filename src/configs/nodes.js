@@ -60,7 +60,7 @@ export const nodesConfig = [
         },
     },
     {
-        type: 'Signal Energy',
+        type: 'SIGNAL ENREGY',
         ports: {
             in: {
                 id: 'in',
@@ -68,7 +68,7 @@ export const nodesConfig = [
             },
         },
         properties: {
-            name: 'Signal Energy',
+            name: 'SIGNAL ENREGY',
             chartData: [],
         },
     },

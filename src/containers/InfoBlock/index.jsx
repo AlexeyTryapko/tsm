@@ -2,7 +2,7 @@ import * as React from 'react';
 import NodeModal from '../NodeModal';
 import PropertiesSidebar from '../PropertiesSidebar';
 
-const NODES_WITH_MODAL = ['MONITOR', 'SPECTRE'];
+const NODES_WITH_MODAL = ['MONITOR', 'SPECTRE', 'SIGNAL ENREGY'];
 const NODES_WITH_SIDEBAR = [
     'SIGNAL SOURCE',
     'NOISE',
