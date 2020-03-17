@@ -26,6 +26,7 @@ const InfoBlock = ({
             <NodeModal
                 type={type}
                 data={data}
+                executionTime={properties.executionTime}
                 closeModal={closeInfo}
                 deleteNode={deleteNode}
             />

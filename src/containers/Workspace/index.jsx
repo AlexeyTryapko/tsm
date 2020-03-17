@@ -72,13 +72,13 @@ export const Workspace = ({
     const getNodeInfoBlock = () => {
         const {
             selected: { id: selectedId },
-            globalProperties: { useSamples = false },
+            globalProperties: { useSamples = false, executionTime },
         } = workspace;
         const props = {
             type: getNodeType(selectedId),
             closeInfo: () => clearSelectedItem(),
             updateProperties: updateProperties.bind(null, selectedId),
-            properties: getNodeProperties(selectedId),
+            properties: { ...getNodeProperties(selectedId), executionTime },
             data: getNodeProperties(selectedId).chartData,
             deleteNode: () => workspaceActions.onDeleteKey({}),
             useSamples,

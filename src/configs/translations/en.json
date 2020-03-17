@@ -47,5 +47,7 @@
     "analogSignal": "Analog signal",
     "sequence": "Sequece",
     "cancel": "CANCEL",
-    "spectre": "SPECTRE"
+    "spectre": "SPECTRE",
+    "from": "From",
+    "to": "To"
 }

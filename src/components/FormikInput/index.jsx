@@ -10,6 +10,7 @@ export const FormikInput = ({
     placeholder,
     validationMessage,
     invalid,
+    inputProps,
 }) => {
     return (
         <Pane>
@@ -24,6 +25,7 @@ export const FormikInput = ({
                 placeholder={placeholder}
                 validationMessage={validationMessage}
                 inputHeight={40}
+                {...inputProps}
             />
         </Pane>
     );

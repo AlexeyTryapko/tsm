@@ -21,13 +21,14 @@ const getModalComponent = type => {
     }
 };
 
-const NodeModal = ({ type, data, closeModal, deleteNode }) => {
+const NodeModal = ({ type, data, closeModal, deleteNode, ...props }) => {
     const Component = getModalComponent(type);
     return (
         <Component
             closeModal={closeModal}
             deleteNode={deleteNode}
             data={data}
+            {...props}
         />
     );
 };
