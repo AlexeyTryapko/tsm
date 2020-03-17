@@ -14,8 +14,7 @@
         "linux": {
             "target": [
                 "deb",
-                "rpm",
-                "snap"
+                "rpm"
             ],
             "category": "Utility"
         }
