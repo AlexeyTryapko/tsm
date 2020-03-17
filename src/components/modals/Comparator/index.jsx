@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Dialog, Pane, Text } from 'evergreen-ui';
+import { withTranslation } from 'react-i18next';
 
-const ComparatorModal = ({ isShown, closeModal, sequence }) => (
+const ComparatorModal = ({ isShown, closeModal, sequence, t }) => (
     <Dialog
         isShown={isShown}
-        title="Sequence"
+        title={t('sequence')}
         onCloseComplete={() => closeModal()}
         hasFooter={false}
     >
@@ -19,4 +20,4 @@ const ComparatorModal = ({ isShown, closeModal, sequence }) => (
     </Dialog>
 );
 
-export default ComparatorModal;
+export default withTranslation()(ComparatorModal);

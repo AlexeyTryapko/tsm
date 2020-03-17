@@ -4,9 +4,9 @@ import FormikInput from '../../FormikInput';
 import FormiKSelect from '../../FormikSelect';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
+import { withTranslation } from 'react-i18next';
 
-const NoiseForm = props => {
-    const { submitForm, onDeleteNode, errors, touched } = props;
+const NoiseForm = ({ submitForm, onDeleteNode, errors, touched, t }) => {
     const defaultProps = name => ({
         name,
         invalid: errors[name] && touched[name],
@@ -23,41 +23,45 @@ const NoiseForm = props => {
     const types = [
         {
             value: 'whiteNoise',
-            label: 'White noise',
+            label: t('whiteNoise'),
         },
         {
             value: 'pinkNoise',
-            label: 'Pink noise',
+            label: t('pinkNoise'),
         },
         {
             value: 'blueNoise',
-            label: 'Blue noise',
+            label: t('blueNoise'),
         },
         {
             value: 'grayNoise',
-            label: 'Gray noise',
+            label: t('grayNoise'),
         },
         {
             value: 'impulseNoise',
-            label: 'Impulse noise',
+            label: t('impulseNoise'),
         },
         {
             value: 'randomNoise',
-            label: 'Random noise',
+            label: t('randomNoise'),
         },
     ];
 
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
-                Noise
+                {t('NOISE')}
             </Heading>
             <Field
                 {...defaultSelectProps('noiseType')}
-                label="Noise type"
+                label={t('noiseType')}
                 options={types}
             />
-            <Field {...defaultProps('amplitude')} label="Amplitude" required />
+            <Field
+                {...defaultProps('amplitude')}
+                label={t('amplitude')}
+                required
+            />
             <Pane display="flex" justifyContent="flex-end">
                 <Button
                     height={40}
@@ -66,29 +70,31 @@ const NoiseForm = props => {
                     intent="danger"
                     onClick={onDeleteNode}
                 >
-                    REMOVE
+                    {t('remove')}
                 </Button>
                 <Button height={40} appearance="primary" onClick={submitForm}>
-                    SAVE
+                    {t('save')}
                 </Button>
             </Pane>
         </Pane>
     );
 };
 
-export default withFormik({
-    handleSubmit: (values, { props }) => {
-        props.updateAction(values);
-        props.onConfirmBtnClick();
-    },
-    validationSchema: Yup.object({
-        noiseType: Yup.string().required('Field is required'),
-        amplitude: Yup.number().required('Field is required'),
-    }),
-    mapPropsToValues: ({ noiseType = '', amplitude = '' }) => ({
-        noiseType,
-        amplitude,
-    }),
-    validateOnChange: false,
-    validateOnBlur: false,
-})(NoiseForm);
+export default withTranslation()(
+    withFormik({
+        handleSubmit: (values, { props }) => {
+            props.updateAction(values);
+            props.onConfirmBtnClick();
+        },
+        validationSchema: Yup.object({
+            noiseType: Yup.string().required('Field is required'),
+            amplitude: Yup.number().required('Field is required'),
+        }),
+        mapPropsToValues: ({ noiseType = '', amplitude = '' }) => ({
+            noiseType,
+            amplitude,
+        }),
+        validateOnChange: false,
+        validateOnBlur: false,
+    })(NoiseForm)
+);

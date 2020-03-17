@@ -4,6 +4,7 @@ import FormikInput from '../../FormikInput';
 import FormikSelect from '../../FormikSelect';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
+import { withTranslation } from 'react-i18next';
 
 const ReferenceSourceForm = ({
     submitForm,
@@ -11,6 +12,7 @@ const ReferenceSourceForm = ({
     errors,
     touched,
     useSamples,
+    t,
 }) => {
     const defaultProps = name => ({
         name,
@@ -29,11 +31,11 @@ const ReferenceSourceForm = ({
     const signalTypes = [
         {
             value: 'manchesterСode',
-            label: 'Manchester сode',
+            label: t('manchesterСode'),
         },
         {
             value: 'analogSignal',
-            label: 'Analog signal',
+            label: t('analogSignal'),
         },
     ];
 
@@ -51,36 +53,39 @@ const ReferenceSourceForm = ({
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
-                Reference source
+                {t('REFERENCE SOURCE')}
             </Heading>
             <Field
                 {...defaultSelectProps('signalType')}
-                label="Signal type"
+                label={t('signalType')}
                 options={signalTypes}
             />
             <Field
                 {...defaultSelectProps('referenceSymbol')}
-                label="Referenece symbol"
+                label={t('referenceSymbol')}
                 options={referenceSymbol}
             />
-            <Field {...defaultProps('amplitude')} label="Amplitude" required />
+            <Field
+                {...defaultProps('amplitude')}
+                label={t('amplitude')}
+                required
+            />
             {useSamples ? (
                 <Field
                     {...defaultProps('samplesPerPeriod')}
-                    label="Samples per period"
+                    label={t('samplesPerPeriod')}
                     required
                 />
             ) : (
                 <Field
                     {...defaultProps('frequency')}
-                    label="Frequency"
-                    description="For analog signals"
+                    label={t('frequency')}
                     required
                 />
             )}
             <Field
                 {...defaultProps('outOfSync')}
-                label="Out of sync"
+                label={t('outOfSync')}
                 required
             />
             <Pane display="flex" justifyContent="flex-end">
@@ -91,44 +96,46 @@ const ReferenceSourceForm = ({
                     intent="danger"
                     onClick={onDeleteNode}
                 >
-                    REMOVE
+                    {t('remove')}
                 </Button>
                 <Button height={40} appearance="primary" onClick={submitForm}>
-                    SAVE
+                    {t('save')}
                 </Button>
             </Pane>
         </Pane>
     );
 };
 
-export default withFormik({
-    handleSubmit: (values, { props }) => {
-        props.updateAction(values);
-        props.onConfirmBtnClick();
-    },
-    validationSchema: Yup.object({
-        signalType: Yup.string().required('Field is required'),
-        referenceSymbol: Yup.string().required('Field is required'),
-        amplitude: Yup.number().required('Field is required'),
-        frequency: Yup.number().required('Field is required'),
-        outOfSync: Yup.number().required('Field is required'),
-        samplesPerPeriod: Yup.number().required('Field is required'),
-    }),
-    mapPropsToValues: ({
-        signalType = '',
-        referenceSymbol = '',
-        amplitude = '',
-        frequency = '',
-        outOfSync = '',
-        samplesPerPeriod = '',
-    }) => ({
-        signalType,
-        referenceSymbol,
-        amplitude,
-        frequency,
-        outOfSync,
-        samplesPerPeriod,
-    }),
-    validateOnChange: false,
-    validateOnBlur: false,
-})(ReferenceSourceForm);
+export default withTranslation()(
+    withFormik({
+        handleSubmit: (values, { props }) => {
+            props.updateAction(values);
+            props.onConfirmBtnClick();
+        },
+        validationSchema: Yup.object({
+            signalType: Yup.string().required('Field is required'),
+            referenceSymbol: Yup.string().required('Field is required'),
+            amplitude: Yup.number().required('Field is required'),
+            frequency: Yup.number().required('Field is required'),
+            outOfSync: Yup.number().required('Field is required'),
+            samplesPerPeriod: Yup.number().required('Field is required'),
+        }),
+        mapPropsToValues: ({
+            signalType = '',
+            referenceSymbol = '',
+            amplitude = '',
+            frequency = '',
+            outOfSync = '',
+            samplesPerPeriod = '',
+        }) => ({
+            signalType,
+            referenceSymbol,
+            amplitude,
+            frequency,
+            outOfSync,
+            samplesPerPeriod,
+        }),
+        validateOnChange: false,
+        validateOnBlur: false,
+    })(ReferenceSourceForm)
+);

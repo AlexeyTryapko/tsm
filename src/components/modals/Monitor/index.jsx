@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { Dialog } from 'evergreen-ui';
 import { ResponsiveLine } from '@nivo/line';
+import { withTranslation } from 'react-i18next';
 
-const MonitorModal = ({ closeModal, data = [], deleteNode }) => (
+const MonitorModal = ({ closeModal, data = [], deleteNode, t }) => (
     <Dialog
         isShown={true}
         onCloseComplete={closeModal}
-        title="Monitor"
+        cancelLabel={t('cancel')}
+        title={t('MONITOR')}
         intent="danger"
         onConfirm={deleteNode}
-        confirmLabel="REMOVE"
+        confirmLabel={t('remove')}
         width={1000}
         minHeightContent={400}
     >
@@ -33,7 +35,7 @@ const MonitorModal = ({ closeModal, data = [], deleteNode }) => (
                     tickSize: 5,
                     tickPadding: 5,
                     tickRotation: 0,
-                    legend: 'amplitude',
+                    legend: t('amplitude'),
                     legendOffset: -40,
                     legendPosition: 'middle',
                 }}
@@ -76,4 +78,4 @@ const MonitorModal = ({ closeModal, data = [], deleteNode }) => (
     </Dialog>
 );
 
-export default MonitorModal;
+export default withTranslation()(MonitorModal);

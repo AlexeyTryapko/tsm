@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { Dialog } from 'evergreen-ui';
 import { ResponsiveLine } from '@nivo/line';
+import { withTranslation } from 'react-i18next';
 
-const SpectreModal = ({ closeModal, data = [], deleteNode }) => (
+const SpectreModal = ({ closeModal, data = [], deleteNode, t }) => (
     <Dialog
         isShown={true}
         onCloseComplete={closeModal}
         title="Spectre"
         intent="danger"
         onConfirm={deleteNode}
-        confirmLabel="REMOVE"
+        cancelLabel={t('cancel')}
+        confirmLabel={t('remove')}
         width={1000}
         minHeightContent={400}
     >
@@ -76,4 +78,4 @@ const SpectreModal = ({ closeModal, data = [], deleteNode }) => (
     </Dialog>
 );
 
-export default SpectreModal;
+export default withTranslation()(SpectreModal);

@@ -6,6 +6,7 @@ import Schema from '../../containers/Schema';
 import InfoBlock from '../../containers/InfoBlock';
 import { start } from '../../services/simulation';
 import { toaster } from 'evergreen-ui';
+import { withTranslation } from 'react-i18next';
 
 export const Workspace = ({
     handleWorkspaceUpload,
@@ -16,6 +17,7 @@ export const Workspace = ({
     workspace,
     workspaceList,
     addWorkspace,
+    t,
 }) => {
     const [showGlobalSettings, toggleGlobalSettings] = useState(false);
 
@@ -113,7 +115,7 @@ export const Workspace = ({
         do {
             res = start(chart);
         } while (res);
-        toaster.success('Simulation is finished');
+        toaster.success(t('simulationIsFinished'));
         updateWorkspace(cloneDeep(chart));
     };
 
@@ -138,4 +140,4 @@ export const Workspace = ({
     );
 };
 
-export default Workspace;
+export default withTranslation()(Workspace);

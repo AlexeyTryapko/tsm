@@ -3,9 +3,15 @@ import { withFormik, Field } from 'formik';
 import FormikInput from '../../FormikInput';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
+import { withTranslation } from 'react-i18next';
 
-const CommunicationLineForm = props => {
-    const { submitForm, onDeleteNode, errors, touched } = props;
+const CommunicationLineForm = ({
+    submitForm,
+    onDeleteNode,
+    errors,
+    touched,
+    t,
+}) => {
     const defaultProps = name => ({
         name,
         invalid: errors[name] && touched[name],
@@ -16,16 +22,16 @@ const CommunicationLineForm = props => {
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
-                Communication line
+                {t('COMMUNICATION LINE')}
             </Heading>
             <Field
                 {...defaultProps('coeffForIncomingSignal')}
-                label="Coefficient for the first incoming signal"
+                label={t('coeffForIncomingSignal')}
                 required
             />
             <Field
                 {...defaultProps('coeffForTheNoise')}
-                label="Coefficient for the noise"
+                label={t('coeffForTheNoise')}
                 required
             />
             <Pane display="flex" justifyContent="flex-end">
@@ -36,32 +42,34 @@ const CommunicationLineForm = props => {
                     intent="danger"
                     onClick={onDeleteNode}
                 >
-                    REMOVE
+                    {t('remove')}
                 </Button>
                 <Button height={40} appearance="primary" onClick={submitForm}>
-                    SAVE
+                    {t('save')}
                 </Button>
             </Pane>
         </Pane>
     );
 };
 
-export default withFormik({
-    handleSubmit: (values, { props }) => {
-        props.updateAction(values);
-        props.onConfirmBtnClick();
-    },
-    validationSchema: Yup.object({
-        coeffForIncomingSignal: Yup.number().required('Field is required'),
-        coeffForTheNoise: Yup.number().required('Field is required'),
-    }),
-    mapPropsToValues: ({
-        coeffForIncomingSignal = '',
-        coeffForTheNoise = '',
-    }) => ({
-        coeffForIncomingSignal,
-        coeffForTheNoise,
-    }),
-    validateOnChange: false,
-    validateOnBlur: false,
-})(CommunicationLineForm);
+export default withTranslation()(
+    withFormik({
+        handleSubmit: (values, { props }) => {
+            props.updateAction(values);
+            props.onConfirmBtnClick();
+        },
+        validationSchema: Yup.object({
+            coeffForIncomingSignal: Yup.number().required('Field is required'),
+            coeffForTheNoise: Yup.number().required('Field is required'),
+        }),
+        mapPropsToValues: ({
+            coeffForIncomingSignal = '',
+            coeffForTheNoise = '',
+        }) => ({
+            coeffForIncomingSignal,
+            coeffForTheNoise,
+        }),
+        validateOnChange: false,
+        validateOnBlur: false,
+    })(CommunicationLineForm)
+);

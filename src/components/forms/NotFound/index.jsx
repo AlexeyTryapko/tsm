@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { Pane, Heading } from 'evergreen-ui';
+import { withTranslation } from 'react-i18next';
 
-const FormNotFound = () => (
+const FormNotFound = ({ t }) => (
     <Pane
         padding={20}
         display="flex"
         justifyContent="center"
         alignItems="center"
     >
-        <Heading size={700}>Form not found</Heading>
+        <Heading size={700}>{t('formNotFound')}</Heading>
     </Pane>
 );
 
-export default FormNotFound;
+export default withTranslation()(FormNotFound);

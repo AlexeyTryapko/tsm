@@ -4,10 +4,17 @@ import FormikInput from '../../FormikInput';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
 import ComporatorModal from '../../modals/Comparator';
+import { withTranslation } from 'react-i18next';
 
-const ComparatorForm = props => {
+const ComparatorForm = ({
+    submitForm,
+    onDeleteNode,
+    errors,
+    touched,
+    values,
+    t,
+}) => {
     const [showModal, toggleModal] = useState(false);
-    const { submitForm, onDeleteNode, errors, touched, values } = props;
     const defaultProps = name => ({
         name,
         invalid: errors[name] && touched[name],
@@ -18,21 +25,21 @@ const ComparatorForm = props => {
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
-                Comparator
+                {t('COMPARATOR')}
             </Heading>
             <Field
                 {...defaultProps('lowLevel1')}
-                label="Low lavel 1"
+                label={t('lowLevel1')}
                 required
             />
             <Field
                 {...defaultProps('highLevel0')}
-                label="Hight level 0"
+                label={t('highLevel0')}
                 required
             />
             <Pane display="flex" justifyContent="space-between">
                 <Button height={40} onClick={() => toggleModal(true)}>
-                    SHOW OUTPUT
+                    {t('showOutput')}
                 </Button>
                 <Pane display="flex" justifyContent="flex-end">
                     <Button
@@ -42,14 +49,14 @@ const ComparatorForm = props => {
                         intent="danger"
                         onClick={onDeleteNode}
                     >
-                        REMOVE
+                        {t('remove')}
                     </Button>
                     <Button
                         height={40}
                         appearance="primary"
                         onClick={submitForm}
                     >
-                        SAVE
+                        {t('save')}
                     </Button>
                 </Pane>
             </Pane>
@@ -62,20 +69,26 @@ const ComparatorForm = props => {
     );
 };
 
-export default withFormik({
-    handleSubmit: (values, { props }) => {
-        props.updateAction(values);
-        props.onConfirmBtnClick();
-    },
-    validationSchema: Yup.object({
-        lowLevel1: Yup.number().required('Field is required'),
-        highLevel0: Yup.number().required('Field is required'),
-    }),
-    mapPropsToValues: ({ lowLevel1 = '', highLevel0 = '', sequence = '' }) => ({
-        lowLevel1,
-        highLevel0,
-        sequence,
-    }),
-    validateOnChange: false,
-    validateOnBlur: false,
-})(ComparatorForm);
+export default withTranslation()(
+    withFormik({
+        handleSubmit: (values, { props }) => {
+            props.updateAction(values);
+            props.onConfirmBtnClick();
+        },
+        validationSchema: Yup.object({
+            lowLevel1: Yup.number().required('Field is required'),
+            highLevel0: Yup.number().required('Field is required'),
+        }),
+        mapPropsToValues: ({
+            lowLevel1 = '',
+            highLevel0 = '',
+            sequence = '',
+        }) => ({
+            lowLevel1,
+            highLevel0,
+            sequence,
+        }),
+        validateOnChange: false,
+        validateOnBlur: false,
+    })(ComparatorForm)
+);

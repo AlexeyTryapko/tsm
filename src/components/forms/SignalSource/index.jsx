@@ -4,6 +4,7 @@ import FormikInput from '../../FormikInput';
 import FormikSelect from '../../FormikSelect';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
+import { withTranslation } from 'react-i18next';
 
 const SignalSourceForm = ({
     submitForm,
@@ -11,6 +12,7 @@ const SignalSourceForm = ({
     errors,
     touched,
     useSamples,
+    t,
 }) => {
     const defaultProps = name => ({
         name,
@@ -29,40 +31,47 @@ const SignalSourceForm = ({
     const signalTypes = [
         {
             value: 'manchesterСode',
-            label: 'Manchester сode',
+            label: t('manchesterСode'),
         },
         {
             value: 'analogSignal',
-            label: 'Analog signal',
+            label: t('analogSignal'),
         },
     ];
 
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
-                Signal source
+                {t('SIGNAL SOURCE')}
             </Heading>
             <Field
                 {...defaultSelectProps('signalType')}
-                label="Signal type"
+                label={t('signalType')}
                 options={signalTypes}
             />
-            <Field {...defaultProps('amplitude')} label="Amplitude" required />
+            <Field
+                {...defaultProps('amplitude')}
+                label={t('amplitude')}
+                required
+            />
             {useSamples ? (
                 <Field
                     {...defaultProps('samplesPerPeriod')}
-                    label="Samples per period"
+                    label={t('samplesPerPeriod')}
                     required
                 />
             ) : (
                 <Field
                     {...defaultProps('frequency')}
-                    label="Frequency"
-                    description="For analog signals"
+                    label={t('frequency')}
                     required
                 />
             )}
-            <Field {...defaultProps('sequence')} label="Sequece" required />
+            <Field
+                {...defaultProps('sequence')}
+                label={t('sequence')}
+                required
+            />
             <Pane display="flex" justifyContent="flex-end">
                 <Button
                     height={40}
@@ -71,41 +80,43 @@ const SignalSourceForm = ({
                     intent="danger"
                     onClick={onDeleteNode}
                 >
-                    REMOVE
+                    {t('remove')}
                 </Button>
                 <Button height={40} appearance="primary" onClick={submitForm}>
-                    SAVE
+                    {t('save')}
                 </Button>
             </Pane>
         </Pane>
     );
 };
 
-export default withFormik({
-    handleSubmit: (values, { props }) => {
-        props.updateAction(values);
-        props.onConfirmBtnClick();
-    },
-    validationSchema: Yup.object({
-        signalType: Yup.string().required('Field is required'),
-        amplitude: Yup.number().required('Field is required'),
-        frequency: Yup.number().required('Field is required'),
-        sequence: Yup.number().required('Field is required'),
-        samplesPerPeriod: Yup.number().required('Field is required'),
-    }),
-    mapPropsToValues: ({
-        signalType = '',
-        amplitude = '',
-        frequency = '',
-        sequence = '',
-        samplesPerPeriod = '',
-    }) => ({
-        signalType,
-        amplitude,
-        frequency,
-        sequence,
-        samplesPerPeriod,
-    }),
-    validateOnChange: false,
-    validateOnBlur: false,
-})(SignalSourceForm);
+export default withTranslation()(
+    withFormik({
+        handleSubmit: (values, { props }) => {
+            props.updateAction(values);
+            props.onConfirmBtnClick();
+        },
+        validationSchema: Yup.object({
+            signalType: Yup.string().required('Field is required'),
+            amplitude: Yup.number().required('Field is required'),
+            frequency: Yup.number().required('Field is required'),
+            sequence: Yup.number().required('Field is required'),
+            samplesPerPeriod: Yup.number().required('Field is required'),
+        }),
+        mapPropsToValues: ({
+            signalType = '',
+            amplitude = '',
+            frequency = '',
+            sequence = '',
+            samplesPerPeriod = '',
+        }) => ({
+            signalType,
+            amplitude,
+            frequency,
+            sequence,
+            samplesPerPeriod,
+        }),
+        validateOnChange: false,
+        validateOnBlur: false,
+    })(SignalSourceForm)
+);

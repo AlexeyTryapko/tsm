@@ -4,14 +4,15 @@ import FormikInput from '../../FormikInput';
 import FormikCheckbox from '../../FormikCheckbox';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
+import { withTranslation } from 'react-i18next';
 
-const GlobalPropertiesForm = props => {
-    const {
-        submitForm,
-        errors,
-        touched,
-        values: { useSamples },
-    } = props;
+const GlobalPropertiesForm = ({
+    submitForm,
+    errors,
+    touched,
+    values: { useSamples },
+    t,
+}) => {
     const defaultProps = name => ({
         name,
         invalid: errors[name] && touched[name],
@@ -28,28 +29,28 @@ const GlobalPropertiesForm = props => {
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
-                Global properties
+                {t('GLOBAL')}
             </Heading>
             <Field
                 {...defaultCheckboxProps('useSamples')}
-                label="Use samples"
+                label={t('useSamples')}
                 required
             />
             <Field
                 {...defaultProps('quantizationPeriod')}
-                label="Quantization period"
+                label={t('quantizationPeriod')}
                 required
             />
             {useSamples ? (
                 <>
                     <Field
-                        {...defaultProps('numberOfSamples')}
-                        label="Number of smaples"
+                        {...defaultProps('samplesPerUnit')}
+                        label={t('samplesPerUnit')}
                         required
                     />
                     <Field
-                        {...defaultProps('samplesPerUnit')}
-                        label="Samples per unit"
+                        {...defaultProps('numberOfSamples')}
+                        label={t('numberOfSamples')}
                         required
                     />
                 </>
@@ -57,53 +58,55 @@ const GlobalPropertiesForm = props => {
                 <>
                     <Field
                         {...defaultProps('periodOfSignalUnit')}
-                        label="Period of signal unit"
+                        label={t('periodOfSignalUnit')}
                         required
                     />
                     <Field
                         {...defaultProps('executionTime')}
-                        label="Time of execution"
+                        label={t('executionTime')}
                         required
                     />
                 </>
             )}
             <Pane display="flex" justifyContent="flex-end">
                 <Button height={40} appearance="primary" onClick={submitForm}>
-                    SAVE
+                    {t('save')}
                 </Button>
             </Pane>
         </Pane>
     );
 };
 
-export default withFormik({
-    handleSubmit: (values, { props }) => {
-        props.updateAction(values);
-        props.onConfirmBtnClick();
-    },
-    validationSchema: Yup.object({
-        quantizationPeriod: Yup.number().required('Field is required'),
-        periodOfSignalUnit: Yup.number().required('Field is required'),
-        executionTime: Yup.number().required('Field is required'),
-        numberOfSamples: Yup.number().required('Field is required'),
-        useSamples: Yup.boolean().required('Field is required'),
-        samplesPerUnit: Yup.number().required('Field is required'),
-    }),
-    mapPropsToValues: ({
-        quantizationPeriod = '',
-        periodOfSignalUnit = '',
-        executionTime = '',
-        numberOfSamples = '',
-        useSamples = false,
-        samplesPerUnit = '',
-    }) => ({
-        quantizationPeriod,
-        periodOfSignalUnit,
-        executionTime,
-        numberOfSamples,
-        useSamples,
-        samplesPerUnit,
-    }),
-    validateOnChange: false,
-    validateOnBlur: false,
-})(GlobalPropertiesForm);
+export default withTranslation()(
+    withFormik({
+        handleSubmit: (values, { props }) => {
+            props.updateAction(values);
+            props.onConfirmBtnClick();
+        },
+        validationSchema: Yup.object({
+            quantizationPeriod: Yup.number().required('Field is required'),
+            periodOfSignalUnit: Yup.number().required('Field is required'),
+            executionTime: Yup.number().required('Field is required'),
+            numberOfSamples: Yup.number().required('Field is required'),
+            useSamples: Yup.boolean().required('Field is required'),
+            samplesPerUnit: Yup.number().required('Field is required'),
+        }),
+        mapPropsToValues: ({
+            quantizationPeriod = '',
+            periodOfSignalUnit = '',
+            executionTime = '',
+            numberOfSamples = '',
+            useSamples = false,
+            samplesPerUnit = '',
+        }) => ({
+            quantizationPeriod,
+            periodOfSignalUnit,
+            executionTime,
+            numberOfSamples,
+            useSamples,
+            samplesPerUnit,
+        }),
+        validateOnChange: false,
+        validateOnBlur: false,
+    })(GlobalPropertiesForm)
+);
