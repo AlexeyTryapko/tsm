@@ -5,7 +5,14 @@ import FormikInput from '../../FormikInput';
 import { Pane } from 'evergreen-ui';
 import * as Yup from 'yup';
 
-const PeriodForm = ({ errors, touched, t, submitForm, setFieldValue }) => {
+const PeriodForm = ({
+    errors,
+    touched,
+    t,
+    submitForm,
+    setFieldValue,
+    validateForm,
+}) => {
     const defaultProps = name => ({
         name,
         invalid: errors[name] && touched[name],
@@ -14,7 +21,7 @@ const PeriodForm = ({ errors, touched, t, submitForm, setFieldValue }) => {
             marginRight: 16,
             onChange: ev => {
                 setFieldValue(name, ev.target.value);
-                submitForm();
+                validateForm().then(() => submitForm());
             },
         },
         component: FormikInput,
@@ -33,16 +40,17 @@ export default withTranslation()(
         validationSchema: Yup.object({
             from: Yup.number()
                 .min(0)
+                // .lessThan(to, 'This value should be greater then FROM')
                 .required('Field is required'),
             to: Yup.number()
                 .min(0)
+                // .moreThan(from, 'This value should be greater then FROM')
                 .required('Field is required'),
         }),
         mapPropsToValues: ({ from = '', to = '' }) => ({
             from,
             to,
         }),
-        validateOnChange: true,
-        validateOnBlur: false,
+        validateOnChange: false,
     })(PeriodForm)
 );
