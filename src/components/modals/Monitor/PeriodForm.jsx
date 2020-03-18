@@ -37,14 +37,23 @@ const PeriodForm = ({
 export default withTranslation()(
     withFormik({
         handleSubmit: (values, { props }) => props.updateAction(values),
+        validate: values => {
+            const errors = {};
+            if (values.to < values.from) {
+                errors['to'] = 'Value shoud be greater then from';
+                errors['from'] = 'Value should be less then to';
+            } else {
+                delete errors['to'];
+                delete errors['from'];
+            }
+            return errors;
+        },
         validationSchema: Yup.object({
             from: Yup.number()
                 .min(0)
-                // .lessThan(to, 'This value should be greater then FROM')
                 .required('Field is required'),
             to: Yup.number()
                 .min(0)
-                // .moreThan(from, 'This value should be greater then FROM')
                 .required('Field is required'),
         }),
         mapPropsToValues: ({ from = '', to = '' }) => ({
