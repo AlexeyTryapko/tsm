@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Dialog } from 'evergreen-ui';
+import { Dialog, Pane } from 'evergreen-ui';
 import { ResponsiveLine } from '@nivo/line';
 import { withTranslation } from 'react-i18next';
 import PeriodForm from '../../PeriodForm';
+import ChartTypeSelect from './ChartTypeSelect';
 
-const MonitorModal = ({
+const PowerSpectralDensityOfSignal = ({
     closeModal,
     data = [],
     deleteNode,
@@ -17,37 +18,58 @@ const MonitorModal = ({
         setFrom(from);
         setTo(to);
     };
+    const [chartType, setChartType] = useState('linear');
 
     const filteredData = data.map(item => ({
         ...item,
         data: item.data.filter(({ x }) => x >= from && x <= to),
     }));
 
+    const scaleProps =
+        chartType === 'linear'
+            ? {
+                  yScale: {
+                      type: 'linear',
+                      min: 'auto',
+                      max: 'auto',
+                      reverse: false,
+                  },
+              }
+            : {
+                  xScale: {
+                      type: 'log',
+                      base: 2,
+                      max: 'auto',
+                  },
+                  yScale: {
+                      type: 'log',
+                      base: 10,
+                      max: 'auto',
+                  },
+              };
     return (
         <Dialog
             isShown={true}
             onCloseComplete={closeModal}
             cancelLabel={t('cancel')}
-            title={t('MONITOR')}
+            title={t('POWER_SPECTRAL_DENSITY_OF_SIGNAL')}
             intent="danger"
             onConfirm={deleteNode}
             confirmLabel={t('remove')}
             width={1000}
             minHeightContent={400}
         >
-            <PeriodForm from={from} to={to} updateAction={updatePeriod} />
+            <Pane display="flex" justifyContent="flex-start">
+                <ChartTypeSelect type={chartType} updateAction={setChartType} />
+                <PeriodForm from={from} to={to} updateAction={updatePeriod} />
+            </Pane>
             <div className="chart">
                 <ResponsiveLine
+                    {...scaleProps}
                     width={980}
                     height={400}
                     data={filteredData}
                     margin={{ top: 50, right: 60, bottom: 50, left: 60 }}
-                    yScale={{
-                        type: 'linear',
-                        min: 'auto',
-                        max: 'auto',
-                        reverse: false,
-                    }}
                     axisTop={null}
                     axisRight={null}
                     axisBottom={null}
@@ -100,4 +122,4 @@ const MonitorModal = ({
     );
 };
 
-export default withTranslation()(MonitorModal);
+export default withTranslation()(PowerSpectralDensityOfSignal);

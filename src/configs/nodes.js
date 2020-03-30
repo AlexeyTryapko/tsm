@@ -125,17 +125,17 @@ export const nodesConfig = [
             sequence: '',
         },
     },
-    // {
-    //     type: 'SPECTRE',
-    //     ports: {
-    //         in: {
-    //             id: 'in',
-    //             type: 'left',
-    //         },
-    //     },
-    //     properties: {
-    //         name: 'SPECTRE',
-    //         chartData: [],
-    //     },
-    // },
+    {
+        type: 'POWER_SPECTRAL_DENSITY_OF_SIGNAL',
+        ports: {
+            in: {
+                id: 'in',
+                type: 'left',
+            },
+        },
+        properties: {
+            name: 'POWER_SPECTRAL_DENSITY_OF_SIGNAL',
+            chartData: [],
+        },
+    },
 ];

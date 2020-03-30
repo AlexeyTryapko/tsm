@@ -49,5 +49,9 @@
     "cancel": "ВІДМІНА",
     "spectre": "СПЕКТР",
     "from": "З",
-    "to": "По"
+    "to": "По",
+    "POWER_SPECTRAL_DENSITY_OF_SIGNAL": "СПЕКТРАЛЬНА ЩІЛЬНІСТЬ ПОТУЖНОСТІ СИГНАЛУ",
+    "ChartTypeSelect": "Тип графіку",
+    "linear": "Лінійний",
+    "logarithmic": "Логарифмічний"
 }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { withTranslation } from 'react-i18next';
 import { withFormik, Field } from 'formik';
-import FormikInput from '../../FormikInput';
+import FormikInput from '../FormikInput';
 import { Pane } from 'evergreen-ui';
 import * as Yup from 'yup';
 

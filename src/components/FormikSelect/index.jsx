@@ -11,6 +11,7 @@ export const FormikSelect = ({
     validationMessage,
     invalid,
     options,
+    inputProps,
 }) => {
     return (
         <Pane>
@@ -25,6 +26,7 @@ export const FormikSelect = ({
                 placeholder={placeholder}
                 validationMessage={validationMessage}
                 inputHeight={40}
+                {...inputProps}
             >
                 {options.map(({ label, value }) => (
                     <option key={value} value={value}>
