@@ -136,6 +136,8 @@ export const nodesConfig = [
         properties: {
             name: 'POWER_SPECTRAL_DENSITY_OF_SIGNAL',
             chartData: [],
+            freqScaleMin: 0,
+            freqScaleMax: 1000,
         },
     },
 ];

@@ -7,6 +7,7 @@ import {
     correlator,
     comparator,
     signalEnergy,
+    powerSpectralDensity,
 } from './functions';
 import { cloneDeep } from 'lodash';
 
@@ -55,6 +56,7 @@ export const start = chart => {
             CORRELATOR: correlator,
             COMPARATOR: comparator,
             'SIGNAL ENREGY': signalEnergy,
+            'POWER_SPECTRAL_DENSITY_OF_SIGNAL': powerSpectralDensity,
         };
 
         let obj_idxs = {};

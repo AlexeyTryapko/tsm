@@ -1,4 +1,4 @@
-const { PI, sin, floor, random, sign } = Math;
+const { PI, sin, floor, random, sign, pow, evaluate } = Math;
 
 export function signalSource(x, simulationParams, blockParams, step) {
     let A = blockParams['amplitude'];
@@ -250,4 +250,97 @@ export function signalEnergy(x, simulationParams, blockParams, step){
             });
         }
     }
+}
+
+
+export function powerSpectralDensity(x, simulationParams, blockParams, step){
+    let scaleMin = blockParams['freqScaleMin'];
+    let scaleMax = blockParams['freqScaleMax'];
+    let dt = simulationParams['quantizationPeriod']
+    let last = false;
+
+    if (simulationParams['useSamples']) {
+        last = simulationParams['numberOfSamples'] == step;
+    } else {
+        last = simulationParams['executionTime'] == dt*step;
+    }
+
+    for (let [in_i, input_x] of x.entries()) {
+        let found = false;
+        for (let [ch_i, chart] of blockParams['chartData'].entries()) {
+            if (input_x.name == chart.id) {
+                if (!chart.data) {
+                    chart.signal = [];
+                    chart.signal.push(input_x.data);
+                } else {
+                    chart.signal.push(input_x.data);
+                }
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            blockParams['chartData'].push({
+                id: input_x.name,
+                signal: [input_x.data],
+            });
+        }
+    }
+
+    if (last) {
+        let freqScale = [];
+        if (blockParams['logarithmicScale']) {
+            freqScale = logarithmicScale(scaleMin, scaleMax);
+        } else {
+            df = (scaleMax - scaleMin) / 100;
+            for (; scaleMin <= scaleMax; scaleMin += df) {
+                freqScale.push(scaleMin);
+            } 
+        }
+
+        for (let [in_i, input_x] of x.entries()) {
+            let found = false;
+            for (let [ch_i, chart] of blockParams['chartData'].entries()) {
+                if (input_x.name == chart.id) {
+                    chart.data = psd(chart.signal, freqScale);
+                    found = true;
+                    break;
+                }
+            }
+        }
+    }
+}
+
+
+function psd(signal, freqScale) {
+    let result = [];
+    for(let f of freqScale){
+        let s = 0;
+        for(let i = 0; i < signal.length; i++){
+            let scope = {f: f, n: i, dt: dt, PI:PI};
+            s += signal[i]*evaluate('e^(-i*2*PI*f*n*dt)', scope);
+        }
+        s = pow(s, 2);
+        s = s/signal.length;
+        result.push({x:f, y:s});
+    }
+    return result;
+}
+
+
+function logarithmicScale(min, max){
+    let scale = [];
+    let a = min;
+    for (let na = 0; a <= 1; na++) { a /= 10; }
+    if (na == 0) {
+        min = 0;
+    } else {
+        min = 1*pow(10, na);
+    }
+    for (; min < max; min *= 10){
+        for(let i = 1; i <= 9; i++){
+            scale.push(min*i);
+        }
+    }
+    return scale;
 }
