@@ -138,6 +138,7 @@ export const nodesConfig = [
             chartData: [],
             freqScaleMin: 0,
             freqScaleMax: 1000,
+            logarithmicScale: true,
         },
     },
 ];
