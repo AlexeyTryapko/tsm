@@ -7,6 +7,8 @@ import {
     correlator,
     comparator,
     signalEnergy,
+    spectralDensity,
+    
 } from './functions';
 import { cloneDeep } from 'lodash';
 
@@ -41,6 +43,16 @@ export const start = chart => {
      *	Main logic
      *
      **/
+
+    if(step===0){
+        if(chart.globalProperties['useSamples']){
+            chart.globalProperties['executionTime'] = 
+            chart.globalProperties['numberOfSamples'] * chart.globalProperties['quantizationPeriod'];
+            chart.globalProperties['periodOfSignalUnit'] = 
+                chart.globalProperties['samplesPerUnit'] * chart.globalProperties['quantizationPeriod'];
+        }
+    }
+
     if (
         step <
         chart.globalProperties['executionTime'] /
@@ -49,12 +61,13 @@ export const start = chart => {
         let func_names = {
             'SIGNAL SOURCE': signalSource,
             'REFERENCE SOURCE': referenceSource,
-            NOISE: noise,
-            MONITOR: monitor,
+            'NOISE': noise,
+            'MONITOR': monitor,
             'COMMUNICATION LINE': communicationLine,
-            CORRELATOR: correlator,
-            COMPARATOR: comparator,
+            'CORRELATOR': correlator,
+            'COMPARATOR': comparator,
             'SIGNAL ENREGY': signalEnergy,
+            'SPECTRAL DENSITY': spectralDensity,
         };
 
         let obj_idxs = {};

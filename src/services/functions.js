@@ -1,3 +1,4 @@
+import { fft, ComplexNumber} from './math';
 const { PI, sin, floor, random, sign } = Math;
 
 export function signalSource(x, simulationParams, blockParams, step) {
@@ -251,3 +252,33 @@ export function signalEnergy(x, simulationParams, blockParams, step){
         }
     }
 }
+
+export function spectralDensity(x, simulationParams, blockParams, step){
+    let time = simulationParams['executionTime'];
+    let dt = simulationParams['quantizationPeriod'];
+
+    let N = floor(time/dt);
+    if(step===0){
+        blockParams.signal = new Array(N);
+    }
+
+
+    if(blockParams.signal)
+        blockParams.signal[step] = ComplexNumber.toComplex(x[0].data);
+    
+
+    if(step===N-1){
+        blockParams['chartData'].push({
+                id: x[0].name,
+                data: [],
+            });
+        let chart = blockParams['chartData'][0];
+
+        let output = fft(blockParams.signal);
+
+        for(let [i, f] of output.entries()){
+            chart.data.push({ x: i, y: f.re * f.re });
+        }
+    }
+}
+

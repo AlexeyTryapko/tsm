@@ -126,7 +126,7 @@ export const nodesConfig = [
         },
     },
     {
-        type: 'POWER_SPECTRAL_DENSITY_OF_SIGNAL',
+        type: 'SPECTRAL DENSITY',
         ports: {
             in: {
                 id: 'in',
@@ -134,7 +134,7 @@ export const nodesConfig = [
             },
         },
         properties: {
-            name: 'POWER_SPECTRAL_DENSITY_OF_SIGNAL',
+            name: 'SPECTRAL DENSITY',
             chartData: [],
         },
     },
