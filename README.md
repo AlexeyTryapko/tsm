@@ -45,3 +45,7 @@ Builds the app for linux production to the `dist` folder.
 ### `yarn electron-pack:win`
 
 Builds the app for windows production to the `dist` folder.
+
+### `yarn electron-pack:mac`
+
+Builds the app for macOS production to the `dist` folder.

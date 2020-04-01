@@ -1,6 +1,6 @@
 {
     "name": "tsm",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "private": true,
     "main": "public/electron.js",
     "author": "ALexey <aatryapko1201@gmail.com>",
@@ -39,7 +39,8 @@
         "build": "react-scripts build",
         "electron": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
         "electron-pack:linux": "electron-builder build --linux",
-        "electron-pack:win": "electron-builder build -w"
+        "electron-pack:win": "electron-builder build -w",
+        "electron-pack:mac": "electron-builder build -m"
     },
     "browserslist": {
         "production": [
