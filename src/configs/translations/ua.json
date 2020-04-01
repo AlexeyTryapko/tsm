@@ -50,7 +50,7 @@
     "spectre": "СПЕКТР",
     "from": "З",
     "to": "По",
-    "POWER_SPECTRAL_DENSITY_OF_SIGNAL": "СПЕКТРАЛЬНА ЩІЛЬНІСТЬ ПОТУЖНОСТІ СИГНАЛУ",
+    "SPECTRAL DENSITY": "СПЕКТРАЛЬНА ЩІЛЬНІСТЬ ПОТУЖНОСТІ СИГНАЛУ",
     "ChartTypeSelect": "Тип графіку",
     "linear": "Лінійний",
     "logarithmic": "Логарифмічний"

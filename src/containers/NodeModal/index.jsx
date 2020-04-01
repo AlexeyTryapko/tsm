@@ -17,7 +17,7 @@ const getModalComponent = type => {
             return ComparatorModal;
         case 'SIGNAL ENREGY':
             return SignalEnergy;
-        case 'POWER_SPECTRAL_DENSITY_OF_SIGNAL':
+        case 'SPECTRAL DENSITY':
             return PowerSpectralDensityOfSignal;
         default:
             return undefined;

@@ -50,7 +50,7 @@
     "spectre": "СПЕКТР",
     "from": "С",
     "to": "По",
-    "POWER_SPECTRAL_DENSITY_OF_SIGNAL": "СПЕКТРАЛЬНАЯ ПЛОТНОСТЬ МОЩНОСТИ СИГНАЛА",
+    "SPECTRAL DENSITY": "СПЕКТРАЛЬНАЯ ПЛОТНОСТЬ МОЩНОСТИ СИГНАЛА",
     "ChartTypeSelect": "Тип графика",
     "linear": "Линейный",
     "logarithmic": "Логарифмический"
