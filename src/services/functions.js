@@ -8,7 +8,7 @@ export function signalSource(x, simulationParams, blockParams, step) {
     let T = simulationParams['periodOfSignalUnit'];
     let dt = simulationParams['quantizationPeriod'];
     let n = simulationParams['samplesPerUnit'];
-    let period = simulationParams['samplesPerPeriod'];
+    let period = blockParams['samplesPerPeriod'];
     let current = floor((step * dt) / T);
 
     if(simulationParams['useSamples']){
@@ -53,7 +53,7 @@ export function referenceSource(x, simulationParams, blockParams, step) {
     let dt = simulationParams['quantizationPeriod'];
     let referenceSymbol = blockParams['referenceSymbol'];
     let n = simulationParams['samplesPerUnit'];
-    let period = simulationParams['samplesPerPeriod'];
+    let period = blockParams['samplesPerPeriod'];
 
     if(simulationParams['useSamples']){
         f = 1/(period*dt);
