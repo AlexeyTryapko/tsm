@@ -40,7 +40,7 @@
     "formNotFound": "Форма не найдена",
     "signalType": "Тип сигнала",
     "referenceSymbol": "Эталонный символ",
-    "samplesPerPeriod": "Колличество отсчётов",
+    "samplesPerPeriod": "Колличество отсчётов на период",
     "frequency": "Частота",
     "outOfSync": "Рассинхронизация",
     "manchesterСode": "Манчестерский код",
@@ -50,7 +50,7 @@
     "spectre": "СПЕКТР",
     "from": "С",
     "to": "По",
-    "POWER_SPECTRAL_DENSITY_OF_SIGNAL": "СПЕКТРАЛЬНАЯ ПЛОТНОСТЬ МОЩНОСТИ СИГНАЛА",
+    "SPECTRAL DENSITY": "СПЕКТРАЛЬНАЯ ПЛОТНОСТЬ МОЩНОСТИ СИГНАЛА",
     "ChartTypeSelect": "Тип графика",
     "linear": "Линейный",
     "logarithmic": "Логарифмический"

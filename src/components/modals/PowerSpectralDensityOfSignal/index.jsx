@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
-import { Dialog, Pane } from 'evergreen-ui';
+import React from 'react';
+import { Dialog } from 'evergreen-ui';
 import { ResponsiveLine } from '@nivo/line';
 import { withTranslation } from 'react-i18next';
-import PeriodForm from '../../PeriodForm';
-import ChartTypeSelect from './ChartTypeSelect';
 
 const PowerSpectralDensityOfSignal = ({
     closeModal,
     data = [],
     deleteNode,
-    executionTime,
     t,
 }) => {
     const [from, setFrom] = useState(0);
@@ -113,13 +110,13 @@ const PowerSpectralDensityOfSignal = ({
                                         itemOpacity: 1,
                                     },
                                 },
-                            ],
-                        },
-                    ]}
-                />
-            </div>
-        </Dialog>
-    );
-};
+                            },
+                        ],
+                    },
+                ]}
+            />
+        </div>
+    </Dialog>
+);
 
 export default withTranslation()(PowerSpectralDensityOfSignal);
