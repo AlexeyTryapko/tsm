@@ -1,4 +1,4 @@
-import { fft, ComplexNumber} from './math';
+import { fft, ComplexNumber} from './math/math';
 const { PI, sin, floor, random, sign } = Math;
 
 export function signalSource(x, simulationParams, blockParams, step) {
