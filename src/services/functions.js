@@ -277,7 +277,10 @@ export function spectralDensity(x, simulationParams, blockParams, step){
         let output = fft(blockParams.signal);
 
         for(let [i, f] of output.entries()){
-            chart.data.push({ x: i, y: f.re * f.re });
+            if(i>N/2)
+                break;
+            else if(i%Math.round(time)==0)
+                chart.data.push({ x: i/Math.round(time), y: f.getRadius() });
         }
     }
 }

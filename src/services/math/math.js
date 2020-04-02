@@ -1,3 +1,6 @@
+const { PI, sin, cos, sqrt, log} = Math;
+var nj = require('numjs');
+
 /**
  * Return the number of bits used in the binary representation of the number.
  *
@@ -39,6 +42,13 @@ export class ComplexNumber {
    * @param {ComplexNumber|number} addend
    * @return {ComplexNumber}
    */
+
+  add_(addend){
+    const complexAddend = ComplexNumber.toComplex(addend);
+    this.re += complexAddend.re;
+    this.im += complexAddend.im;
+  }
+
   add(addend) {
     // Make sure we're dealing with complex number.
     const complexAddend = ComplexNumber.toComplex(addend);
@@ -165,6 +175,15 @@ export class ComplexNumber {
     };
   }
 
+  exp(){
+    return new ComplexNumber(
+            {
+              re:cos(this.im)*Math.exp(this.re),
+              im:sin(this.im)*Math.exp(this.re)
+            }
+          )
+  }
+
   /**
    * Convert real numbers to complex number.
    * In case if complex number is provided then lefts it as is.
@@ -178,14 +197,6 @@ export class ComplexNumber {
     }
 
     return new ComplexNumber({ re: number, im: 0 });
-  }
-
-  static toNumber(number) {
-    if (!(number instanceof ComplexNumber)) {
-      return number;
-    }
-    else
-    	return number.re;
   }
 }
 
@@ -218,48 +229,64 @@ function reverseBits(input, bitsCount) {
  * @param {boolean} [inverse]
  * @return {ComplexNumber[]}
  */
-export function fft(inputData, inverse = false) {
+
+// export function dft(x){
+//     N = nj.float32(x);
+//     n = nj.arange(N);
+//     k = n.reshape(N, 1);
+//     j = new ComplexNumber({re:0, im:-2});
+//     M = nj.exp(-2j * PI * k * n / N)
+//     return np.dot(M, x)
+// }
+
+export function rec_fft(x){
+  let N = x.length;
+  let X = new Array(N);
+
+  if(N%2>0)
+    throw "x must be power of 2"
+  else if(N===2){
+    for(let i=0;i<x.length;i++)
+      X[i] = new ComplexNumber();
+
+    for(let k=0; k<X.length; k++){
+      for(let n=0; n<x.length; n++){
+        X[k].add_(
+          new ComplexNumber(
+            {
+              re:0,
+              im:-2*PI*k*n/N
+            }
+          ).exp().multiply(x[n])
+        )
+      }
+    }
+
+    return X;
+  }
+  else{
+    let X_even = rec_fft(x.filter((a,i)=>i%2===0));
+    let X_odd = rec_fft(x.filter((a,i)=>i%2===1));
+    let N_2 = Math.floor(N/2)
+    for(let n=0;n<N;n++){
+      X[n] = X_even[n%N_2].add(
+        new ComplexNumber({re:0, im:-2*PI*n/N}).exp().multiply(X_odd[n%N_2])
+      ) 
+    }
+    return X
+  }
+}
+
+export function fft(inputData) {
   const bitsCount = bitLength(inputData.length - 1);
   const N = 1 << bitsCount;
+
+  inputData = inputData.map(ComplexNumber.toComplex);
 
   while (inputData.length < N) {
     inputData.push(new ComplexNumber());
   }
 
-  const output = [];
-  for (let dataSampleIndex = 0; dataSampleIndex < N; dataSampleIndex += 1) {
-    output[dataSampleIndex] = inputData[reverseBits(dataSampleIndex, bitsCount)];
-  }
-
-  for (let blockLength = 2; blockLength <= N; blockLength *= 2) {
-    const imaginarySign = inverse ? -1 : 1;
-    const phaseStep = new ComplexNumber({
-      re: Math.cos(2 * Math.PI / blockLength),
-      im: imaginarySign * Math.sin(2 * Math.PI / blockLength),
-    });
-
-    for (let blockStart = 0; blockStart < N; blockStart += blockLength) {
-      let phase = new ComplexNumber({ re: 1, im: 0 });
-
-      for (let signalId = blockStart; signalId < (blockStart + blockLength / 2); signalId += 1) {
-        const component = output[signalId + blockLength / 2].multiply(phase);
-
-        const upd1 = output[signalId].add(component);
-        const upd2 = output[signalId].subtract(component);
-
-        output[signalId] = upd1;
-        output[signalId + blockLength / 2] = upd2;
-
-        phase = phase.multiply(phaseStep);
-      }
-    }
-  }
-
-  if (inverse) {
-    for (let signalId = 0; signalId < N; signalId += 1) {
-      output[signalId] /= N;
-    }
-  }
-
+  let output = rec_fft(inputData)
   return output;
 }
