@@ -11,7 +11,7 @@
     "REFERENCE SOURCE": "ДЖЕРЕЛО ЕТАЛОННОГО СИГНАЛУ",
     "MONITOR": "МОНІТОР",
     "COMMUNICATION LINE": "ЛІНІЯ ЗВ'ЯЗКУ",
-    "CORRELATOR": "КОРЕЛЯТОР",
+    "CORRELATOR": "КОРРЕЛЯТОР",
     "COMPARATOR": "КОМПАРАТОР",
     "SIGNAL ENREGY": "ЕНЕРГІЯ СИГНАЛУ",
     "simulationIsFinished": "Симуляцію завершено",
@@ -50,7 +50,7 @@
     "spectre": "СПЕКТР",
     "from": "З",
     "to": "По",
-    "SPECTRAL DENSITY": "СПЕКТРАЛЬНА ЩІЛЬНІСТЬ ПОТУЖНОСТІ СИГНАЛУ",
+    "SPECTRAL DENSITY": "СПЕКТРАЛЬНА ЩІЛЬНІСТЬ",
     "ChartTypeSelect": "Тип графіку",
     "linear": "Лінійний",
     "logarithmic": "Логарифмічний"

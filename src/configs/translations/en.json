@@ -50,7 +50,7 @@
     "spectre": "SPECTRE",
     "from": "From",
     "to": "To",
-    "SPECTRAL DENSITY": "POWER SPECTRAL DENSITY OF SIGNAL",
+    "SPECTRAL DENSITY": "SPECTRAL DENSITY",
     "ChartTypeSelect": "Chart type",
     "linear": "Linear",
     "logarithmic": "Logarithmic"

@@ -4,7 +4,7 @@ import {
     MonitorModal,
     SpectreModal,
     SignalEnergy,
-    PowerSpectralDensityOfSignal,
+    SpectralDensity,
 } from '../../components/modals';
 
 const getModalComponent = type => {
@@ -18,7 +18,7 @@ const getModalComponent = type => {
         case 'SIGNAL ENREGY':
             return SignalEnergy;
         case 'SPECTRAL DENSITY':
-            return PowerSpectralDensityOfSignal;
+            return SpectralDensity;
         default:
             return undefined;
     }

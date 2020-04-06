@@ -3,12 +3,7 @@ import { Dialog } from 'evergreen-ui';
 import { ResponsiveLine } from '@nivo/line';
 import { withTranslation } from 'react-i18next';
 
-const PowerSpectralDensityOfSignal = ({
-    closeModal,
-    data = [],
-    deleteNode,
-    t,
-}) => (
+const SpectralDensity = ({ closeModal, data = [], deleteNode, t }) => (
     <Dialog
         isShown={true}
         onCloseComplete={closeModal}
@@ -83,4 +78,4 @@ const PowerSpectralDensityOfSignal = ({
     </Dialog>
 );
 
-export default withTranslation()(PowerSpectralDensityOfSignal);
+export default withTranslation()(SpectralDensity);
