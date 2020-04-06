@@ -2,7 +2,7 @@ const { PI, sin, sqrt, log, random } = Math;
 
 var gauss_second = undefined;
 
-function rand_gauss(mu=0, std=1) {
+export function rand_gauss({mu=0, std=1}={}) {
   if (gauss_second) {
     let tmp = gauss_second;
     gauss_second = undefined;
