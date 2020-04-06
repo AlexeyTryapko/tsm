@@ -1,5 +1,7 @@
 # TSM
 
+[![Build Status](https://travis-ci.com/AlexeyTryapko/tsm.svg?branch=dev)](https://travis-ci.com/AlexeyTryapko/tsm)
+
 ## Setup
 
 1. Install [Node.js](https://nodejs.org/en/ 'Node.js') (LTS).
