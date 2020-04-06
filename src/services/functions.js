@@ -116,7 +116,7 @@ export function noise(x, simulationParams, blockParams, step) {
 
     blockParams.f.forEach((f)=>rand+=A*sin(2*PI*f*dt*step))
 
-    return A * rand;
+    return rand;
 }
 
 export function monitor(x, simulationParams, blockParams, step) {
