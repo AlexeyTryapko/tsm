@@ -1,4 +1,4 @@
-const { PI, sin, sqrt, log, random } = Math;
+const { sqrt, log, random } = Math;
 
 var gauss_second = undefined;
 
@@ -16,7 +16,7 @@ export function rand_gauss({mu=0, std=1}={}) {
       x1 = 2.0 * random() - 1.0;
       x2 = 2.0 * random() - 1.0;
       r2 = x1 * x1 + x2 * x2;
-    } while (r2 >= 1.0 || r2 == 0.0);
+    } while (r2 >= 1.0 || r2 === 0.0);
 
     /* Polar method, a more efficient version of the Box-Muller approach. */
     let f = sqrt(-2.0 * log(r2) / r2);

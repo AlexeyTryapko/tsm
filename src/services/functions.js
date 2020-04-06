@@ -1,4 +1,4 @@
-import { fft, ComplexNumber, sin_taylor} from './math/math';
+import { fft, ComplexNumber} from './math/math';
 import { rand_gauss} from './math/distributions'
 const { PI, sin, floor, random, sign, log2, sqrt } = Math;
 
@@ -121,10 +121,10 @@ export function noise(x, simulationParams, blockParams, step) {
 
 export function monitor(x, simulationParams, blockParams, step) {
     let dt = simulationParams['quantizationPeriod'];
-    for (let [in_i, input_x] of x.entries()) {
+    x.forEach((input_x)=>{
         let found = false;
-        for (let [ch_i, chart] of blockParams['chartData'].entries()) {
-            if (input_x.name == chart.id) {
+        for (let [, chart] of blockParams['chartData'].entries()) {
+            if (input_x.name === chart.id) {
                 if (!chart.data) {
                     chart.data = [];
                 }
@@ -139,7 +139,7 @@ export function monitor(x, simulationParams, blockParams, step) {
                 data: [{ x: dt * step, y: input_x.data }],
             });
         }
-    }
+    })
 }
 
 export function communicationLine(x, simulationParams, blockParams, step) {
@@ -148,7 +148,7 @@ export function communicationLine(x, simulationParams, blockParams, step) {
     let kSignal = blockParams['coeffForIncomingSignal'];
     let kNoise = blockParams['coeffForTheNoise'];
 
-    for (let [in_i, input_x] of x.entries()) {
+    for (let [, input_x] of x.entries()) {
         if (input_x.name.includes('SIGNAL SOURCE')) {
             inputSignal = input_x.data;
         }
@@ -170,7 +170,7 @@ export function correlator(x, simulationParams, blockParams, step) {
     if(simulationParams['useSamples']){
         T = n*dt;
     }
-    for (let [in_i, input_x] of x.entries()) {
+    for (let [, input_x] of x.entries()) {
         if (input_x.name.includes('COMMUNICATION LINE')) {
             inputSignal = input_x.data;
         }
@@ -185,7 +185,7 @@ export function correlator(x, simulationParams, blockParams, step) {
         sum = 0;
         blockParams['reset'] = false;
     }
-    if (dt * step - floor((step * dt) / T) * T == 0) {
+    if (dt * step - floor((step * dt) / T) * T === 0) {
         blockParams['reset'] = true;
     }
 
@@ -207,7 +207,7 @@ export function comparator(x, simulationParams, blockParams, step) {
     if(simulationParams['useSamples']){
         T = n*dt;
     }
-    for (let [in_i, input_x] of x.entries()) {
+    for (let [, input_x] of x.entries()) {
         if (input_x.name.includes('CORRELATOR')) {
             inputSignal = input_x.data;
         }
@@ -245,15 +245,15 @@ export function comparator(x, simulationParams, blockParams, step) {
 export function signalEnergy(x, simulationParams, blockParams, step){
     let dt = simulationParams['quantizationPeriod'];
 
-    for (let [in_i, input_x] of x.entries()) {
+    for (let [, input_x] of x.entries()) {
         let found = false;
-        for (let [ch_i, chart] of blockParams['chartData'].entries()) {
-            if (input_x.name == chart.id) {
+        for (let [, chart] of blockParams['chartData'].entries()) {
+            if (input_x.name === chart.id) {
                 if (!chart.data) {
                     chart.data = [];
                     chart.data.push({ x: dt * step, y: input_x.data*input_x.data*dt });
                 } else {
-                    chart.data.push({ x: dt * step, y: input_x.data*input_x.data*dt + chart.data.filter(obj => obj.x == dt*(step-1))[0].y});
+                    chart.data.push({ x: dt * step, y: input_x.data*input_x.data*dt + chart.data.filter(obj => obj.x === dt*(step-1))[0].y});
                 }
                 found = true;
                 break;
@@ -294,7 +294,7 @@ export function spectralDensity(x, simulationParams, blockParams, step){
         for(let [i, f] of output.entries()){
             if(i>N/2)
                 break;
-            else if(i%Math.round(time)==0)
+            else if(i%Math.round(time)===0)
                 chart.data.push({ x: i/Math.round(time), y: f.getRadius() });
         }
     }

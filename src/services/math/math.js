@@ -1,4 +1,4 @@
-const { PI, sin, cos, sqrt, log} = Math;
+const { PI, sin, cos} = Math;
 
 
 export function calc_factorials(N,call){
@@ -213,26 +213,7 @@ export class ComplexNumber {
     }
 }
 
-/**
- * Returns the number which is the flipped binary representation of input.
- *
- * @param {number} input
- * @param {number} bitsCount
- * @return {number}
- */
-function reverseBits(input, bitsCount) {
-    let reversedBits = 0;
 
-    for (let bitIndex = 0; bitIndex < bitsCount; bitIndex += 1) {
-        reversedBits *= 2;
-
-        if (Math.floor(input / (1 << bitIndex)) % 2 === 1) {
-            reversedBits += 1;
-        }
-    }
-
-    return reversedBits;
-}
 
 /**
  * Returns the radix-2 fast fourier transform of the given array.
@@ -256,7 +237,7 @@ export function rec_fft(x) {
     let N = x.length;
     let X = new Array(N);
 
-    if (N % 2 > 0) throw 'x must be power of 2';
+    if (N % 2 > 0) throw  Error('x must be power of 2');
     else if (N === 2) {
         for (let i = 0; i < x.length; i++) X[i] = new ComplexNumber();
 
