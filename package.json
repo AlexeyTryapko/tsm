@@ -40,7 +40,8 @@
         "electron": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
         "electron-pack:linux": "electron-builder build --linux",
         "electron-pack:win": "electron-builder build -w",
-        "electron-pack:mac": "electron-builder build -m"
+        "electron-pack:mac": "electron-builder build -m",
+        "release": "electron-builder"
     },
     "browserslist": {
         "production": [
