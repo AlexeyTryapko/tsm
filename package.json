@@ -3,21 +3,46 @@
     "version": "0.1.0",
     "private": true,
     "main": "public/electron.js",
+    "author": "ALexey <aatryapko1201@gmail.com>",
+    "homepage": "./",
+    "build": {
+        "appId": "tsm",
+        "files": [
+            "build/**/*",
+            "node_modules/**/*"
+        ],
+        "linux": {
+            "target": [
+                "deb",
+                "rpm"
+            ],
+            "category": "Utility"
+        }
+    },
     "dependencies": {
         "@mrblenny/react-flow-chart": "^0.0.9",
+        "@nivo/line": "^0.61.1",
         "electron-is-dev": "^1.1.0",
         "evergreen-ui": "^4.23.0",
         "formik": "^2.1.4",
+        "i18next": "^19.3.2",
         "lodash": "^4.17.15",
         "react": "^16.12.0",
         "react-dom": "^16.12.0",
+        "react-i18next": "^11.3.3",
         "react-scripts": "3.4.0",
+        "uuid": "^3.3.2",
         "yup": "^0.28.1"
     },
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "electron": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\""
+        "electron": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+        "electron-pack:linux": "electron-builder build --linux",
+        "electron-pack:win": "electron-builder build -w",
+        "electron-pack:mac": "electron-builder build -m",
+        "release": "yarn build && electron-builder",
+        "test": "echo success"
     },
     "browserslist": {
         "production": [
@@ -35,6 +60,7 @@
         "babel-eslint": "10.0.3",
         "concurrently": "^5.1.0",
         "electron": "^8.0.2",
+        "electron-builder": "^22.3.6",
         "eslint": "^6.8.0",
         "eslint-config-babel": "^9.0.0",
         "eslint-config-prettier": "^6.10.0",

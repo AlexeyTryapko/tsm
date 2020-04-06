@@ -1,5 +1,7 @@
 # TSM
 
+[![Build Status](https://travis-ci.com/AlexeyTryapko/tsm.svg?branch=dev)](https://travis-ci.com/AlexeyTryapko/tsm)
+
 ## Setup
 
 1. Install [Node.js](https://nodejs.org/en/ 'Node.js') (LTS).
@@ -37,3 +39,15 @@ Builds the app for production to the `build` folder.
 ### `yarn electron`
 
 Runs the app in development mode in Electron.
+
+### `yarn electron-pack:linux`
+
+Builds the app for linux production to the `dist` folder.
+
+### `yarn electron-pack:win`
+
+Builds the app for windows production to the `dist` folder.
+
+### `yarn electron-pack:mac`
+
+Builds the app for macOS production to the `dist` folder.

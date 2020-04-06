@@ -5,10 +5,9 @@ import {
     NoiseForm,
     ReferenceSourceForm,
     CommunicationLineForm,
-    CorrelatorForm,
-    ClockGeneratorForm,
-    MonitorForm,
     FormNotFound,
+    GlobalPropertiesForm,
+    ComparatorForm,
 } from '../../components/forms';
 
 const getFormComponent = type => {
@@ -21,37 +20,52 @@ const getFormComponent = type => {
             return ReferenceSourceForm;
         case 'COMMUNICATION LINE':
             return CommunicationLineForm;
-        case 'CORRELATOR':
-            return CorrelatorForm;
-        case 'CLOCK GENERATOR':
-            return ClockGeneratorForm;
-        case 'MONITOR':
-            return MonitorForm;
+        case 'GLOBAL':
+            return GlobalPropertiesForm;
+        case 'COMPARATOR':
+            return ComparatorForm;
         default:
             return FormNotFound;
     }
 };
 
-const getForm = (type, properties, updateProperties, closeSidebar) => {
+const getForm = (
+    type,
+    properties,
+    updateProperties,
+    closeSidebar,
+    deleteNode,
+    useSamples
+) => {
     const Component = getFormComponent(type);
     return (
         <Component
             updateAction={updateProperties}
             onConfirmBtnClick={closeSidebar}
+            onDeleteNode={deleteNode}
+            useSamples={useSamples}
             {...properties}
         />
     );
 };
 
 const PropertiesSidebar = ({
-    isShown,
     type,
     properties,
     closeSidebar,
     updateProperties,
+    deleteNode,
+    useSamples,
 }) => (
-    <SideSheet isShown={isShown} onCloseComplete={closeSidebar}>
-        {getForm(type, properties, updateProperties, closeSidebar)}
+    <SideSheet isShown={true} onCloseComplete={closeSidebar}>
+        {getForm(
+            type,
+            properties,
+            updateProperties,
+            closeSidebar,
+            deleteNode,
+            useSamples
+        )}
     </SideSheet>
 );
 

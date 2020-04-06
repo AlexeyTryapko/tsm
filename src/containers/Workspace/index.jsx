@@ -1,17 +1,143 @@
-import * as React from 'react';
-import { FlowChart } from '@mrblenny/react-flow-chart';
-import Node from '../../components/Node';
+import React, { useState } from 'react';
+import { nodesConfig } from '../../configs';
+import { cloneDeep } from 'lodash';
+import NodesSidebar from '../../containers/NodesSidebar';
+import Schema from '../../containers/Schema';
+import InfoBlock from '../../containers/InfoBlock';
+import { start } from '../../services/simulation';
+import { toaster } from 'evergreen-ui';
+import { withTranslation } from 'react-i18next';
 
-export const Workspace = ({ chart, actions }) => (
-    <div className="content">
-        <FlowChart
-            chart={chart}
-            callbacks={actions}
-            Components={{
-                NodeInner: Node,
-            }}
-        />
-    </div>
-);
+export const Workspace = ({
+    handleWorkspaceUpload,
+    selectWorkspace,
+    updateWorkspace,
+    removeWorkspace,
+    workspaceActions,
+    workspace,
+    workspaceList,
+    addWorkspace,
+    t,
+}) => {
+    const [showGlobalSettings, toggleGlobalSettings] = useState(false);
 
-export default Workspace;
+    const clearSelectedItem = () => {
+        updateWorkspace({
+            selected: {},
+        });
+    };
+
+    const updateGlobalSettings = newParams => {
+        updateWorkspace({
+            globalProperties: {
+                ...workspace.globalProperties,
+                ...newParams,
+            },
+        });
+    };
+
+    const getSchemaDownloadHref = () => {
+        const schema = JSON.stringify(workspace);
+        const blob = new Blob([schema], { type: 'application/octet-stream' });
+        return URL.createObjectURL(blob);
+    };
+
+    const getNodeProperties = id => {
+        const { nodes } = workspace;
+        return nodes[id]?.properties;
+    };
+
+    const getNodeType = id => {
+        const { nodes } = workspace;
+        return nodes[id]?.type;
+    };
+
+    const updateProperties = (id, properties) => {
+        const { nodes } = workspace;
+        const { properties: oldProps } = nodes[id];
+        updateWorkspace({
+            nodes: {
+                ...nodes,
+                [id]: {
+                    ...nodes[id],
+                    properties: {
+                        ...oldProps,
+                        ...properties,
+                    },
+                },
+            },
+        });
+    };
+
+    const getNodeInfoBlock = () => {
+        const {
+            selected: { id: selectedId },
+            globalProperties: { useSamples = false, executionTime },
+        } = workspace;
+        const props = {
+            type: getNodeType(selectedId),
+            closeInfo: () => clearSelectedItem(),
+            updateProperties: updateProperties.bind(null, selectedId),
+            properties: { ...getNodeProperties(selectedId), executionTime },
+            data: getNodeProperties(selectedId).chartData,
+            deleteNode: () => workspaceActions.onDeleteKey({}),
+            useSamples,
+        };
+        return <InfoBlock {...props} />;
+    };
+
+    const getGlobalInfoBlock = () => {
+        const { globalProperties } = workspace;
+        const props = {
+            type: 'GLOBAL',
+            properties: globalProperties,
+            closeInfo: () => toggleGlobalSettings(false),
+            updateProperties: props => updateGlobalSettings(props),
+        };
+
+        return <InfoBlock {...props} />;
+    };
+
+    const getInfoBlock = () => {
+        const { selected, globalProperties } = workspace;
+        if (showGlobalSettings) {
+            return getGlobalInfoBlock(globalProperties);
+        }
+
+        if (selected.id && selected.type === 'node') {
+            return getNodeInfoBlock(workspaceActions);
+        }
+    };
+
+    const simulate = () => {
+        const chart = cloneDeep(workspace);
+        let res = undefined;
+        do {
+            res = start(chart);
+        } while (res);
+        toaster.success(t('simulationIsFinished'));
+        updateWorkspace(cloneDeep(chart));
+    };
+
+    return (
+        <div className="page-content">
+            <NodesSidebar
+                nodes={nodesConfig}
+                handleRunClick={() => simulate()}
+                handleSettingsCLick={() => toggleGlobalSettings(true)}
+                handleFileUpload={handleWorkspaceUpload}
+                hrefForDownload={getSchemaDownloadHref()}
+                addWorkspace={addWorkspace}
+                workspaceList={workspaceList}
+                selectWorkspace={selectWorkspace}
+                removeWorkspace={removeWorkspace}
+                workspaceTitle={workspace.schemaTitle}
+                workspaceId={workspace.id}
+            />
+            <Schema chart={workspace} actions={workspaceActions} />
+            {getInfoBlock()}
+        </div>
+    );
+};
+
+export default withTranslation()(Workspace);

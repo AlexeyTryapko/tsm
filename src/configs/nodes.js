@@ -2,79 +2,140 @@ export const nodesConfig = [
     {
         type: 'SIGNAL SOURCE',
         ports: {
-            port1: {
-                id: 'port1',
+            out: {
+                id: 'out',
                 type: 'right',
             },
         },
-        properties: {},
+        properties: {
+            name: 'SIGNAL SOURCE',
+            signalType: 'manchesterСode',
+            amplitude: 1,
+            frequency: 3,
+            sequence: 11101,
+            samplesPerPeriod: 20,
+        },
     },
     {
         type: 'NOISE',
         ports: {
-            port1: {
-                id: 'port1',
+            out: {
+                id: 'out',
                 type: 'right',
             },
         },
-        properties: {},
+        properties: {
+            name: 'NOISE',
+            noiseType: 'whiteNoise',
+            amplitude: 0.1,
+        },
     },
     {
         type: 'REFERENCE SOURCE',
         ports: {
-            port1: {
-                id: 'port1',
+            out: {
+                id: 'out',
                 type: 'right',
             },
         },
-        properties: {},
+        properties: {
+            name: 'REFERENCE SOURCE',
+            signalType: 'manchesterСode',
+            referenceSymbol: '1',
+            amplitude: 1,
+            frequency: 1,
+            outOfSync: 0,
+            samplesPerPeriod: 20,
+        },
     },
     {
         type: 'MONITOR',
         ports: {
-            port1: {
-                id: 'port1',
+            in: {
+                id: 'in',
                 type: 'left',
             },
         },
-        properties: {},
+        properties: {
+            name: 'MONITOR',
+            chartData: [],
+        },
+    },
+    {
+        type: 'SIGNAL ENREGY',
+        ports: {
+            in: {
+                id: 'in',
+                type: 'left',
+            },
+        },
+        properties: {
+            name: 'SIGNAL ENREGY',
+            chartData: [],
+        },
     },
     {
         type: 'COMMUNICATION LINE',
         ports: {
-            port1: {
-                id: 'port1',
+            in: {
+                id: 'in',
                 type: 'left',
             },
-            port2: {
-                id: 'port2',
+            out: {
+                id: 'out',
                 type: 'right',
             },
         },
-        properties: {},
+        properties: {
+            name: 'COMMUNICATION LINE',
+            coeffForIncomingSignal: 1,
+            coeffForTheNoise: 0.5,
+        },
     },
     {
         type: 'CORRELATOR',
         ports: {
-            port1: {
-                id: 'port1',
+            in: {
+                id: 'in',
                 type: 'left',
             },
-            port2: {
-                id: 'port2',
+            out: {
+                id: 'out',
                 type: 'right',
             },
         },
-        properties: {},
+        properties: {
+            name: 'CORRELATOR',
+            integralSum: 0,
+            reset: false,
+        },
     },
     {
-        type: 'CLOCK GENERATOR',
+        type: 'COMPARATOR',
         ports: {
-            port1: {
-                id: 'port1',
-                type: 'right',
+            in: {
+                id: 'in',
+                type: 'left',
             },
         },
-        properties: {},
+        properties: {
+            name: 'COMPARATOR',
+            compSum: 0,
+            previousInput: 0,
+            sequence: '',
+        },
+    },
+    {
+        type: 'SPECTRAL DENSITY',
+        ports: {
+            in: {
+                id: 'in',
+                type: 'left',
+            },
+        },
+        properties: {
+            name: 'SPECTRAL DENSITY',
+            chartData: [],
+        },
     },
 ];

@@ -7,4 +7,5 @@ export const defaultChart = {
     links: {},
     selected: {},
     hovered: {},
+    schemaTitle: 'Untitled',
 };

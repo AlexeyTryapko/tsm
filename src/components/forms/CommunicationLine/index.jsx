@@ -3,9 +3,15 @@ import { withFormik, Field } from 'formik';
 import FormikInput from '../../FormikInput';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
+import { withTranslation } from 'react-i18next';
 
-const CommunicationLineForm = props => {
-    const { submitForm, errors, touched } = props;
+const CommunicationLineForm = ({
+    submitForm,
+    onDeleteNode,
+    errors,
+    touched,
+    t,
+}) => {
     const defaultProps = name => ({
         name,
         invalid: errors[name] && touched[name],
@@ -16,57 +22,54 @@ const CommunicationLineForm = props => {
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
-                Communication line
+                {t('COMMUNICATION LINE')}
             </Heading>
             <Field
-                {...defaultProps('coeffForTheFirstIncomingSignal')}
-                label="Coefficient for the first incoming signal"
+                {...defaultProps('coeffForIncomingSignal')}
+                label={t('coeffForIncomingSignal')}
                 required
             />
             <Field
-                {...defaultProps('coeffForTheSecondIncomingSignal')}
-                label="Coefficient for the second incoming signal"
-                required
-            />
-            <Field
-                {...defaultProps('samplesPerPeriodOrAlphabetChar')}
-                label="Number of samples per period / per alphabet character"
+                {...defaultProps('coeffForTheNoise')}
+                label={t('coeffForTheNoise')}
                 required
             />
             <Pane display="flex" justifyContent="flex-end">
+                <Button
+                    height={40}
+                    marginRight={20}
+                    appearance="primary"
+                    intent="danger"
+                    onClick={onDeleteNode}
+                >
+                    {t('remove')}
+                </Button>
                 <Button height={40} appearance="primary" onClick={submitForm}>
-                    SAVE
+                    {t('save')}
                 </Button>
             </Pane>
         </Pane>
     );
 };
 
-export default withFormik({
-    handleSubmit: (values, { props }) => {
-        props.updateAction(values);
-        props.onConfirmBtnClick();
-    },
-    validationSchema: Yup.object({
-        coeffForTheFirstIncomingSignal: Yup.number().required(
-            'Field is required'
-        ),
-        coeffForTheSecondIncomingSignal: Yup.number().required(
-            'Field is required'
-        ),
-        samplesPerPeriodOrAlphabetChar: Yup.number().required(
-            'Field is required'
-        ),
-    }),
-    mapPropsToValues: ({
-        coeffForTheFirstIncomingSignal = '',
-        coeffForTheSecondIncomingSignal = '',
-        samplesPerPeriodOrAlphabetChar = '',
-    }) => ({
-        coeffForTheFirstIncomingSignal,
-        coeffForTheSecondIncomingSignal,
-        samplesPerPeriodOrAlphabetChar,
-    }),
-    validateOnChange: false,
-    validateOnBlur: false,
-})(CommunicationLineForm);
+export default withTranslation()(
+    withFormik({
+        handleSubmit: (values, { props }) => {
+            props.updateAction(values);
+            props.onConfirmBtnClick();
+        },
+        validationSchema: Yup.object({
+            coeffForIncomingSignal: Yup.number().required('Field is required'),
+            coeffForTheNoise: Yup.number().required('Field is required'),
+        }),
+        mapPropsToValues: ({
+            coeffForIncomingSignal = '',
+            coeffForTheNoise = '',
+        }) => ({
+            coeffForIncomingSignal,
+            coeffForTheNoise,
+        }),
+        validateOnChange: false,
+        validateOnBlur: false,
+    })(CommunicationLineForm)
+);

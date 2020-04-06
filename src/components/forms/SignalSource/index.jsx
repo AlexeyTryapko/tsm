@@ -1,11 +1,19 @@
 import * as React from 'react';
 import { withFormik, Field } from 'formik';
 import FormikInput from '../../FormikInput';
+import FormikSelect from '../../FormikSelect';
 import * as Yup from 'yup';
 import { Pane, Button, Heading } from 'evergreen-ui';
+import { withTranslation } from 'react-i18next';
 
-const SignalSourceForm = props => {
-    const { submitForm, errors, touched } = props;
+const SignalSourceForm = ({
+    submitForm,
+    onDeleteNode,
+    errors,
+    touched,
+    useSamples,
+    t,
+}) => {
     const defaultProps = name => ({
         name,
         invalid: errors[name] && touched[name],
@@ -13,84 +21,102 @@ const SignalSourceForm = props => {
         component: FormikInput,
     });
 
+    const defaultSelectProps = name => ({
+        name,
+        invalid: errors[name] && touched[name],
+        validationMessage: errors[name],
+        component: FormikSelect,
+    });
+
+    const signalTypes = [
+        {
+            value: 'manchesterСode',
+            label: t('manchesterСode'),
+        },
+        {
+            value: 'analogSignal',
+            label: t('analogSignal'),
+        },
+    ];
+
     return (
         <Pane padding={20}>
             <Heading size={500} marginBottom={20}>
-                Signal source
+                {t('SIGNAL SOURCE')}
             </Heading>
             <Field
-                {...defaultProps('signalAmplitude')}
-                label="Signal amplitude"
-                required
+                {...defaultSelectProps('signalType')}
+                label={t('signalType')}
+                options={signalTypes}
             />
             <Field
-                {...defaultProps('signalFrequency')}
-                label="Signal frequency"
-                description="For analog signals"
+                {...defaultProps('amplitude')}
+                label={t('amplitude')}
                 required
             />
+            {useSamples ? (
+                <Field
+                    {...defaultProps('samplesPerPeriod')}
+                    label={t('samplesPerPeriod')}
+                    required
+                />
+            ) : (
+                <Field
+                    {...defaultProps('frequency')}
+                    label={t('frequency')}
+                    required
+                />
+            )}
             <Field
-                {...defaultProps('periodsPerLogicalSymbol')}
-                label="The number of periods per logical symbol of the alphabet"
-                description="For analog harmonic signals of type sin x"
-                required
-            />
-            <Field
-                {...defaultProps('samplesPerPeriod')}
-                label="Number of samples per period"
-                description="For analog signals"
-                required
-            />
-            <Field
-                {...defaultProps('samplesPerAlphabetCharacter')}
-                label="Number of samples per alphabet character"
-                description="For discrete signals"
-                required
-            />
-            <Field
-                {...defaultProps('numberOfcharactersTransmittedAlphabet')}
-                label="Number of characters transmitted alphabet"
+                {...defaultProps('sequence')}
+                label={t('sequence')}
                 required
             />
             <Pane display="flex" justifyContent="flex-end">
+                <Button
+                    height={40}
+                    marginRight={20}
+                    appearance="primary"
+                    intent="danger"
+                    onClick={onDeleteNode}
+                >
+                    {t('remove')}
+                </Button>
                 <Button height={40} appearance="primary" onClick={submitForm}>
-                    SAVE
+                    {t('save')}
                 </Button>
             </Pane>
         </Pane>
     );
 };
 
-export default withFormik({
-    handleSubmit: (values, { props }) => {
-        props.updateAction(values);
-        props.onConfirmBtnClick();
-    },
-    validationSchema: Yup.object({
-        signalAmplitude: Yup.number().required('Field is required'),
-        signalFrequency: Yup.number().required('Field is required'),
-        periodsPerLogicalSymbol: Yup.number().required('Field is required'),
-        samplesPerPeriod: Yup.number().required('Field is required'),
-        samplesPerAlphabetCharacter: Yup.number().required('Field is required'),
-        numberOfcharactersTransmittedAlphabet: Yup.number().required(
-            'Field is required'
-        ),
-    }),
-    mapPropsToValues: ({
-        signalAmplitude = '',
-        signalFrequency = '',
-        periodsPerLogicalSymbol = '',
-        samplesPerPeriod = '',
-        samplesPerAlphabetCharacter = '',
-        numberOfcharactersTransmittedAlphabet = '',
-    }) => ({
-        signalAmplitude,
-        signalFrequency,
-        periodsPerLogicalSymbol,
-        samplesPerPeriod,
-        samplesPerAlphabetCharacter,
-        numberOfcharactersTransmittedAlphabet,
-    }),
-    validateOnChange: false,
-    validateOnBlur: false,
-})(SignalSourceForm);
+export default withTranslation()(
+    withFormik({
+        handleSubmit: (values, { props }) => {
+            props.updateAction(values);
+            props.onConfirmBtnClick();
+        },
+        validationSchema: Yup.object({
+            signalType: Yup.string().required('Field is required'),
+            amplitude: Yup.number().required('Field is required'),
+            frequency: Yup.number().required('Field is required'),
+            sequence: Yup.number().required('Field is required'),
+            samplesPerPeriod: Yup.number().required('Field is required'),
+        }),
+        mapPropsToValues: ({
+            signalType = '',
+            amplitude = '',
+            frequency = '',
+            sequence = '',
+            samplesPerPeriod = '',
+        }) => ({
+            signalType,
+            amplitude,
+            frequency,
+            sequence,
+            samplesPerPeriod,
+        }),
+        validateOnChange: false,
+        validateOnBlur: false,
+    })(SignalSourceForm)
+);
