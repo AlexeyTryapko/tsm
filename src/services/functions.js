@@ -1,5 +1,6 @@
-import { fft, ComplexNumber} from './math/math';
-const { PI, sin, floor, random, sign } = Math;
+import { fft, ComplexNumber, sin_taylor} from './math/math';
+import { rand_gauss} from './math/distributions'
+const { PI, sin, floor, random, sign, log2, sqrt } = Math;
 
 export function signalSource(x, simulationParams, blockParams, step) {
     let A = blockParams['amplitude'];
@@ -77,29 +78,43 @@ export function referenceSource(x, simulationParams, blockParams, step) {
 export function noise(x, simulationParams, blockParams, step) {
     let noiseType = blockParams['noiseType'];
     let A = blockParams['amplitude'];
+    let dt = simulationParams['quantizationPeriod']
+    let max_f = 0.5/dt;
+
     let rand = 0;
 
-    if (noiseType === 'whiteNoise') {
-        rand = 2 * (random() - 0.5);
+    if(step===0){
+        blockParams.rand_func = undefined;
+        blockParams.f = new Array(floor(2*log2(max_f-1.0))).fill(0);
     }
-    if (noiseType === 'pinkNoise') {
-        rand = 2 * (random() - 0.5);
+
+    if(!blockParams.rand_func){
+        if (noiseType === 'whiteNoise') {
+            blockParams.rand_func = () =>  (max_f-1.0)*random();
+        }
+        else if (noiseType === 'pinkNoise') {
+            blockParams.rand_func = () => 2 * (random() - 0.5);
+        }
+        else if (noiseType === 'blueNoise') {
+            blockParams.rand_func = () => 2 * (random() - 0.5);
+        }
+        else if (noiseType === 'grayNoise') {
+            blockParams.rand_func = () => 2 * (random() - 0.5);
+        }
+        else if (noiseType === 'pinkNoise') {
+            blockParams.rand_func = () => 2 * (random() - 0.5);
+        }
+        else if (noiseType === 'impulseNoise') {
+            blockParams.rand_func = () => 2 * (random() - 0.5);
+        }
+        else if (noiseType === 'randomNoise') {
+            blockParams.rand_func = () => rand_gauss({mu:(max_f-1.0)/2, std:sqrt(max_f)});
+        }
+
+        blockParams.f = blockParams.f.map((v)=> blockParams.rand_func())
     }
-    if (noiseType === 'blueNoise') {
-        rand = 2 * (random() - 0.5);
-    }
-    if (noiseType === 'grayNoise') {
-        rand = 2 * (random() - 0.5);
-    }
-    if (noiseType === 'pinkNoise') {
-        rand = 2 * (random() - 0.5);
-    }
-    if (noiseType === 'impulseNoise') {
-        rand = 2 * (random() - 0.5);
-    }
-    if (noiseType === 'randomNoise') {
-        rand = 2 * (random() - 0.5);
-    }
+
+    blockParams.f.forEach((f)=>rand+=A*sin(2*PI*f*dt*step))
 
     return A * rand;
 }

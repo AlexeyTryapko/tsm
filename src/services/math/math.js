@@ -1,5 +1,16 @@
 const { PI, sin, cos, sqrt, log} = Math;
-var nj = require('numjs');
+
+
+export function calc_factorials(N,call){
+  let arr = [call(0)];
+  for(let n=1;n<N;n++){
+    let gain = arr[n-1];
+    for(let i=call(n-1) + 1;i<=call(n);i++)
+      gain *= i;
+    arr.push(gain);
+  }
+  return arr;
+}
 
 /**
  * Return the number of bits used in the binary representation of the number.
@@ -290,3 +301,35 @@ export function fft(inputData) {
   let output = rec_fft(inputData)
   return output;
 }
+
+export function binpow (a, n) {
+  let res = 1;
+  while (n>0) {
+    if (n & 1)
+      res *= a;
+    a *= a;
+    n >>= 1;
+  }
+  return res;
+}
+console.log(binpow(2,3))
+
+var taylor_n = 3
+
+var sin_fctrl = calc_factorials(taylor_n,(n)=>2*n+1);
+
+export function sin_taylor(x){
+  if(!(x instanceof Array)){
+    x = [x];
+  }
+  let fx = 0;
+  x.forEach((x_i)=>{
+    for(let i=0; i<taylor_n; i++){
+      fx+= (i%2===0?1:-1)*binpow(x_i,2*i+1)/sin_fctrl[i];
+    }
+  });
+  return fx;
+}
+
+console.log(sin_taylor([0.8,0.3]))
+
