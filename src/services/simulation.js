@@ -2,8 +2,6 @@ import {
     signalSource,
     referenceSource,
     noise,
-    monitor,
-    communicationLine,
     correlator,
     comparator,
     signalEnergy,
@@ -11,6 +9,7 @@ import {
     
 } from './functions';
 import { cloneDeep } from 'lodash';
+import { blockReferences } from '../expand/config/ref'
 
 export const start = chart => {
     let step = chart.globalProperties['step'];
@@ -62,12 +61,11 @@ export const start = chart => {
             'SIGNAL SOURCE': signalSource,
             'REFERENCE SOURCE': referenceSource,
             'NOISE': noise,
-            'MONITOR': monitor,
-            'COMMUNICATION LINE': communicationLine,
             'CORRELATOR': correlator,
             'COMPARATOR': comparator,
             'SIGNAL ENREGY': signalEnergy,
             'SPECTRAL DENSITY': spectralDensity,
+            ...blockReferences,
         };
 
         let obj_idxs = {};

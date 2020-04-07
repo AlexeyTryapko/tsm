@@ -1,6 +1,6 @@
 import { fft, ComplexNumber} from './math/math';
 import { rand_gauss} from './math/distributions'
-const { PI, sin, floor, random, sign, log2, sqrt } = Math;
+const { PI, sin, floor, random, sign, log2 } = Math;
 
 export function signalSource(x, simulationParams, blockParams, step) {
     let A = blockParams['amplitude'];
@@ -85,7 +85,7 @@ export function noise(x, simulationParams, blockParams, step) {
 
     if(step===0){
         blockParams.rand_func = undefined;
-        blockParams.f = new Array(floor(2*log2(max_f-1.0))).fill(0);
+        blockParams.f = new Array(floor(4*log2(max_f-1.0))).fill(0);
     }
 
     if(!blockParams.rand_func){
@@ -108,7 +108,7 @@ export function noise(x, simulationParams, blockParams, step) {
             blockParams.rand_func = () => 2 * (random() - 0.5);
         }
         else if (noiseType === 'randomNoise') {
-            blockParams.rand_func = () => rand_gauss({mu:(max_f-1.0)/2, std:sqrt(max_f)});
+            blockParams.rand_func = () => rand_gauss({mu:(max_f-1.0)/2, std:max_f/3});
         }
 
         blockParams.f = blockParams.f.map((v)=> blockParams.rand_func())
@@ -117,46 +117,6 @@ export function noise(x, simulationParams, blockParams, step) {
     blockParams.f.forEach((f)=>rand+=A*sin(2*PI*f*dt*step))
 
     return rand;
-}
-
-export function monitor(x, simulationParams, blockParams, step) {
-    let dt = simulationParams['quantizationPeriod'];
-    x.forEach((input_x)=>{
-        let found = false;
-        for (let [, chart] of blockParams['chartData'].entries()) {
-            if (input_x.name === chart.id) {
-                if (!chart.data) {
-                    chart.data = [];
-                }
-                chart.data.push({ x: dt * step, y: input_x.data });
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            blockParams['chartData'].push({
-                id: input_x.name,
-                data: [{ x: dt * step, y: input_x.data }],
-            });
-        }
-    })
-}
-
-export function communicationLine(x, simulationParams, blockParams, step) {
-    let inputSignal = 0;
-    let inputNoise = 0;
-    let kSignal = blockParams['coeffForIncomingSignal'];
-    let kNoise = blockParams['coeffForTheNoise'];
-
-    for (let [, input_x] of x.entries()) {
-        if (input_x.name.includes('SIGNAL SOURCE')) {
-            inputSignal = input_x.data;
-        }
-        if (input_x.name.includes('NOISE')) {
-            inputNoise = input_x.data;
-        }
-    }
-    return inputSignal * kSignal + inputNoise * kNoise;
 }
 
 export function correlator(x, simulationParams, blockParams, step) {

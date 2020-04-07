@@ -1,32 +1,17 @@
 import * as React from 'react';
 import { SideSheet } from 'evergreen-ui';
-import {
-    SignalSourceForm,
-    NoiseForm,
-    ReferenceSourceForm,
-    CommunicationLineForm,
-    FormNotFound,
-    GlobalPropertiesForm,
-    ComparatorForm,
-} from '../../components/forms';
+import { FormNotFound, GlobalPropertiesForm } from '../../components/forms';
+import {componentReferences} from '../../configs/components';
+
 
 const getFormComponent = type => {
-    switch (type) {
-        case 'SIGNAL SOURCE':
-            return SignalSourceForm;
-        case 'NOISE':
-            return NoiseForm;
-        case 'REFERENCE SOURCE':
-            return ReferenceSourceForm;
-        case 'COMMUNICATION LINE':
-            return CommunicationLineForm;
-        case 'GLOBAL':
-            return GlobalPropertiesForm;
-        case 'COMPARATOR':
-            return ComparatorForm;
-        default:
-            return FormNotFound;
-    }
+    if(type==='GLOBAL')
+        return GlobalPropertiesForm;
+    let comp =  componentReferences[type]
+    if(!comp)
+        return FormNotFound;
+    else
+        return comp;
 };
 
 const getForm = (

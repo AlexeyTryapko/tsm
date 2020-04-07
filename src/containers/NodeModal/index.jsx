@@ -1,27 +1,9 @@
 import * as React from 'react';
-import {
-    ComparatorModal,
-    MonitorModal,
-    SpectreModal,
-    SignalEnergy,
-    SpectralDensity,
-} from '../../components/modals';
+import {componentReferences} from '../../configs/components';
+
 
 const getModalComponent = type => {
-    switch (type) {
-        case 'MONITOR':
-            return MonitorModal;
-        case 'SPECTRE':
-            return SpectreModal;
-        case 'COMPORATOR':
-            return ComparatorModal;
-        case 'SIGNAL ENREGY':
-            return SignalEnergy;
-        case 'SPECTRAL DENSITY':
-            return SpectralDensity;
-        default:
-            return undefined;
-    }
+    return componentReferences[type];
 };
 
 const NodeModal = ({ type, data, closeModal, deleteNode, ...props }) => {

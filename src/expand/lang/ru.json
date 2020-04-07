@@ -1,0 +1,9 @@
+{
+    "ADDER": "СУМАТОР",
+    "MONITOR": "МОНИТОР",
+    "from": "С",
+    "to": "По",
+    "COMMUNICATION LINE": "ЛИНИЯ СВЯЗИ",
+    "coeffForIncomingSignal": "Коэффициент входного сигнала",
+    "coeffForTheNoise": "Коэффициент шума"
+}

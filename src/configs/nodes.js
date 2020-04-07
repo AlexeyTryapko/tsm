@@ -1,3 +1,5 @@
+import {nodes} from '../expand/config/nodes.js'
+
 export const nodesConfig = [
     {
         type: 'SIGNAL SOURCE',
@@ -9,6 +11,7 @@ export const nodesConfig = [
         },
         properties: {
             name: 'SIGNAL SOURCE',
+            form: true,
             signalType: 'manchesterСode',
             amplitude: 1,
             frequency: 3,
@@ -26,6 +29,7 @@ export const nodesConfig = [
         },
         properties: {
             name: 'NOISE',
+            form: true,
             noiseType: 'whiteNoise',
             amplitude: 0.1,
         },
@@ -40,25 +44,13 @@ export const nodesConfig = [
         },
         properties: {
             name: 'REFERENCE SOURCE',
+            form: true,
             signalType: 'manchesterСode',
             referenceSymbol: '1',
             amplitude: 1,
             frequency: 1,
             outOfSync: 0,
             samplesPerPeriod: 20,
-        },
-    },
-    {
-        type: 'MONITOR',
-        ports: {
-            in: {
-                id: 'in',
-                type: 'left',
-            },
-        },
-        properties: {
-            name: 'MONITOR',
-            chartData: [],
         },
     },
     {
@@ -71,25 +63,8 @@ export const nodesConfig = [
         },
         properties: {
             name: 'SIGNAL ENREGY',
+            modal:true,
             chartData: [],
-        },
-    },
-    {
-        type: 'COMMUNICATION LINE',
-        ports: {
-            in: {
-                id: 'in',
-                type: 'left',
-            },
-            out: {
-                id: 'out',
-                type: 'right',
-            },
-        },
-        properties: {
-            name: 'COMMUNICATION LINE',
-            coeffForIncomingSignal: 1,
-            coeffForTheNoise: 0.5,
         },
     },
     {
@@ -120,6 +95,7 @@ export const nodesConfig = [
         },
         properties: {
             name: 'COMPARATOR',
+            form: true,
             compSum: 0,
             previousInput: 0,
             sequence: '',
@@ -134,8 +110,10 @@ export const nodesConfig = [
             },
         },
         properties: {
+            modal:true,
             name: 'SPECTRAL DENSITY',
             chartData: [],
         },
     },
+    ...nodes,
 ];
