@@ -2,20 +2,6 @@ import * as React from 'react';
 import NodeModal from '../NodeModal';
 import PropertiesSidebar from '../PropertiesSidebar';
 
-const NODES_WITH_MODAL = [
-    'MONITOR',
-    'SPECTRE',
-    'SIGNAL ENREGY',
-    'SPECTRAL DENSITY',
-];
-const NODES_WITH_SIDEBAR = [
-    'SIGNAL SOURCE',
-    'NOISE',
-    'REFERENCE SOURCE',
-    'COMMUNICATION LINE',
-    'GLOBAL',
-    'COMPARATOR',
-];
 
 const InfoBlock = ({
     type,
@@ -27,7 +13,7 @@ const InfoBlock = ({
     useSamples,
 }) => (
     <>
-        {NODES_WITH_MODAL.includes(type) && (
+        {properties.modal && (
             <NodeModal
                 type={type}
                 data={data}
@@ -36,7 +22,7 @@ const InfoBlock = ({
                 deleteNode={deleteNode}
             />
         )}{' '}
-        {NODES_WITH_SIDEBAR.includes(type) && (
+        {(type==="GLOBAL"||properties.form) && (
             <PropertiesSidebar
                 type={type}
                 closeSidebar={closeInfo}

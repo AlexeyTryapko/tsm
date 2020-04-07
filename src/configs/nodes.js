@@ -1,6 +1,15 @@
+import SignalSourceForm from '../components/forms/SignalSource';
+import NoiseForm from '../components/forms/Noise';
+import ReferenceSourceForm from '../components/forms/ReferenceSource';
+import ComparatorForm from '../components/forms/Comparator';
+import SignalEnergy from '../components/modals/SignalEnergy';
+import SpectralDensity from '../components/modals/SpectralDensity';
+import {nodes} from '../expand/config/nodes.js'
+
 export const nodesConfig = [
     {
         type: 'SIGNAL SOURCE',
+        component:SignalSourceForm,
         ports: {
             out: {
                 id: 'out',
@@ -9,6 +18,7 @@ export const nodesConfig = [
         },
         properties: {
             name: 'SIGNAL SOURCE',
+            form: true,
             signalType: 'manchesterСode',
             amplitude: 1,
             frequency: 3,
@@ -18,6 +28,7 @@ export const nodesConfig = [
     },
     {
         type: 'NOISE',
+        component: NoiseForm,
         ports: {
             out: {
                 id: 'out',
@@ -26,12 +37,14 @@ export const nodesConfig = [
         },
         properties: {
             name: 'NOISE',
+            form: true,
             noiseType: 'whiteNoise',
             amplitude: 0.1,
         },
     },
     {
         type: 'REFERENCE SOURCE',
+        component: ReferenceSourceForm,
         ports: {
             out: {
                 id: 'out',
@@ -40,6 +53,7 @@ export const nodesConfig = [
         },
         properties: {
             name: 'REFERENCE SOURCE',
+            form: true,
             signalType: 'manchesterСode',
             referenceSymbol: '1',
             amplitude: 1,
@@ -49,20 +63,8 @@ export const nodesConfig = [
         },
     },
     {
-        type: 'MONITOR',
-        ports: {
-            in: {
-                id: 'in',
-                type: 'left',
-            },
-        },
-        properties: {
-            name: 'MONITOR',
-            chartData: [],
-        },
-    },
-    {
         type: 'SIGNAL ENREGY',
+        component:SignalEnergy,
         ports: {
             in: {
                 id: 'in',
@@ -71,6 +73,7 @@ export const nodesConfig = [
         },
         properties: {
             name: 'SIGNAL ENREGY',
+            modal:true,
             chartData: [],
         },
     },
@@ -88,6 +91,7 @@ export const nodesConfig = [
         },
         properties: {
             name: 'COMMUNICATION LINE',
+            form: true,
             coeffForIncomingSignal: 1,
             coeffForTheNoise: 0.5,
         },
@@ -112,6 +116,7 @@ export const nodesConfig = [
     },
     {
         type: 'COMPARATOR',
+        component:ComparatorForm,
         ports: {
             in: {
                 id: 'in',
@@ -120,6 +125,7 @@ export const nodesConfig = [
         },
         properties: {
             name: 'COMPARATOR',
+            form: true,
             compSum: 0,
             previousInput: 0,
             sequence: '',
@@ -127,6 +133,7 @@ export const nodesConfig = [
     },
     {
         type: 'SPECTRAL DENSITY',
+        component:SpectralDensity,
         ports: {
             in: {
                 id: 'in',
@@ -134,8 +141,10 @@ export const nodesConfig = [
             },
         },
         properties: {
+            modal:true,
             name: 'SPECTRAL DENSITY',
             chartData: [],
         },
     },
+    ...nodes,
 ];

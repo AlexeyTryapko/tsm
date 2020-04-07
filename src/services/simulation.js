@@ -11,6 +11,7 @@ import {
     
 } from './functions';
 import { cloneDeep } from 'lodash';
+import { references } from '../expand/ref'
 
 export const start = chart => {
     let step = chart.globalProperties['step'];
@@ -68,6 +69,7 @@ export const start = chart => {
             'COMPARATOR': comparator,
             'SIGNAL ENREGY': signalEnergy,
             'SPECTRAL DENSITY': spectralDensity,
+            ...references,
         };
 
         let obj_idxs = {};
