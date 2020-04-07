@@ -1,17 +1,9 @@
 import * as React from 'react';
-import {nodesConfig} from '../../configs/nodes';
+import {componentReferences} from '../../configs/components';
 
 
 const getModalComponent = type => {
-    let ret = undefined;
-    nodesConfig.forEach((node)=>{
-
-        if(node.type===type){
-            ret = node.component;
-        }
-    })
-
-    return ret;
+    return componentReferences[type];
 };
 
 const NodeModal = ({ type, data, closeModal, deleteNode, ...props }) => {

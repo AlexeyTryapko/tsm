@@ -1,15 +1,8 @@
-import SignalSourceForm from '../components/forms/SignalSource';
-import NoiseForm from '../components/forms/Noise';
-import ReferenceSourceForm from '../components/forms/ReferenceSource';
-import ComparatorForm from '../components/forms/Comparator';
-import SignalEnergy from '../components/modals/SignalEnergy';
-import SpectralDensity from '../components/modals/SpectralDensity';
 import {nodes} from '../expand/config/nodes.js'
 
 export const nodesConfig = [
     {
         type: 'SIGNAL SOURCE',
-        component:SignalSourceForm,
         ports: {
             out: {
                 id: 'out',
@@ -28,7 +21,6 @@ export const nodesConfig = [
     },
     {
         type: 'NOISE',
-        component: NoiseForm,
         ports: {
             out: {
                 id: 'out',
@@ -44,7 +36,6 @@ export const nodesConfig = [
     },
     {
         type: 'REFERENCE SOURCE',
-        component: ReferenceSourceForm,
         ports: {
             out: {
                 id: 'out',
@@ -64,7 +55,6 @@ export const nodesConfig = [
     },
     {
         type: 'SIGNAL ENREGY',
-        component:SignalEnergy,
         ports: {
             in: {
                 id: 'in',
@@ -75,25 +65,6 @@ export const nodesConfig = [
             name: 'SIGNAL ENREGY',
             modal:true,
             chartData: [],
-        },
-    },
-    {
-        type: 'COMMUNICATION LINE',
-        ports: {
-            in: {
-                id: 'in',
-                type: 'left',
-            },
-            out: {
-                id: 'out',
-                type: 'right',
-            },
-        },
-        properties: {
-            name: 'COMMUNICATION LINE',
-            form: true,
-            coeffForIncomingSignal: 1,
-            coeffForTheNoise: 0.5,
         },
     },
     {
@@ -116,7 +87,6 @@ export const nodesConfig = [
     },
     {
         type: 'COMPARATOR',
-        component:ComparatorForm,
         ports: {
             in: {
                 id: 'in',
@@ -133,7 +103,6 @@ export const nodesConfig = [
     },
     {
         type: 'SPECTRAL DENSITY',
-        component:SpectralDensity,
         ports: {
             in: {
                 id: 'in',

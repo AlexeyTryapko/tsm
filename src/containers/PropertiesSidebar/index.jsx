@@ -1,19 +1,17 @@
 import * as React from 'react';
 import { SideSheet } from 'evergreen-ui';
 import { FormNotFound, GlobalPropertiesForm } from '../../components/forms';
-import {nodesConfig} from '../../configs/nodes';
+import {componentReferences} from '../../configs/components';
+
 
 const getFormComponent = type => {
-    
-    let ret = type==="GLOBAL"?GlobalPropertiesForm:FormNotFound;
-    nodesConfig.forEach((node)=>{
-
-        if(node.type===type){
-            ret = node.component;
-        }
-    })
-
-    return ret;
+    if(type==='GLOBAL')
+        return GlobalPropertiesForm;
+    let comp =  componentReferences[type]
+    if(!comp)
+        return FormNotFound;
+    else
+        return comp;
 };
 
 const getForm = (

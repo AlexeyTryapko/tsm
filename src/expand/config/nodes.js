@@ -1,6 +1,3 @@
-import MonitorModal from '../components/Monitor'
-import CommunicationLineForm from '../components/CommunicationLine'
-
 export const nodes = [
     {
         "type": "ADDER",
@@ -20,7 +17,6 @@ export const nodes = [
     },
     {
         "type": "MONITOR",
-        "component": MonitorModal,
         "ports": {
             "in": {
                 "id": "in",
@@ -35,7 +31,6 @@ export const nodes = [
     },
     {
         "type": "COMMUNICATION LINE",
-        "component":CommunicationLineForm,
         "ports": {
             "in": {
                 "id": "in",
