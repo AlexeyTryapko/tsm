@@ -1,6 +1,6 @@
 {
     "name": "tsm",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "private": true,
     "main": "public/electron.js",
     "author": "ALexey <aatryapko1201@gmail.com>",

@@ -60,7 +60,7 @@ deploy:
     script: bash deploy.travis.sh
     skip_cleanup: true
     on:
-        branch: dev
+        branch: master
 
 before_cache:
     - rm -rf $HOME/.cache/electron-builder/wine
@@ -69,4 +69,4 @@ before_cache:
 # the 'master' and 'prod' branches
 branches:
     only:
-        - dev
+        - master
