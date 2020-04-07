@@ -1,3 +1,9 @@
 {
-    "ADDER": "ADDER"
+    "ADDER": "ADDER",
+    "MONITOR": "MONITOR",
+    "from": "From",
+    "to": "To",
+    "COMMUNICATION LINE": "COMMUNICATION LINE",
+    "coeffForIncomingSignal": "Coefficient for the income signal",
+    "coeffForTheNoise": "Coefficient for the noise"
 }
